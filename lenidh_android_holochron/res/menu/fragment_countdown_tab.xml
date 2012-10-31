@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/menu_save_countdown" android:orderInCategory="100" android:title="@string/menu_save_countdown" android:showAsAction="always|withText" android:icon="@drawable/ic_save"></item>
+    <item android:id="@+id/menu_edit_countdown" android:orderInCategory="200" android:title="@string/menu_edit_countdown" android:showAsAction="always|withText" android:icon="@drawable/ic_edit"></item>
+    
+
+</menu>

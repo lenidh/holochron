@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <ListPreference android:entries="@array/pref_lap_appearance_entries" android:entryValues="@array/pref_lap_appearance_values" android:dialogTitle="@string/pref_lap_appearance" android:key="@string/pref_key_lap_appearance" android:title="@string/pref_lap_appearance" android:summary="%s" android:defaultValue="@string/pref_value_lap_appearance_all"/>
+    
+
+</PreferenceScreen>

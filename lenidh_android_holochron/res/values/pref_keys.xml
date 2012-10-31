@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_key_lap_appearance">pref_key_lap_appearance</string>
+    <string name="pref_value_lap_appearance_all">all</string>
+    <string name="pref_value_lap_appearance_lap">lap</string>
+    <string name="pref_value_lap_appearance_abs">abs</string>
+    
+</resources>

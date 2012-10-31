@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Holochron</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="title_activity_clock">Uhr</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="timer_format">%1$d:%2$02d:%3$02d.%4$d</string>
+    <string name="reset">Zurücksetzen</string>
+    <string name="lap">Runde</string>
+    <string name="seperator60">:</string>
+    <string name="seperator100">.</string>
+    <string name="best_lap">Beste Runde</string>
+    <string name="best_time">Beste Zeit</string>
+    <string name="pref_lap_appearance">Runden Erscheinungsbild</string>
+    <string name="pref_lap_appearance_all">Runden- und Gesamtzeit</string>
+    <string name="pref_lap_appearance_lap">Nur Rundenzeit</string>
+    <string name="pref_lap_appearance_abs">Nur Gesamtzeit</string>
+    <string name="title_activity_clock_pager">Uhr</string>
+    
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_lap_appearance_entries">
+        <item >@string/pref_lap_appearance_all</item>
+        <item >@string/pref_lap_appearance_lap</item>
+        <item >@string/pref_lap_appearance_abs</item>
+    </string-array>
+    <string-array name="pref_lap_appearance_values">
+        <item >@string/pref_value_lap_appearance_all</item>
+        <item >@string/pref_value_lap_appearance_lap</item>
+        <item >@string/pref_value_lap_appearance_abs</item>
+    </string-array>
+    <integer-array name="pref_lap_appearance_valuesI">
+        <item >0</item>
+        <item >1</item>
+        <item >2</item>
+    </integer-array>
+    
+</resources>
