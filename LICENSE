@@ -1,0 +1,16 @@
+holochron is licensed under GPLv3
+
+The following open source projects are used in holochron:
+
+  * ActionBarSherlock
+    http://actionbarsherlock.com/
+    Apache License v2
+
+Images:
+
+  * ic_launcher-web.png, ic_launcher.png, faenza/*
+    http://tiheum.deviantart.com/art/Faenza-Icons-173323228
+    GPLv3
+    
+  * ic_edit.png, ic_save.png
+    http://developer.android.com/design/downloads/index.html
