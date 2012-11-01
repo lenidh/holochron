@@ -17,13 +17,11 @@
 
 package lenidh.android.holochron.ui;
 
-import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import lenidh.android.holochron.countdown.Countdown;
 import lenidh.android.holochron.R;
-import android.content.Intent;
+import lenidh.android.holochron.countdown.Countdown;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -104,18 +102,18 @@ public class CountdownTabFragment extends SherlockFragment implements
 			@Override
 			public void onClick(View v) {
 				Log.d(TAG, "_startStopButton clicked");
-//				if (_countdown.isRunning()) {
-//					_countdown.stop();
-//					cancelAlarm();
-//				} else if (_countdown.isFinished()) {
-//					_ringtone.stop();
-//					_countdown.reset();
-//					updateTime();
-//				} else {
-//					_countdown.start();
-//					setAlarm();
-//				}
-//				updateState();
+				// if (_countdown.isRunning()) {
+				// _countdown.stop();
+				// cancelAlarm();
+				// } else if (_countdown.isFinished()) {
+				// _ringtone.stop();
+				// _countdown.reset();
+				// updateTime();
+				// } else {
+				// _countdown.start();
+				// setAlarm();
+				// }
+				// updateState();
 			}
 		});
 	}
@@ -130,9 +128,9 @@ public class CountdownTabFragment extends SherlockFragment implements
 		if (savedInstanceState != null) {
 			_countdown = (Countdown) savedInstanceState
 					.getSerializable("countdown");
-//			if (_countdown.getRemainingTime() <= 0) {
-//				_countdown.stop();
-//			}
+			// if (_countdown.getRemainingTime() <= 0) {
+			// _countdown.stop();
+			// }
 		} else {
 			_countdown = new Countdown(0, 0, 5);
 		}
@@ -153,9 +151,9 @@ public class CountdownTabFragment extends SherlockFragment implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.menu_settings:
-			startActivity(new Intent(getActivity(), SettingsActivity.class));
-			return true;
+		// case R.id.menu_item_settings:
+		// startActivity(new Intent(getActivity(), SettingsActivity.class));
+		// return true;
 		case R.id.menu_save_countdown:
 			Toast t1 = Toast.makeText(getActivity(), "save item was clicked",
 					Toast.LENGTH_SHORT);
@@ -196,8 +194,8 @@ public class CountdownTabFragment extends SherlockFragment implements
 
 		updateTime();
 
-//		if (_countdown.isRunning())
-//			startTimerTask();
+		// if (_countdown.isRunning())
+		// startTimerTask();
 	}
 
 	@Override
@@ -229,10 +227,10 @@ public class CountdownTabFragment extends SherlockFragment implements
 			}
 		};
 
-//		Calendar cal = Calendar.getInstance();
-//		cal.add(Calendar.SECOND, (int) (_countdown.getRemainingTime()));
-//
-//		_timer.schedule(_alarmTask, cal.getTime());
+		// Calendar cal = Calendar.getInstance();
+		// cal.add(Calendar.SECOND, (int) (_countdown.getRemainingTime()));
+		//
+		// _timer.schedule(_alarmTask, cal.getTime());
 	}
 
 	private void setRingtone() {
@@ -268,43 +266,47 @@ public class CountdownTabFragment extends SherlockFragment implements
 
 	@Override
 	public void updateCountdown(Countdown countdown) {
-//		stopTimerTask();
-//		_countdown.stop();
-//		_countdown = countdown;
-//		updateTime();
-//		updateState();
+		// stopTimerTask();
+		// _countdown.stop();
+		// _countdown = countdown;
+		// updateTime();
+		// updateState();
 	}
 
 	public void updateState() {
-//		if (_countdown.isRunning()) {
-//			_stateButton.setText(R.string.stop);
-//			startTimerTask();
-//		} else if (_countdown.isFinished()) {
-//			_stateButton.setText(R.string.reset);
-//			stopTimerTask();
-//		} else {
-//			_stateButton.setText(R.string.start);
-//			stopTimerTask();
-//		}
+		// if (_countdown.isRunning()) {
+		// _stateButton.setText(R.string.stop);
+		// startTimerTask();
+		// } else if (_countdown.isFinished()) {
+		// _stateButton.setText(R.string.reset);
+		// stopTimerTask();
+		// } else {
+		// _stateButton.setText(R.string.start);
+		// stopTimerTask();
+		// }
 	}
 
 	public void updateTime() {
-//		long time = _countdown.getRemainingTime();
-//
-//		if (time <= 0) {
-//			_countdown.stop();
-//			updateState();
-//			stopTimerTask();
-//		}
-//
-//		_countdownDisplay[0]
-//				.setImageResource(_digits[(int) (time / 36000 % 10)]);
-//		_countdownDisplay[1]
-//				.setImageResource(_digits[(int) (time / 3600 % 10)]);
-//		_countdownDisplay[2].setImageResource(_digits[(int) (time / 600 % 6)]);
-//		_countdownDisplay[3].setImageResource(_digits[(int) (time / 60 % 10)]);
-//		_countdownDisplay[4].setImageResource(_digits[(int) (time / 10 % 6)]);
-//		_countdownDisplay[5].setImageResource(_digits[(int) (time / 1 % 10)]);
+		// long time = _countdown.getRemainingTime();
+		//
+		// if (time <= 0) {
+		// _countdown.stop();
+		// updateState();
+		// stopTimerTask();
+		// }
+		//
+		// _countdownDisplay[0]
+		// .setImageResource(_digits[(int) (time / 36000 % 10)]);
+		// _countdownDisplay[1]
+		// .setImageResource(_digits[(int) (time / 3600 % 10)]);
+		// _countdownDisplay[2].setImageResource(_digits[(int) (time / 600 %
+		// 6)]);
+		// _countdownDisplay[3].setImageResource(_digits[(int) (time / 60 %
+		// 10)]);
+		// _countdownDisplay[4].setImageResource(_digits[(int) (time / 10 %
+		// 6)]);
+		// _countdownDisplay[5].setImageResource(_digits[(int) (time / 1 %
+		// 10)]);
 	}
 
 }

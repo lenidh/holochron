@@ -19,9 +19,8 @@ package lenidh.android.holochron.adapters;
 
 import java.util.ArrayList;
 
-import lenidh.android.holochron.measurement.Lap;
 import lenidh.android.holochron.R;
-
+import lenidh.android.holochron.measurement.Lap;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -35,41 +34,41 @@ import android.widget.TextView;
  * Befüllt die Rundenliste mit Einträgen.
  */
 public class LapArrayAdapter extends ArrayAdapter<Lap> {
-	
+
 	/**
 	 * Referenzen auf die Elemente der Listeneinträge.
 	 */
 	private static class ViewHolder {
-		
+
 		public TextView lapNumber;
-		
+
 		public TextView lapTime;
-		
+
 		public TextView lapDifference;
-		
+
 		public TextView absoluteTime;
-		
+
 		public TextView absoluteDifference;
 	}
-	
+
 	private LayoutInflater _inflater;
-	
+
 	private SharedPreferences _sharedPreference;
-	
+
 	private String _prefKeyLapAppearance;
-	
-	private String _prefLapAppearanceLap;
-	
-	private String _prefLapAppearanceAbs;
-	
+
+	private String _prefValueLapAppearanceLap;
+
+	private String _prefValueLapAppearanceAbs;
+
 	private String _strTimeFormat;
-	
+
 	private String _strBestLap;
-	
+
 	private String _strBestTime;
-	
+
 	private ArrayList<Lap> _values;
-	
+
 	/**
 	 * Konstruktor
 	 * 
@@ -81,23 +80,24 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 	public LapArrayAdapter(Context context, ArrayList<Lap> values) {
 		super(context, R.layout.lap_entry, values);
 		_inflater = (LayoutInflater) context
-		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		_values = values;
-		
+
+		// Referenzen für Einstellungsabfragen.
 		_sharedPreference = PreferenceManager
-		        .getDefaultSharedPreferences(context);
+				.getDefaultSharedPreferences(context);
 		_prefKeyLapAppearance = context
-		        .getString(R.string.pref_key_lap_appearance);
-		_prefLapAppearanceLap = context
-		        .getString(R.string.pref_value_lap_appearance_lap);
-		_prefLapAppearanceAbs = context
-		        .getString(R.string.pref_value_lap_appearance_abs);
-		
+				.getString(R.string.pref_key_lap_appearance);
+		_prefValueLapAppearanceLap = context
+				.getString(R.string.pref_value_lap_appearance_lap);
+		_prefValueLapAppearanceAbs = context
+				.getString(R.string.pref_value_lap_appearance_abs);
+
 		_strTimeFormat = context.getString(R.string.timer_format);
 		_strBestLap = context.getString(R.string.best_lap);
 		_strBestTime = context.getString(R.string.best_time);
 	}
-	
+
 	/**
 	 * Liefert für die übergebene Zeit einen formatierten String zurück.
 	 * 
@@ -114,37 +114,37 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		String timeString = String.format(_strTimeFormat, h, m, s, hs);
 		return timeString;
 	}
-	
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
 			convertView = _inflater.inflate(R.layout.lap_entry, parent, false);
-			
+
 			holder = new ViewHolder();
 			holder.lapNumber = (TextView) convertView
-			        .findViewById(R.id.lapNumber);
+					.findViewById(R.id.lapNumber);
 			holder.lapTime = (TextView) convertView.findViewById(R.id.lapTime);
 			holder.lapDifference = (TextView) convertView
-			        .findViewById(R.id.lapDifference);
+					.findViewById(R.id.lapDifference);
 			holder.absoluteTime = (TextView) convertView
-			        .findViewById(R.id.absoluteTime);
+					.findViewById(R.id.absoluteTime);
 			holder.absoluteDifference = (TextView) convertView
-			        .findViewById(R.id.absoluteDifference);
-			
+					.findViewById(R.id.absoluteDifference);
+
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
-		if (_sharedPreference.getString(_prefKeyLapAppearance, "")
-		        .equals(_prefLapAppearanceLap)) {
+
+		if (_sharedPreference.getString(_prefKeyLapAppearance, "").equals(
+				_prefValueLapAppearanceLap)) {
 			holder.absoluteTime.setVisibility(View.GONE);
 			holder.absoluteDifference.setVisibility(View.GONE);
 			holder.lapTime.setVisibility(View.VISIBLE);
 			holder.lapDifference.setVisibility(View.VISIBLE);
 		} else if (_sharedPreference.getString(_prefKeyLapAppearance, "")
-		        .equals(_prefLapAppearanceAbs)) {
+				.equals(_prefValueLapAppearanceAbs)) {
 			holder.lapTime.setVisibility(View.GONE);
 			holder.lapDifference.setVisibility(View.GONE);
 			holder.absoluteTime.setVisibility(View.VISIBLE);
@@ -155,28 +155,28 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 			holder.absoluteTime.setVisibility(View.VISIBLE);
 			holder.absoluteDifference.setVisibility(View.VISIBLE);
 		}
-		
+
 		holder.lapNumber.setText(String.format(" %d", position + 1));
 		holder.lapTime
-		        .setText(getTimeString(_values.get(position).getLapTime()));
+				.setText(getTimeString(_values.get(position).getLapTime()));
 		holder.absoluteTime.setText(getTimeString(_values.get(position)
-		        .getAbsTime()));
-		
+				.getAbsTime()));
+
 		long diff = _values.get(position).getLapDiff();
 		if (diff <= 0) {
 			holder.lapDifference.setText(_strBestLap);
 		} else {
 			holder.lapDifference.setText("+" + getTimeString(diff));
 		}
-		
+
 		diff = _values.get(position).getAbsDiff();
 		if (diff <= 0) {
 			holder.absoluteDifference.setText(_strBestTime);
 		} else {
 			holder.absoluteDifference.setText("+" + getTimeString(diff));
 		}
-		
+
 		return convertView;
 	}
-	
+
 }
