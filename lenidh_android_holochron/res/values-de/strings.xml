@@ -9,8 +9,6 @@
     <string name="app_contributions">Bibliotheken und Bilder</string>
     <string name="menu_item_settings">Einstellungen</string>
     <string name="menu_item_about">Über Holochron</string>
-    <string name="menu_save_countdown">Speichern</string>
-    <string name="menu_edit_countdown">Bearbeiten</string>
     <string name="title_activity_clock_pager">Holochron</string>
     <string name="title_activity_settings">Einstellungen</string>
     <string name="title_activity_about">Über Holochron</string>
@@ -19,8 +17,6 @@
     <string name="timer_format">%1$d:%2$02d:%3$02d.%4$d</string>
     <string name="reset">Zurücksetzen</string>
     <string name="lap">Runde</string>
-    <string name="seperator60">:</string>
-    <string name="seperator100">.</string>
     <string name="best_lap">Beste Runde</string>
     <string name="best_time">Beste Zeit</string>
     <string name="pref_lap_appearance">Runden Erscheinungsbild</string>
