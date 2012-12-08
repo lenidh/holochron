@@ -5,7 +5,7 @@
     <string name="app_summary">Holochron ist eine Open-Source-Stoppuhr für Android.</string>
     <string name="app_code">https://code.google.com/p/holochron/</string>
     <string name="app_license">Lizenz: GPLv3+</string>
-    <string name="app_developer">Entwickler: </string>
+    <string name="app_developer">Entwickler: Moritz Heindl</string>
     <string name="app_contributions">Bibliotheken und Bilder</string>
     <string name="menu_item_settings">Einstellungen</string>
     <string name="menu_item_about">Über Holochron</string>
@@ -28,8 +28,9 @@
     <string name="pref_lap_appearance_lap">Nur Rundenzeit</string>
     <string name="pref_lap_appearance_abs">Nur Gesamtzeit</string>
     <string name="pref_volume_buttons">Steuerung über Lautstärketasten</string>
-    <string name="pref_volume_buttons_use">Benutze die Lautstärketasten</string>
-    <string name="pref_volume_buttons_ignore">Ignoriere die Lautstärketasten</string>
+    <string name="pref_volume_buttons_use">„Lauter“: Starten/Stoppen; „Leiser“: Zurücksetzen/Runde aufzeichnen</string>
+    <string name="pref_volume_buttons_inverse">„Leiser“: Starten/Stoppen; „Lauter“: Zurücksetzen/Runde aufzeichnen</string>
+    <string name="pref_volume_buttons_ignore">Lautstärketasten ignorieren</string>
     <string name="thanksto">&#xb7; &lt;a href="http://actionbarsherlock.com/">ActionBarSherlock&lt;/a> (Apache License 2)&lt;br/>&#xb7; &lt;a href="http://tiheum.deviantart.com/art/Faenza-Icons-173323228">Faenza&lt;/a> basiertes App-Icon (GPLv3)</string>
     
 </resources>
