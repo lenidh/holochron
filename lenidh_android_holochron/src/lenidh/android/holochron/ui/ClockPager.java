@@ -40,6 +40,7 @@ public class ClockPager extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 
 		_viewPager = new ViewPager(this);
+		_viewPager.setId(R.id.pager);
 		setContentView(_viewPager);
 
 		final ActionBar bar = getSupportActionBar();
