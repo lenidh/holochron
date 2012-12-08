@@ -20,7 +20,6 @@ package lenidh.android.holochron.ui;
 import lenidh.android.holochron.R;
 import lenidh.android.holochron.adapters.ClockPagerAdapter;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
@@ -36,10 +35,6 @@ public class ClockPager extends SherlockFragmentActivity {
 	private ViewPager _viewPager;
 	private ClockPagerAdapter _tabsAdapter;
 
-	private SharedPreferences _sharedPreference;
-	private String _prefKeyVolumeButtons;
-	private String _prefValueVolumeButtonsUse;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,14 +43,9 @@ public class ClockPager extends SherlockFragmentActivity {
 		_viewPager.setId(R.id.pager);
 		setContentView(_viewPager);
 
-		// Referenzen für Einstellungsabfragen.
-		_sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-		_prefKeyVolumeButtons = getString(R.string.pref_key_volume_buttons);
-		_prefValueVolumeButtonsUse = getString(R.string.pref_value_volume_buttons_use);
-
 		final ActionBar bar = getSupportActionBar();
 		// TODO: Solange der Countdown noch nicht fertig ist, werden keine Tabs
-		// benötigt.
+		// ben�tigt.
 		// bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		// bar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
 
@@ -103,27 +93,29 @@ public class ClockPager extends SherlockFragmentActivity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		Object currentFragment = _tabsAdapter.instantiateItem(_viewPager,
 				_viewPager.getCurrentItem());
+
 		switch (keyCode) {
+
 		case KeyEvent.KEYCODE_VOLUME_DOWN:
-			if (_sharedPreference.getString(_prefKeyVolumeButtons, "").equals(
-					_prefValueVolumeButtonsUse)) {
-				if (currentFragment.getClass() == TimekeeperTabFragment.class) {
-					((TimekeeperTabFragment) currentFragment)
-							.onVolumeDownDown();
-				}
-				return true;
+			if (currentFragment.getClass() == TimekeeperTabFragment.class) {
+				boolean result = ((TimekeeperTabFragment) currentFragment)
+						.onVolumeDownDown();
+				if (result)
+					return true;
 			}
 			break;
+
 		case KeyEvent.KEYCODE_VOLUME_UP:
-			if (_sharedPreference.getString(_prefKeyVolumeButtons, "").equals(
-					_prefValueVolumeButtonsUse)) {
-				if (currentFragment.getClass() == TimekeeperTabFragment.class) {
-					((TimekeeperTabFragment) currentFragment).onVolumeUpDown();
-				}
-				return true;
+			if (currentFragment.getClass() == TimekeeperTabFragment.class) {
+				boolean result = ((TimekeeperTabFragment) currentFragment)
+						.onVolumeUpDown();
+				if (result)
+					return true;
 			}
 			break;
+
 		}
+
 		return super.onKeyDown(keyCode, event);
 	}
 

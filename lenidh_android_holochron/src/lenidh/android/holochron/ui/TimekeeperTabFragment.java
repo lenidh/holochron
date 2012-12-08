@@ -81,6 +81,11 @@ public class TimekeeperTabFragment extends SherlockFragment implements
 
 	private LapManager _lapManager = null;
 
+	private SharedPreferences _sharedPreference;
+	private String _prefKeyVolumeButtons;
+	private String _prefValueVolumeButtonsUse;
+	private String _prefValueVolumeButtonsInverse;
+
 	private void changeState() {
 		if (_timekeeper.isRunning()) {
 			Log.d(TAG, "stop measurement");
@@ -150,6 +155,12 @@ public class TimekeeperTabFragment extends SherlockFragment implements
 				resetOrRecord();
 			}
 		});
+		
+		// Referenzen für Einstellungsabfragen.
+		_sharedPreference = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+		_prefKeyVolumeButtons = getString(R.string.pref_key_volume_buttons);
+		_prefValueVolumeButtonsUse = getString(R.string.pref_value_volume_buttons_use);
+		_prefValueVolumeButtonsInverse = getString(R.string.pref_value_volume_buttons_inverse);
 	}
 
 	@Override
@@ -220,12 +231,34 @@ public class TimekeeperTabFragment extends SherlockFragment implements
 		stopTimerTask();
 	}
 
-	public void onVolumeDownDown() {
-		resetOrRecord();
+	public boolean onVolumeDownDown() {
+		String volumeKeySetting = _sharedPreference.getString(_prefKeyVolumeButtons, "");
+		if (volumeKeySetting.equals(_prefValueVolumeButtonsUse)) {
+			resetOrRecord();
+			return true;
+		}
+		else if (volumeKeySetting.equals(_prefValueVolumeButtonsInverse)) {
+			changeState();
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
-	public void onVolumeUpDown() {
-		changeState();
+	public boolean onVolumeUpDown() {
+		String volumeKeySetting = _sharedPreference.getString(_prefKeyVolumeButtons, "");
+		if (volumeKeySetting.equals(_prefValueVolumeButtonsUse)) {
+			changeState();
+			return true;
+		}
+		else if (volumeKeySetting.equals(_prefValueVolumeButtonsInverse)) {
+			resetOrRecord();
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public void printTime() {
