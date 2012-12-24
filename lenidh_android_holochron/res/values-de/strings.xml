@@ -12,8 +12,8 @@
     <string name="title_activity_clock_pager">Holochron</string>
     <string name="title_activity_settings">Einstellungen</string>
     <string name="title_activity_about">Über Holochron</string>
-    <string name="start">Start</string>
-    <string name="stop">Stop</string>
+    <string name="start">Starten</string>
+    <string name="stop">Stoppen</string>
     <string name="timer_format">%1$d:%2$02d:%3$02d.%4$d</string>
     <string name="reset">Zurücksetzen</string>
     <string name="lap">Runde</string>
