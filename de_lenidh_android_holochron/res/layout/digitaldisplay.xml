@@ -8,14 +8,14 @@
 		android:layout_height="wrap_content" >
 
 	    <ImageView
-	        android:id="@+id/imageView1"
+	        android:id="@+id/hour1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:src="@drawable/digitaldigit6" />
 	
 	    <ImageView
-	        android:id="@+id/imageView2"
+	        android:id="@+id/hour2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
@@ -29,14 +29,14 @@
 	        android:src="@drawable/digitalcolon" />
 	
 	    <ImageView
-	        android:id="@+id/imageView4"
+	        android:id="@+id/minute1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:src="@drawable/digitaldigit8" />
 	
 	    <ImageView
-	        android:id="@+id/imageView5"
+	        android:id="@+id/minute2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
@@ -50,14 +50,14 @@
 	        android:src="@drawable/digitalcolon" />
 	
 	    <ImageView
-	        android:id="@+id/imageView7"
+	        android:id="@+id/second1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:src="@drawable/digitaldigit4" />
 	
 	    <ImageView
-	        android:id="@+id/imageView8"
+	        android:id="@+id/second2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
