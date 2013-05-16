@@ -1,9 +1,9 @@
-package de.lenidh.android.holochron2.adapters;
+package de.lenidh.android.holochron.adapters;
 
 import java.util.List;
 
 import android.util.Log;
-import de.lenidh.android.holochron2.R;
+import de.lenidh.android.holochron.R;
 import de.lenidh.libzeitmesser.stopwatch.Lap;
 import android.content.Context;
 import android.view.LayoutInflater;
