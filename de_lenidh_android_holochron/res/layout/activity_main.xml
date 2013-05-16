@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <de.lenidh.android.holochron2.controls.DigitalDisplay
+    <de.lenidh.android.holochron.controls.DigitalDisplay
         android:id="@+id/digitalDisplay1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

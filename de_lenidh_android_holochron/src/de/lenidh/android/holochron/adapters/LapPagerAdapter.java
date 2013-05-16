@@ -15,7 +15,7 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.lenidh.android.holochron2.adapters;
+package de.lenidh.android.holochron.adapters;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 

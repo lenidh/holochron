@@ -15,7 +15,7 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.lenidh.android.holochron2.ui;
+package de.lenidh.android.holochron.ui;
 
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -24,10 +24,10 @@ import android.view.View;
 import android.widget.Button;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
-import de.lenidh.android.holochron2.R;
-import de.lenidh.android.holochron2.adapters.LapArrayAdapter;
-import de.lenidh.android.holochron2.adapters.LapPagerAdapter;
-import de.lenidh.android.holochron2.controls.DigitalDisplay;
+import de.lenidh.android.holochron.R;
+import de.lenidh.android.holochron.adapters.LapArrayAdapter;
+import de.lenidh.android.holochron.adapters.LapPagerAdapter;
+import de.lenidh.android.holochron.controls.DigitalDisplay;
 import de.lenidh.libzeitmesser.stopwatch.*;
 
 import java.util.List;

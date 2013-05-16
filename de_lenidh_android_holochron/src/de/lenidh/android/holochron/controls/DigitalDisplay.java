@@ -15,9 +15,9 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.lenidh.android.holochron2.controls;
+package de.lenidh.android.holochron.controls;
 
-import de.lenidh.android.holochron2.R;
+import de.lenidh.android.holochron.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
