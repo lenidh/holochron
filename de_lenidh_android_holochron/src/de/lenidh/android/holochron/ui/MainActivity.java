@@ -17,6 +17,7 @@
 
 package de.lenidh.android.holochron.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
@@ -24,6 +25,8 @@ import android.view.View;
 import android.widget.Button;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import de.lenidh.android.holochron.R;
 import de.lenidh.android.holochron.adapters.LapArrayAdapter;
 import de.lenidh.android.holochron.adapters.LapPagerAdapter;
@@ -43,11 +46,11 @@ public class MainActivity extends SherlockFragmentActivity implements Display {
 	private ViewPager lapPager;
 	
 	private LapPagerAdapter lapPagerAdapter;
-	
-	private List<Lap> lapTimeItems;
+
 	private List<Lap> elapsedTimeItems;
-	private LapArrayAdapter lapTimeArrayAdapter;
+	private List<Lap> lapTimeItems;
 	private LapArrayAdapter elapsedTimeArrayAdapter;
+	private LapArrayAdapter lapTimeArrayAdapter;
 	private LapContainer lapContainer;
 
 	@Override
@@ -75,12 +78,12 @@ public class MainActivity extends SherlockFragmentActivity implements Display {
 		this.watch.addDisplay(this);
 
 		this.lapContainer = this.watch.getLapContainer();
-		this.lapTimeItems = this.lapContainer.toList(); // TODO: List in lap time order. Needs modification of libZeitmesser.
 		this.elapsedTimeItems = this.lapContainer.toList();
-		this.lapTimeArrayAdapter = new LapArrayAdapter(this, this.lapTimeItems, LapArrayAdapter.Mode.lapTime);
+		this.lapTimeItems = this.lapContainer.toList(LapContainer.Order.lapTime);
 		this.elapsedTimeArrayAdapter = new LapArrayAdapter(this, this.elapsedTimeItems, LapArrayAdapter.Mode.elapsedTime);
-		((SherlockListFragment)this.lapPagerAdapter.getItem(0)).setListAdapter(this.lapTimeArrayAdapter);
-		((SherlockListFragment)this.lapPagerAdapter.getItem(1)).setListAdapter(this.elapsedTimeArrayAdapter);
+		this.lapTimeArrayAdapter = new LapArrayAdapter(this, this.lapTimeItems, LapArrayAdapter.Mode.lapTime);
+		((SherlockListFragment)this.lapPagerAdapter.getItem(0)).setListAdapter(this.elapsedTimeArrayAdapter);
+		((SherlockListFragment)this.lapPagerAdapter.getItem(1)).setListAdapter(this.lapTimeArrayAdapter);
 		
 		// Button listener
 		this.btnState.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +108,26 @@ public class MainActivity extends SherlockFragmentActivity implements Display {
 				}
 			}
 		});
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		this.getSupportMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_item_settings:
+				this.startActivity(new Intent(this, SettingsActivity.class));
+				return true;
+			case R.id.menu_item_about:
+				this.startActivity(new Intent(this, AboutActivity.class));
+				return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -140,12 +163,5 @@ public class MainActivity extends SherlockFragmentActivity implements Display {
 			}
 		});
 	}
-
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.main, menu);
-//		return true;
-//	}
 
 }
