@@ -75,7 +75,6 @@ public class MainActivity extends SherlockFragmentActivity implements Display {
 				return SystemClock.elapsedRealtime();
 			}
 		});
-		this.watch.addDisplay(this);
 
 		this.lapContainer = this.watch.getLapContainer();
 		this.elapsedTimeItems = this.lapContainer.toList();
@@ -108,6 +107,30 @@ public class MainActivity extends SherlockFragmentActivity implements Display {
 				}
 			}
 		});
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+
+		this.watch.removeDisplay(this);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+		this.watch.addDisplay(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 	}
 
 	@Override
