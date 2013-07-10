@@ -83,11 +83,19 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		switch (this.mode) {
 			case elapsedTime:
 				holder.timeView.setText(this.formatTime(this.values.get(position).getElapsedTime(), false));
-				holder.diffView.setText(this.formatTime(this.values.get(position).getElapsedTimeDiff(), true));
+				if(this.values.get(position).getElapsedTimeDiff() == 0) {
+					holder.diffView.setText(this.formatTime(this.values.get(position).getElapsedTimeDiff(), true));
+				} else {
+					holder.diffView.setText("+" + this.formatTime(this.values.get(position).getElapsedTimeDiff(), true));
+				}
 				break;
 			case lapTime:
 				holder.timeView.setText(this.formatTime(this.values.get(position).getLapTime(), false));
-				holder.diffView.setText(this.formatTime(this.values.get(position).getLapTimeDiff(), true));
+				if(this.values.get(position).getElapsedTimeDiff() == 0) {
+					holder.diffView.setText(this.formatTime(this.values.get(position).getLapTimeDiff(), true));
+				} else {
+					holder.diffView.setText("+" + this.formatTime(this.values.get(position).getLapTimeDiff(), true));
+				}
 				break;
 		}
 		
