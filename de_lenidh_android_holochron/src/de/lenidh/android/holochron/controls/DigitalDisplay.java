@@ -68,13 +68,16 @@ public class DigitalDisplay extends LinearLayout {
 		this.minutes[1] = (ImageView)this.findViewById(R.id.minute2);
 		this.seconds[0] = (ImageView)this.findViewById(R.id.second1);
 		this.seconds[1] = (ImageView)this.findViewById(R.id.second2);
-		
-		this.hours[0].setImageResource(this.digits[0]);
-		this.hours[1].setImageResource(this.digits[0]);
-		this.minutes[0].setImageResource(this.digits[0]);
-		this.minutes[1].setImageResource(this.digits[0]);
-		this.seconds[0].setImageResource(this.digits[0]);
-		this.seconds[1].setImageResource(this.digits[0]);
+
+		// Disable, if executed in development tools.
+		if(!this.isInEditMode()) {
+			this.hours[0].setImageResource(this.digits[0]);
+			this.hours[1].setImageResource(this.digits[0]);
+			this.minutes[0].setImageResource(this.digits[0]);
+			this.minutes[1].setImageResource(this.digits[0]);
+			this.seconds[0].setImageResource(this.digits[0]);
+			this.seconds[1].setImageResource(this.digits[0]);
+		}
 	}
 	
 	public void setTime(long ms) {
