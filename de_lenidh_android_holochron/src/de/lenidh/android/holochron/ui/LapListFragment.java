@@ -15,35 +15,17 @@
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package de.lenidh.android.holochron.adapters;
+package de.lenidh.android.holochron.ui;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.os.Bundle;
+import android.view.View;
 import com.actionbarsherlock.app.SherlockListFragment;
 
-import java.util.ArrayList;
-
-public class LapPagerAdapter extends FragmentStatePagerAdapter {
-
-	private ArrayList<SherlockListFragment> pages = null;
-
-	public LapPagerAdapter(FragmentManager fm) {
-		super(fm);
-	}
-
-	public void setPages(ArrayList<SherlockListFragment> pages) {
-		this.pages = pages;
-	}
-
+public class LapListFragment extends SherlockListFragment {
 	@Override
-	public SherlockListFragment getItem(int index) {
-		return this.pages.get(index);
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		this.getListView().setDivider(null);
+		this.getListView().setDividerHeight(8);
 	}
-
-	@Override
-	public int getCount() {
-		if(this.pages == null) return 0;
-		return this.pages.size();
-	}
-
 }

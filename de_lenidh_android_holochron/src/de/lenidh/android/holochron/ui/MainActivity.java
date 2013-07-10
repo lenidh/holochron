@@ -18,8 +18,10 @@
 package de.lenidh.android.holochron.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
@@ -33,9 +35,10 @@ import de.lenidh.android.holochron.adapters.LapPagerAdapter;
 import de.lenidh.android.holochron.controls.DigitalDisplay;
 import de.lenidh.libzeitmesser.stopwatch.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends SherlockFragmentActivity implements Display {
+public class MainActivity extends SherlockFragmentActivity implements Display, SharedPreferences.OnSharedPreferenceChangeListener {
 	
 	private Watch watch;
 	
@@ -51,6 +54,8 @@ public class MainActivity extends SherlockFragmentActivity implements Display {
 	private List<Lap> lapTimeItems;
 	private LapArrayAdapter elapsedTimeArrayAdapter;
 	private LapArrayAdapter lapTimeArrayAdapter;
+	private SherlockListFragment elapsedTimeListFragment;
+	private SherlockListFragment lapTimeListFragment;
 	private LapContainer lapContainer;
 
 	@Override
@@ -81,8 +86,11 @@ public class MainActivity extends SherlockFragmentActivity implements Display {
 		this.lapTimeItems = this.lapContainer.toList(LapContainer.Order.lapTime);
 		this.elapsedTimeArrayAdapter = new LapArrayAdapter(this, this.elapsedTimeItems, LapArrayAdapter.Mode.elapsedTime);
 		this.lapTimeArrayAdapter = new LapArrayAdapter(this, this.lapTimeItems, LapArrayAdapter.Mode.lapTime);
-		((SherlockListFragment)this.lapPagerAdapter.getItem(0)).setListAdapter(this.elapsedTimeArrayAdapter);
-		((SherlockListFragment)this.lapPagerAdapter.getItem(1)).setListAdapter(this.lapTimeArrayAdapter);
+		this.elapsedTimeListFragment = new LapListFragment();
+		this.lapTimeListFragment = new LapListFragment();
+		this.elapsedTimeListFragment.setListAdapter(this.elapsedTimeArrayAdapter);
+		this.lapTimeListFragment.setListAdapter(this.lapTimeArrayAdapter);
+		this.updatePages();
 		
 		// Button listener
 		this.btnState.setOnClickListener(new View.OnClickListener() {
@@ -187,4 +195,36 @@ public class MainActivity extends SherlockFragmentActivity implements Display {
 		});
 	}
 
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+		if(this.getString(R.string.pref_key_lap_appearance).equals(key)) {
+			this.updatePages();
+		} else if(this.getString(R.string.pref_key_volume_buttons).equals(key)) {
+
+		} else if(this.getString(R.string.pref_key_theme).equals(key)) {
+
+		}
+	}
+
+	private void updatePages() {
+		String prefValue;
+		String prefValueAll = this.getString(R.string.pref_value_lap_appearance_all);
+		String prefValueAbs = this.getString(R.string.pref_value_lap_appearance_abs);
+		String prefValueLap = this.getString(R.string.pref_value_lap_appearance_lap);
+		String prefKey = this.getString(R.string.pref_key_lap_appearance);
+		ArrayList<SherlockListFragment> pages = new ArrayList<SherlockListFragment>();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+		prefValue = prefs.getString(prefKey, prefValueAll);
+
+		if(prefValue.equals(prefValueAll) || prefValue.equals(prefValueAbs)) {
+			pages.add(this.elapsedTimeListFragment);
+		}
+		if(prefValue.equals(prefValueAll) || prefValue.equals(prefValueLap)) {
+			pages.add(this.lapTimeListFragment);
+		}
+
+		this.lapPagerAdapter.setPages(pages);
+		this.lapPagerAdapter.notifyDataSetChanged();
+	}
 }
