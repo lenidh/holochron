@@ -17,6 +17,7 @@
 
 package de.lenidh.android.holochron.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import com.actionbarsherlock.app.SherlockListFragment;
@@ -26,6 +27,8 @@ public class LapListFragment extends SherlockListFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		this.getListView().setDivider(null);
-		this.getListView().setDividerHeight(8);
+		this.getListView().setCacheColorHint(Color.TRANSPARENT);
+		this.getListView().setFadingEdgeLength(16);
+		this.getListView().setVerticalFadingEdgeEnabled(true);
 	}
 }

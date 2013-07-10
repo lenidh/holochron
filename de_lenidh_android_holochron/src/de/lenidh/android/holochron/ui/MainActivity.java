@@ -25,10 +25,12 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import de.lenidh.android.holochron.App;
 import de.lenidh.android.holochron.R;
 import de.lenidh.android.holochron.adapters.LapArrayAdapter;
 import de.lenidh.android.holochron.adapters.LapPagerAdapter;
@@ -61,7 +63,13 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+
+		// Set theme.
+		if(App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
+			setDarkContentView(R.layout.activity_main);
+		} else {
+			setContentView(R.layout.activity_main);
+		}
 		
 		// Get component references.
 		this.btnState = (Button)this.findViewById(R.id.btnState);
@@ -162,6 +170,13 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 	}
 
 	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		App.updateThemePreference();
+		finish();
+	}
+
+	@Override
 	public void updateLaps() {
 		this.lapTimeArrayAdapter.notifyDataSetChanged();
 		this.elapsedTimeArrayAdapter.notifyDataSetChanged();
@@ -226,5 +241,20 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 
 		this.lapPagerAdapter.setPages(pages);
 		this.lapPagerAdapter.notifyDataSetChanged();
+	}
+
+	private void setDarkContentView(int layoutResId)
+	{
+		setTheme(R.style.AppTheme_Dark);
+
+		setContentView(layoutResId);
+
+		LinearLayout tile = (LinearLayout)this.findViewById(R.id.tile);
+		View hView = this.findViewById(R.id.hSeparator);
+		View vView = this.findViewById(R.id.vSeparator);
+
+		tile.setBackgroundResource(R.drawable.tile_shape_dark);
+		hView.setBackgroundResource(R.color.watch_button_separator_color_dark);
+		vView.setBackgroundResource(R.color.watch_button_separator_color_dark);
 	}
 }

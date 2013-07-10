@@ -24,6 +24,7 @@ import android.preference.ListPreference;
 import android.util.Log;
 import com.actionbarsherlock.app.SherlockPreferenceActivity;
 import com.actionbarsherlock.view.MenuItem;
+import de.lenidh.android.holochron.App;
 import de.lenidh.android.holochron.R;
 
 @SuppressWarnings("deprecation")
@@ -36,6 +37,12 @@ public class SettingsActivity extends SherlockPreferenceActivity implements Shar
 	private ListPreference volumeButtons;
 
 	public void onCreate(Bundle savedInstanceState) {
+
+		// Set theme.
+		if(App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
+			setTheme(R.style.AppTheme_Dark);
+		}
+
 		super.onCreate(savedInstanceState);
 
 		addPreferencesFromResource(R.xml.settings);

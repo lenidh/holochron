@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import de.lenidh.android.holochron.App;
 import de.lenidh.android.holochron.R;
 
 public class AboutActivity extends SherlockActivity {
@@ -34,6 +35,12 @@ public class AboutActivity extends SherlockActivity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// Set theme.
+		if(App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
+			setTheme(R.style.AppTheme_Dark);
+		}
+
 		setContentView(R.layout.activity_about);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

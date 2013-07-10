@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
     <LinearLayout
+        android:id="@+id/tile"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,9 +24,10 @@
             android:minHeight="20dp" />
 
         <View
+            android:id="@+id/hSeparator"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/watch_button_separator_color"/>
+            android:background="@color/watch_button_separator_color_light"/>
 
         <LinearLayout
             android:id="@+id/btnLayout"
@@ -43,9 +44,10 @@
                 android:background="@drawable/left_watch_button_background"/>
 
             <View
+                android:id="@+id/vSeparator"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="@color/watch_button_separator_color"
+                android:background="@color/watch_button_separator_color_light"
                 android:layout_marginBottom="@dimen/tile_shadow_size"/>
 
             <Button
@@ -63,7 +65,6 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/lapPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/activity_vertical_margin"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

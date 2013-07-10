@@ -19,7 +19,11 @@ package de.lenidh.android.holochron.adapters;
 
 import java.util.List;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.LinearLayout;
+import de.lenidh.android.holochron.App;
 import de.lenidh.android.holochron.R;
 import de.lenidh.libzeitmesser.stopwatch.Lap;
 import android.content.Context;
@@ -37,6 +41,7 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		public TextView numberView;
 		public TextView timeView;
 		public TextView diffView;
+		public LinearLayout tileView;
 	}
 
 	public enum Mode {
@@ -47,6 +52,7 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 	private LayoutInflater inflater;
 	private List<Lap> values;
 	private Mode mode;
+	private int tileResId;
 
 	public LapArrayAdapter(Context context, List<Lap> values) {
 		this(context, values, Mode.elapsedTime);
@@ -58,6 +64,12 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.values = values;
 		this.mode = mode;
+
+		if(App.getThemePreference().equals(getContext().getString(R.string.pref_value_theme_dark))) {
+			this.tileResId = R.drawable.tile_shape_dark;
+		} else {
+			this.tileResId = R.drawable.tile_shape;
+		}
 	}
 
 	@Override
@@ -74,6 +86,7 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 			holder.numberView = (TextView)convertView.findViewById(R.id.txt_number);
 			holder.timeView = (TextView)convertView.findViewById(R.id.txt_time);
 			holder.diffView = (TextView)convertView.findViewById(R.id.txt_diff);
+			holder.tileView = (LinearLayout)convertView.findViewById(R.id.tile);
 			
 			convertView.setTag(holder);
 		}
@@ -98,6 +111,8 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 				}
 				break;
 		}
+
+		holder.tileView.setBackgroundResource(this.tileResId);
 		
 		return convertView;
 	}
