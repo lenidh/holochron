@@ -28,6 +28,7 @@ import android.widget.TextView;
 import de.lenidh.android.holochron.App;
 import de.lenidh.android.holochron.R;
 import de.lenidh.libzeitmesser.stopwatch.Lap;
+import de.lenidh.libzeitmesser.stopwatch.LapContainer;
 
 import java.util.List;
 
@@ -47,17 +48,20 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		elapsedTime,
 	}
 
+	private LapContainer container;
 	private LayoutInflater inflater;
 	private List<Lap> values;
 	private Mode mode;
 	private int tileResId;
 
-	public LapArrayAdapter(Context context, List<Lap> values) {
-		this(context, values, Mode.elapsedTime);
+	public LapArrayAdapter(Context context, LapContainer container, List<Lap> values) {
+		this(context, container, values, Mode.elapsedTime);
 	}
 
-	public LapArrayAdapter(Context context, List<Lap> values, Mode mode) {
+	public LapArrayAdapter(Context context, LapContainer container, List<Lap> values, Mode mode) {
 		super(context, R.layout.lap_listitem, values);
+
+		this.container = container;
 		
 		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.values = values;
@@ -89,7 +93,7 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 			convertView.setTag(holder);
 		}
 
-		holder.numberView.setText(Integer.toString(position));
+		holder.numberView.setText(Integer.toString(this.container.NumberOf(this.values.get(position))));
 
 		switch (this.mode) {
 			case elapsedTime:

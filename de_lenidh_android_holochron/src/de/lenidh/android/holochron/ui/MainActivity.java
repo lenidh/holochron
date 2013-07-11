@@ -92,8 +92,8 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 		this.lapContainer = this.watch.getLapContainer();
 		this.elapsedTimeItems = this.lapContainer.toList();
 		this.lapTimeItems = this.lapContainer.toList(LapContainer.Order.lapTime);
-		this.elapsedTimeArrayAdapter = new LapArrayAdapter(this, this.elapsedTimeItems, LapArrayAdapter.Mode.elapsedTime);
-		this.lapTimeArrayAdapter = new LapArrayAdapter(this, this.lapTimeItems, LapArrayAdapter.Mode.lapTime);
+		this.elapsedTimeArrayAdapter = new LapArrayAdapter(this, this.lapContainer, this.elapsedTimeItems, LapArrayAdapter.Mode.elapsedTime);
+		this.lapTimeArrayAdapter = new LapArrayAdapter(this, this.lapContainer, this.lapTimeItems, LapArrayAdapter.Mode.lapTime);
 		this.elapsedTimeListFragment = new LapListFragment();
 		this.lapTimeListFragment = new LapListFragment();
 		this.elapsedTimeListFragment.setListAdapter(this.elapsedTimeArrayAdapter);
