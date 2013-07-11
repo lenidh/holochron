@@ -18,14 +18,14 @@
   -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <ListPreference
+    <!--ListPreference
         android:key="@string/pref_key_lap_appearance"
         android:summary="%s"
         android:title="@string/pref_lap_appearance"
         android:dialogTitle="@string/pref_lap_appearance"
         android:entries="@array/pref_lap_appearance_entries"
         android:entryValues="@array/pref_lap_appearance_values"
-        android:defaultValue="@string/pref_value_lap_appearance_all"/>
+        android:defaultValue="@string/pref_value_lap_appearance_all"/-->
     <ListPreference
         android:key="@string/pref_key_theme"
         android:summary="%s"

@@ -48,7 +48,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements Shar
 		addPreferencesFromResource(R.xml.settings);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		this.lapAppearence = (ListPreference) getPreferenceScreen().findPreference(getString(R.string.pref_key_lap_appearance));
+		//this.lapAppearence = (ListPreference) getPreferenceScreen().findPreference(getString(R.string.pref_key_lap_appearance));
 		this.theme = (ListPreference) getPreferenceScreen().findPreference(getString(R.string.pref_key_theme));
 		this.volumeButtons = (ListPreference) getPreferenceScreen().findPreference(getString(R.string.pref_key_volume_buttons));
 	}
@@ -70,7 +70,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements Shar
 	protected void onResume() {
 		super.onResume();
 
-		this.lapAppearence.setSummary(this.lapAppearence.getEntry());
+		//this.lapAppearence.setSummary(this.lapAppearence.getEntry());
 		this.theme.setSummary(this.theme.getEntry());
 		this.volumeButtons.setSummary(this.volumeButtons.getEntry());
 
@@ -87,7 +87,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements Shar
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		if(key.equals(getString(R.string.pref_key_lap_appearance))) {
-			this.lapAppearence.setSummary(this.lapAppearence.getEntry());
+			//this.lapAppearence.setSummary(this.lapAppearence.getEntry());
 		} else if(key.equals(getString(R.string.pref_key_theme))) {
 			this.theme.setSummary(this.theme.getEntry());
 		} else if(key.equals(getString(R.string.pref_key_volume_buttons))) {

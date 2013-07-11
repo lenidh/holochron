@@ -17,21 +17,19 @@
 
 package de.lenidh.android.holochron.adapters;
 
-import java.util.List;
-
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
-import android.widget.LinearLayout;
-import de.lenidh.android.holochron.App;
-import de.lenidh.android.holochron.R;
-import de.lenidh.libzeitmesser.stopwatch.Lap;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import de.lenidh.android.holochron.App;
+import de.lenidh.android.holochron.R;
+import de.lenidh.libzeitmesser.stopwatch.Lap;
+
+import java.util.List;
 
 public class LapArrayAdapter extends ArrayAdapter<Lap> {
 
@@ -104,7 +102,7 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 				break;
 			case lapTime:
 				holder.timeView.setText(this.formatTime(this.values.get(position).getLapTime(), false));
-				if(this.values.get(position).getElapsedTimeDiff() == 0) {
+				if(this.values.get(position).getLapTimeDiff() == 0) {
 					holder.diffView.setText(this.formatTime(this.values.get(position).getLapTimeDiff(), true));
 				} else {
 					holder.diffView.setText("+" + this.formatTime(this.values.get(position).getLapTimeDiff(), true));

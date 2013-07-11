@@ -214,11 +214,11 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		if(this.getString(R.string.pref_key_lap_appearance).equals(key)) {
 			this.updatePages();
-		} else if(this.getString(R.string.pref_key_volume_buttons).equals(key)) {
+		}/* else if(this.getString(R.string.pref_key_volume_buttons).equals(key)) {
 
 		} else if(this.getString(R.string.pref_key_theme).equals(key)) {
 
-		}
+		}*/
 	}
 
 	private void updatePages() {
