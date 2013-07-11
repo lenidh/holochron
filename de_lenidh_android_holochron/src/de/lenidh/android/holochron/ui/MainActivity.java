@@ -20,7 +20,9 @@ package de.lenidh.android.holochron.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -70,11 +72,7 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 
 			@Override
 			public void onClick(View v) {
-				if(App.getWatch().isRunning()) {
-					App.getWatch().stop();
-				} else {
-					App.getWatch().start();
-				}
+				onStartStop();
 			}
 		});
 
@@ -87,11 +85,7 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 
 			@Override
 			public void onClick(View v) {
-				if(App.getWatch().isRunning()) {
-					App.getWatch().record();
-				} else {
-					App.getWatch().reset();
-				}
+				onResetRecord();
 			}
 		});
 
@@ -232,8 +226,21 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 		}*/
 	}
 
-	private void setDarkContentView(int layoutResId)
-	{
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch (keyCode) {
+			case KeyEvent.KEYCODE_VOLUME_DOWN:
+				this.onVolumeDown();
+				return true;
+			case KeyEvent.KEYCODE_VOLUME_UP:
+				this.onVolumeUp();
+				return true;
+		}
+
+		return super.onKeyDown(keyCode, event);
+	}
+
+	private void setDarkContentView(int layoutResId) {
 		setTheme(R.style.AppTheme_Dark);
 
 		setContentView(layoutResId);
@@ -245,5 +252,43 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 		tile.setBackgroundResource(R.drawable.tile_shape_dark);
 		hView.setBackgroundResource(R.color.watch_button_separator_color_dark);
 		vView.setBackgroundResource(R.color.watch_button_separator_color_dark);
+	}
+
+	private void onStartStop() {
+		if(App.getWatch().isRunning()) {
+			App.getWatch().stop();
+		} else {
+			App.getWatch().start();
+		}
+	}
+
+	private void onResetRecord() {
+		if(App.getWatch().isRunning()) {
+			App.getWatch().record();
+		} else {
+			App.getWatch().reset();
+		}
+	}
+
+	private void onVolumeDown() {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		String volumeKeyPref = preferences.getString(this.getString(R.string.pref_key_volume_buttons), this.getString(R.string.pref_value_volume_buttons_ignore));
+
+		if(this.getString(R.string.pref_value_volume_buttons_use).equals(volumeKeyPref)) {
+			this.onResetRecord();
+		} else if(this.getString(R.string.pref_value_volume_buttons_inverse).equals(volumeKeyPref)) {
+			this.onStartStop();
+		}
+	}
+
+	private void onVolumeUp() {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		String volumeKeyPref = preferences.getString(this.getString(R.string.pref_key_volume_buttons), this.getString(R.string.pref_value_volume_buttons_ignore));
+
+		if(this.getString(R.string.pref_value_volume_buttons_use).equals(volumeKeyPref)) {
+			this.onStartStop();
+		} else if(this.getString(R.string.pref_value_volume_buttons_inverse).equals(volumeKeyPref)) {
+			this.onResetRecord();
+		}
 	}
 }
