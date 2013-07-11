@@ -20,7 +20,10 @@ package de.lenidh.android.holochron;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import de.lenidh.libzeitmesser.stopwatch.SystemTime;
+import de.lenidh.libzeitmesser.stopwatch.Watch;
 
 public class App extends Application {
 
@@ -28,12 +31,26 @@ public class App extends Application {
 
 	private static String themePref;
 
+	private static Watch watch;
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		context = getApplicationContext();
 
+		watch = new Watch(new SystemTime() {
+
+			@Override
+			public long getTime() {
+				return SystemClock.elapsedRealtime();
+			}
+		});
+
 		updateThemePreference();
+	}
+
+	public static Watch getWatch() {
+		return watch;
 	}
 
 	public static String getThemePreference() {

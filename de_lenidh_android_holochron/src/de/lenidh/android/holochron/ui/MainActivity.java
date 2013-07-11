@@ -20,14 +20,11 @@ package de.lenidh.android.holochron.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import de.lenidh.android.holochron.App;
@@ -42,87 +39,108 @@ import java.util.List;
 
 public class MainActivity extends SherlockFragmentActivity implements Display, SharedPreferences.OnSharedPreferenceChangeListener {
 	
-	private Watch watch;
-	
 	// Widgets
 	private Button btnState;
 	private Button btnExtra;
 	private DigitalDisplay display;
-	private ViewPager lapPager;
-	
-	private LapPagerAdapter lapPagerAdapter;
 
-	private List<Lap> elapsedTimeItems;
-	private List<Lap> lapTimeItems;
 	private LapArrayAdapter elapsedTimeArrayAdapter;
 	private LapArrayAdapter lapTimeArrayAdapter;
-	private SherlockListFragment elapsedTimeListFragment;
-	private SherlockListFragment lapTimeListFragment;
-	private LapContainer lapContainer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Set theme.
+
+
+		/* content view */
+
 		if(App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
 			setDarkContentView(R.layout.activity_main);
 		} else {
 			setContentView(R.layout.activity_main);
 		}
-		
-		// Get component references.
+
+
+
+		/* state button */
+
 		this.btnState = (Button)this.findViewById(R.id.btnState);
-		this.btnExtra = (Button)this.findViewById(R.id.btnExtra);
-		this.display = (DigitalDisplay)this.findViewById(R.id.digitalDisplay1);
-		
-		this.lapPager = (ViewPager)this.findViewById(R.id.lapPager);
-		this.lapPagerAdapter = new LapPagerAdapter(getSupportFragmentManager());
-		this.lapPager.setAdapter(this.lapPagerAdapter);
-		
-		// Watch
-		this.watch = new Watch(new SystemTime() {
-			
+		this.btnState.setOnClickListener(new View.OnClickListener() {
+
 			@Override
-			public long getTime() {
-				return SystemClock.elapsedRealtime();
+			public void onClick(View v) {
+				if(App.getWatch().isRunning()) {
+					App.getWatch().stop();
+				} else {
+					App.getWatch().start();
+				}
 			}
 		});
 
-		this.lapContainer = this.watch.getLapContainer();
-		this.elapsedTimeItems = this.lapContainer.toList();
-		this.lapTimeItems = this.lapContainer.toList(LapContainer.Order.lapTime);
-		this.elapsedTimeArrayAdapter = new LapArrayAdapter(this, this.lapContainer, this.elapsedTimeItems, LapArrayAdapter.Mode.elapsedTime);
-		this.lapTimeArrayAdapter = new LapArrayAdapter(this, this.lapContainer, this.lapTimeItems, LapArrayAdapter.Mode.lapTime);
-		this.elapsedTimeListFragment = new LapListFragment();
-		this.lapTimeListFragment = new LapListFragment();
-		this.elapsedTimeListFragment.setListAdapter(this.elapsedTimeArrayAdapter);
-		this.lapTimeListFragment.setListAdapter(this.lapTimeArrayAdapter);
-		this.updatePages();
-		
-		// Button listener
-		this.btnState.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				if(watch.isRunning()) {
-					watch.stop();
-				} else {
-					watch.start();
-				}
-			}
-		});
+
+
+		/* extra button */
+
+		this.btnExtra = (Button)this.findViewById(R.id.btnExtra);
 		this.btnExtra.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				if(watch.isRunning()) {
-					watch.record();
+				if(App.getWatch().isRunning()) {
+					App.getWatch().record();
 				} else {
-					watch.reset();
+					App.getWatch().reset();
 				}
 			}
 		});
+
+
+
+		/* display */
+
+		this.display = (DigitalDisplay)this.findViewById(R.id.digitalDisplay1);
+
+
+
+		/* elapsed time Adapter */
+
+		List<Lap> elapsedTimeItems = App.getWatch().getLapContainer().toList();
+		this.elapsedTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(), elapsedTimeItems, LapArrayAdapter.Mode.elapsedTime);
+
+
+
+		/* lap time Adapter */
+
+		List<Lap> lapTimeItems = App.getWatch().getLapContainer().toList(LapContainer.Order.lapTime);
+		this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(), lapTimeItems, LapArrayAdapter.Mode.lapTime);
+
+
+
+		/* lap pages */
+
+		// Find pager view.
+		ViewPager lapPager = (ViewPager) this.findViewById(R.id.lapPager);
+		ArrayList<LapListFragment> pages = new ArrayList<LapListFragment>();
+
+		// Check if page was already created and create page if necessary.
+		LapListFragment elapsedTimeListFragment = (LapListFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + lapPager.getId() + ":0");
+		if(elapsedTimeListFragment == null) elapsedTimeListFragment = new LapListFragment();
+		elapsedTimeListFragment.setListAdapter(this.elapsedTimeArrayAdapter);
+		pages.add(elapsedTimeListFragment);
+
+		// Check if page was already created and create page if necessary.
+		LapListFragment lapTimeListFragment = (LapListFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + lapPager.getId() + ":1");
+		if(lapTimeListFragment == null) lapTimeListFragment = new LapListFragment();
+		lapTimeListFragment.setListAdapter(this.lapTimeArrayAdapter);
+		pages.add(lapTimeListFragment);
+
+		// Create the page adapter.
+		LapPagerAdapter lapPagerAdapter = new LapPagerAdapter(getSupportFragmentManager());
+		lapPagerAdapter.setPages(pages);
+
+		// Add page adapter to pager.
+		lapPager.setAdapter(lapPagerAdapter);
 	}
 
 	@Override
@@ -134,14 +152,17 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 	protected void onStop() {
 		super.onStop();
 
-		this.watch.removeDisplay(this);
+		App.getWatch().removeDisplay(this);
 	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
 
-		this.watch.addDisplay(this);
+		updateTime();
+		updateLaps();
+		updateState();
+		App.getWatch().addDisplay(this);
 	}
 
 	@Override
@@ -185,10 +206,10 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 	@Override
 	public void updateState() {
 		this.runOnUiThread(new Runnable() {
-			
+
 			@Override
 			public void run() {
-				if(watch.isRunning()) {
+				if (App.getWatch().isRunning()) {
 					btnState.setText(R.string.stop);
 					btnExtra.setText(R.string.lap);
 				} else {
@@ -205,42 +226,20 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 			
 			@Override
 			public void run() {
-				display.setTime(watch.getElapsedTime());
+				display.setTime(App.getWatch().getElapsedTime());
 			}
 		});
 	}
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		if(this.getString(R.string.pref_key_lap_appearance).equals(key)) {
+		/*if(this.getString(R.string.pref_key_lap_appearance).equals(key)) {
 			this.updatePages();
 		}/* else if(this.getString(R.string.pref_key_volume_buttons).equals(key)) {
 
 		} else if(this.getString(R.string.pref_key_theme).equals(key)) {
 
 		}*/
-	}
-
-	private void updatePages() {
-		String prefValue;
-		String prefValueAll = this.getString(R.string.pref_value_lap_appearance_all);
-		String prefValueAbs = this.getString(R.string.pref_value_lap_appearance_abs);
-		String prefValueLap = this.getString(R.string.pref_value_lap_appearance_lap);
-		String prefKey = this.getString(R.string.pref_key_lap_appearance);
-		ArrayList<SherlockListFragment> pages = new ArrayList<SherlockListFragment>();
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-		prefValue = prefs.getString(prefKey, prefValueAll);
-
-		if(prefValue.equals(prefValueAll) || prefValue.equals(prefValueAbs)) {
-			pages.add(this.elapsedTimeListFragment);
-		}
-		if(prefValue.equals(prefValueAll) || prefValue.equals(prefValueLap)) {
-			pages.add(this.lapTimeListFragment);
-		}
-
-		this.lapPagerAdapter.setPages(pages);
-		this.lapPagerAdapter.notifyDataSetChanged();
 	}
 
 	private void setDarkContentView(int layoutResId)

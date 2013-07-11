@@ -18,20 +18,21 @@
 package de.lenidh.android.holochron.adapters;
 
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import com.actionbarsherlock.app.SherlockListFragment;
+import de.lenidh.android.holochron.ui.LapListFragment;
 
 import java.util.ArrayList;
 
-public class LapPagerAdapter extends FragmentStatePagerAdapter {
+public class LapPagerAdapter extends FragmentPagerAdapter {
 
-	private ArrayList<SherlockListFragment> pages = null;
+	private ArrayList<LapListFragment> pages = null;
 
 	public LapPagerAdapter(FragmentManager fm) {
 		super(fm);
 	}
 
-	public void setPages(ArrayList<SherlockListFragment> pages) {
+	public void setPages(ArrayList<LapListFragment> pages) {
 		this.pages = pages;
 	}
 
