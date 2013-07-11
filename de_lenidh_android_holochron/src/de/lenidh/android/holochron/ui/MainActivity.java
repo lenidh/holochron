@@ -144,11 +144,6 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 	}
 
 	@Override
-	protected void onPause() {
-		super.onPause();
-	}
-
-	@Override
 	protected void onStop() {
 		super.onStop();
 
@@ -163,11 +158,6 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 		updateLaps();
 		updateState();
 		App.getWatch().addDisplay(this);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
 	}
 
 	@Override

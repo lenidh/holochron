@@ -18,16 +18,6 @@
   -->
 
 <resources>
-    <string-array name="pref_lap_appearance_entries">
-        <item>@string/pref_lap_appearance_all</item>
-        <item>@string/pref_lap_appearance_lap</item>
-        <item>@string/pref_lap_appearance_abs</item>
-    </string-array>
-    <string-array name="pref_lap_appearance_values">
-        <item>@string/pref_value_lap_appearance_all</item>
-        <item>@string/pref_value_lap_appearance_lap</item>
-        <item>@string/pref_value_lap_appearance_abs</item>
-    </string-array>
     <string-array name="pref_volume_buttons_entries">
         <item>@string/pref_volume_buttons_use</item>
         <item>@string/pref_volume_buttons_inverse</item>

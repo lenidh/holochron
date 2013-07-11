@@ -26,7 +26,7 @@ import android.widget.LinearLayout;
 
 public class DigitalDisplay extends LinearLayout {
 	
-	private int digits[] = {
+	private final int[] digits = {
 			R.drawable.digitaldigit0,
 			R.drawable.digitaldigit1,
 			R.drawable.digitaldigit2,
@@ -39,10 +39,11 @@ public class DigitalDisplay extends LinearLayout {
 			R.drawable.digitaldigit9,
 	};
 
-	private ImageView[] hours = new ImageView[2];
-	private ImageView[] minutes = new ImageView[2];
-	private ImageView[] seconds = new ImageView[2];
+	private final ImageView[] hours = new ImageView[2];
+	private final ImageView[] minutes = new ImageView[2];
+	private final ImageView[] seconds = new ImageView[2];
 	
+	@SuppressWarnings("UnusedDeclaration")
 	public DigitalDisplay(Context context) {
 		super(context);
 		
@@ -52,6 +53,7 @@ public class DigitalDisplay extends LinearLayout {
 		this.initComponents();
 	}
 	
+	@SuppressWarnings("UnusedDeclaration")
 	public DigitalDisplay(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		

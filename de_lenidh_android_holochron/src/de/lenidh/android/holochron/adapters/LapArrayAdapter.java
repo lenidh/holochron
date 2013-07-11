@@ -48,15 +48,11 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		elapsedTime,
 	}
 
-	private LapContainer container;
-	private LayoutInflater inflater;
-	private List<Lap> values;
-	private Mode mode;
-	private int tileResId;
-
-	public LapArrayAdapter(Context context, LapContainer container, List<Lap> values) {
-		this(context, container, values, Mode.elapsedTime);
-	}
+	private final LapContainer container;
+	private final LayoutInflater inflater;
+	private final List<Lap> values;
+	private final Mode mode;
+	private final int tileResId;
 
 	public LapArrayAdapter(Context context, LapContainer container, List<Lap> values, Mode mode) {
 		super(context, R.layout.lap_listitem, values);
@@ -83,6 +79,7 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 			holder = (ViewHolder) convertView.getTag();
 		} else {
 			convertView = this.inflater.inflate(R.layout.lap_listitem, parent, false);
+			assert convertView != null;
 			
 			holder = new ViewHolder();
 			holder.numberView = (TextView)convertView.findViewById(R.id.txt_number);

@@ -31,6 +31,7 @@ import de.lenidh.android.holochron.R;
 
 public class AboutActivity extends SherlockActivity {
 
+	@SuppressWarnings("UnusedDeclaration")
 	private static final String TAG = "AboutActivity";
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,18 +46,19 @@ public class AboutActivity extends SherlockActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		TextView version = (TextView) findViewById(R.id.app_version_name);
-		TextView thanksto = (TextView) findViewById(R.id.thanksto);
+		TextView thanksTo = (TextView) findViewById(R.id.thanksto);
 
 		PackageManager pm = this.getPackageManager();
 		try {
+			assert pm != null;
 			version.setText(pm.getPackageInfo(this.getPackageName(), 0).versionName);
 			version.setVisibility(View.VISIBLE);
 		} catch (PackageManager.NameNotFoundException e) {
 			version.setVisibility(View.GONE);
 		}
 
-		thanksto.setText(Html.fromHtml(getString(R.string.thanksto)));
-		thanksto.setMovementMethod(LinkMovementMethod.getInstance());
+		thanksTo.setText(Html.fromHtml(getString(R.string.thanks_to)));
+		thanksTo.setMovementMethod(LinkMovementMethod.getInstance());
 	}
 
 	@Override
