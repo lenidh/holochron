@@ -12,56 +12,56 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit6" />
+	        android:src="@drawable/digitaldigit6_blue" />
 	
 	    <ImageView
 	        android:id="@+id/hour2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit7" />
+	        android:src="@drawable/digitaldigit7_blue" />
 	
 	    <ImageView
-	        android:id="@+id/imageView3"
+	        android:id="@+id/colon1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitalcolon" />
+	        android:src="@drawable/digitalcolon_blue" />
 	
 	    <ImageView
 	        android:id="@+id/minute1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit8" />
+	        android:src="@drawable/digitaldigit8_blue" />
 	
 	    <ImageView
 	        android:id="@+id/minute2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit9" />
+	        android:src="@drawable/digitaldigit9_blue" />
 	
 	    <ImageView
-	        android:id="@+id/imageView6"
+	        android:id="@+id/colon2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitalcolon" />
+	        android:src="@drawable/digitalcolon_blue" />
 	
 	    <ImageView
 	        android:id="@+id/second1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit4" />
+	        android:src="@drawable/digitaldigit4_blue" />
 	
 	    <ImageView
 	        android:id="@+id/second2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit5" />
+	        android:src="@drawable/digitaldigit5_blue" />
 	
 	</LinearLayout>
 
