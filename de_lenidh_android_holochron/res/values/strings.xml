@@ -21,5 +21,7 @@
     <string name="reset">Reset</string>
     <string name="lap">Lap</string>
     <string name="thanks_to">&#xb7; &lt;a href="http://actionbarsherlock.com/">ActionBarSherlock&lt;/a> (Apache License 2)&lt;br/>&#xb7; &lt;a href="http://tiheum.deviantart.com/art/Faenza-Icons-173323228">Faenza&lt;/a> based app icon (GPLv3)</string>
+    <string name="digital_digit_description">A digital number.</string>
+    <string name="digital_colon_description">A digital colon.</string>
 
 </resources>

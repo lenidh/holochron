@@ -12,49 +12,56 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit1_blue" />
+	        android:src="@drawable/digitaldigit1_blue"
+            android:contentDescription="@string/digital_digit_description" />
 	
 	    <ImageView
 	        android:id="@+id/hour2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit2_blue" />
+	        android:src="@drawable/digitaldigit2_blue"
+            android:contentDescription="@string/digital_digit_description" />
 	
 	    <ImageView
 	        android:id="@+id/colon1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitalcolon_blue" />
+	        android:src="@drawable/digitalcolon_blue"
+            android:contentDescription="@string/digital_colon_description" />
 	
 	    <ImageView
 	        android:id="@+id/minute1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit3_blue" />
+	        android:src="@drawable/digitaldigit3_blue"
+            android:contentDescription="@string/digital_digit_description" />
 	
 	    <ImageView
 	        android:id="@+id/minute2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit4_blue" />
+	        android:src="@drawable/digitaldigit4_blue"
+            android:contentDescription="@string/digital_digit_description" />
 	
 	    <ImageView
 	        android:id="@+id/colon2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitalcolon_blue" />
+	        android:src="@drawable/digitalcolon_blue"
+            android:contentDescription="@string/digital_colon_description" />
 	
 	    <ImageView
 	        android:id="@+id/second1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit5_blue" />
+	        android:src="@drawable/digitaldigit5_blue"
+            android:contentDescription="@string/digital_digit_description" />
 	
 	    <ImageView
 	        android:id="@+id/second2"
@@ -62,7 +69,8 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
             android:scaleType="fitEnd"
-	        android:src="@drawable/digitaldigit6_blue" />
+	        android:src="@drawable/digitaldigit6_blue"
+            android:contentDescription="@string/digital_digit_description" />
 	
 	</LinearLayout>
 
@@ -75,13 +83,15 @@
             android:id="@+id/milli1"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/digitaldigit7_blue" />
+            android:src="@drawable/digitaldigit7_blue"
+            android:contentDescription="@string/digital_digit_description" />
 
         <ImageView
             android:id="@+id/milli2"
             android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/digitaldigit8_blue" />
+            android:src="@drawable/digitaldigit8_blue"
+            android:contentDescription="@string/digital_digit_description" />
 
     </LinearLayout>
 

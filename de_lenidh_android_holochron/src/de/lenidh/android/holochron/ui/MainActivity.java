@@ -58,7 +58,7 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 		/* content view */
 
 		if(App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
-			setDarkContentView(R.layout.activity_main);
+			setDarkContentView();
 		} else {
 			setContentView(R.layout.activity_main);
 		}
@@ -240,10 +240,10 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 		return super.onKeyDown(keyCode, event);
 	}
 
-	private void setDarkContentView(int layoutResId) {
+	private void setDarkContentView() {
 		setTheme(R.style.AppTheme_Dark);
 
-		setContentView(layoutResId);
+		setContentView(R.layout.activity_main);
 
 		LinearLayout tile = (LinearLayout)this.findViewById(R.id.tile);
 		View hView = this.findViewById(R.id.hSeparator);
