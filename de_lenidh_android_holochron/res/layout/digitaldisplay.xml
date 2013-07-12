@@ -12,14 +12,14 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit6_blue" />
+	        android:src="@drawable/digitaldigit1_blue" />
 	
 	    <ImageView
 	        android:id="@+id/hour2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit7_blue" />
+	        android:src="@drawable/digitaldigit2_blue" />
 	
 	    <ImageView
 	        android:id="@+id/colon1"
@@ -33,14 +33,14 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit8_blue" />
+	        android:src="@drawable/digitaldigit3_blue" />
 	
 	    <ImageView
 	        android:id="@+id/minute2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit9_blue" />
+	        android:src="@drawable/digitaldigit4_blue" />
 	
 	    <ImageView
 	        android:id="@+id/colon2"
@@ -54,15 +54,35 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit4_blue" />
+	        android:src="@drawable/digitaldigit5_blue" />
 	
 	    <ImageView
 	        android:id="@+id/second2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit5_blue" />
+            android:scaleType="fitEnd"
+	        android:src="@drawable/digitaldigit6_blue" />
 	
 	</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="right">
+
+        <ImageView
+            android:id="@+id/milli1"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/digitaldigit7_blue" />
+
+        <ImageView
+            android:id="@+id/milli2"
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/digitaldigit8_blue" />
+
+    </LinearLayout>
 
 </LinearLayout>

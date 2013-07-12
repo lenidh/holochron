@@ -58,6 +58,7 @@ public class DigitalDisplay extends LinearLayout {
 	private final ImageView[] hours = new ImageView[2];
 	private final ImageView[] minutes = new ImageView[2];
 	private final ImageView[] seconds = new ImageView[2];
+	private final ImageView[] millis = new ImageView[2];
 	
 	@SuppressWarnings("UnusedDeclaration")
 	public DigitalDisplay(Context context) {
@@ -86,17 +87,6 @@ public class DigitalDisplay extends LinearLayout {
 	}
 	
 	private void initComponents() {
-		int colonResource;
-		Context context = this.getContext();
-		assert context != null;
-		if(App.getThemePreference().equals(context.getString(R.string.pref_value_theme_dark))) {
-			colonResource = R.drawable.digitalcolon_blue;
-			this.digits = this.digits_blue;
-		} else {
-			colonResource = R.drawable.digitalcolon_black;
-			this.digits = this.digits_black;
-		}
-
 		ImageView colon1 = (ImageView)this.findViewById(R.id.colon1);
 		ImageView colon2 = (ImageView)this.findViewById(R.id.colon2);
 		this.hours[0] = (ImageView)this.findViewById(R.id.hour1);
@@ -105,9 +95,22 @@ public class DigitalDisplay extends LinearLayout {
 		this.minutes[1] = (ImageView)this.findViewById(R.id.minute2);
 		this.seconds[0] = (ImageView)this.findViewById(R.id.second1);
 		this.seconds[1] = (ImageView)this.findViewById(R.id.second2);
+		this.millis[0] = (ImageView)this.findViewById(R.id.milli1);
+		this.millis[1] = (ImageView)this.findViewById(R.id.milli2);
 
 		// Disable, if executed in development tools.
 		if(!this.isInEditMode()) {
+			int colonResource;
+			Context context = this.getContext();
+			assert context != null;
+			if(App.getThemePreference().equals(context.getString(R.string.pref_value_theme_dark))) {
+				colonResource = R.drawable.digitalcolon_blue;
+				this.digits = this.digits_blue;
+			} else {
+				colonResource = R.drawable.digitalcolon_black;
+				this.digits = this.digits_black;
+			}
+
 			colon1.setImageResource(colonResource);
 			colon2.setImageResource(colonResource);
 			this.hours[0].setImageResource(this.digits[0]);
@@ -116,6 +119,8 @@ public class DigitalDisplay extends LinearLayout {
 			this.minutes[1].setImageResource(this.digits[0]);
 			this.seconds[0].setImageResource(this.digits[0]);
 			this.seconds[1].setImageResource(this.digits[0]);
+			this.millis[0].setImageResource(this.digits[0]);
+			this.millis[1].setImageResource(this.digits[0]);
 		}
 	}
 	
@@ -126,6 +131,8 @@ public class DigitalDisplay extends LinearLayout {
 		this.minutes[1].setImageResource(this.digits[(int) (ms / 60000 % 10)]);
 		this.seconds[0].setImageResource(this.digits[(int) (ms / 10000 % 6)]);
 		this.seconds[1].setImageResource(this.digits[(int) (ms / 1000 % 10)]);
+		this.millis[0].setImageResource(this.digits[(int) (ms / 100 % 10)]);
+		this.millis[1].setImageResource(this.digits[(int) (ms / 10 % 10)]);
 	}
 
 }

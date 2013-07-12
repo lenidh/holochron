@@ -144,7 +144,7 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		// Skip leading zeros and separators.
 		while (trim && index < 7 && digits[index] <= 0) index++;
 
-		while (index < 12) {
+		while (index < 11) {
 			if(digits[index] >= 0) timeFormat.append(digits[index]);
 			else if(digits[index] == -1) timeFormat.append(':');
 			else if(digits[index] == -2) timeFormat.append('.');

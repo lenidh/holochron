@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="+0.000"
+                android:text="+0.00"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="00:00:00.000"
+                android:text="00:00:00.00"
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>
