@@ -47,4 +47,14 @@ public class LapPagerAdapter extends FragmentPagerAdapter {
 		return this.pages.size();
 	}
 
+	@Override
+	public CharSequence getPageTitle(int position) {
+		switch (position) { // TODO: Use string resources.
+			case 0:
+				return "elapsed time";
+			case 1:
+				return "lap time";
+		}
+		return super.getPageTitle(position);
+	}
 }
