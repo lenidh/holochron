@@ -3,11 +3,11 @@
     <item
         android:drawable="@drawable/digitalvstroke_blue"
         android:id="@+id/digitaldigit"
-        android:top="33dp"
-        android:left="33dp" />
+        android:top="@dimen/digit_offset"
+        android:left="@dimen/digit_offset" />
     <item
         android:drawable="@drawable/digitalvstroke_blue"
         android:id="@+id/digitaldigit"
-        android:bottom="33dp"
-        android:left="33dp" />
+        android:bottom="@dimen/digit_offset"
+        android:left="@dimen/digit_offset" />
 </layer-list>

@@ -9,7 +9,7 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="30"
+   width="32"
    height="40"
    id="svg2"
    version="1.1"
@@ -27,9 +27,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.5694444"
-     inkscape:cx="3.7945355"
-     inkscape:cy="40.762645"
+     inkscape:zoom="14.375"
+     inkscape:cx="15"
+     inkscape:cy="20"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -63,7 +63,7 @@
        sodipodi:cy="68.357971"
        sodipodi:rx="9.5252924"
        sodipodi:ry="9.5252924"
-       d="m 69.758756,68.357971 c 0,5.260674 -4.264619,9.525293 -9.525293,9.525293 -5.260673,0 -9.525292,-4.264619 -9.525292,-9.525293 0,-5.260674 4.264619,-9.525292 9.525292,-9.525292 5.260674,0 9.525293,4.264618 9.525293,9.525292 z"
-       transform="matrix(1.0498365,0,0,1.0498365,-48.235289,960.59753)" />
+       d="m 69.758756,68.357971 a 9.5252924,9.5252924 0 1 1 -19.050585,0 9.5252924,9.5252924 0 1 1 19.050585,0 z"
+       transform="matrix(1.0498365,0,0,1.0498365,-47.235289,960.59753)" />
   </g>
 </svg>

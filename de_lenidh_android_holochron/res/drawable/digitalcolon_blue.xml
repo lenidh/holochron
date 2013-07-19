@@ -3,11 +3,11 @@
     <item
         android:drawable="@drawable/digitaldot_blue"
         android:id="@+id/digitaldigit"
-        android:top="16dp"
-        android:bottom="45dp" />
+        android:top="@dimen/colon_small_offset"
+        android:bottom="@dimen/colon_big_offset" />
     <item
         android:drawable="@drawable/digitaldot_blue"
         android:id="@+id/digitaldigit"
-        android:top="45dp"
-        android:bottom="16dp" />
+        android:top="@dimen/colon_big_offset"
+        android:bottom="@dimen/colon_small_offset" />
 </layer-list>

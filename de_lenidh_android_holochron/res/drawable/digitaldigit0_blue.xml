@@ -3,29 +3,29 @@
     <item
         android:drawable="@drawable/digitalhstroke_blue"
         android:id="@+id/digitaldigit"
-        android:bottom="66dp" />
+        android:bottom="@dimen/digit_double_offset" />
     <item
         android:drawable="@drawable/digitalhstroke_blue"
         android:id="@+id/digitaldigit"
-        android:top="66dp" />
+        android:top="@dimen/digit_double_offset" />
     <item
         android:drawable="@drawable/digitalvstroke_blue"
         android:id="@+id/digitaldigit"
-        android:top="33dp"
-        android:right="33dp" />
+        android:top="@dimen/digit_offset"
+        android:right="@dimen/digit_offset" />
     <item
         android:drawable="@drawable/digitalvstroke_blue"
         android:id="@+id/digitaldigit"
-        android:bottom="33dp"
-        android:right="33dp" />
+        android:bottom="@dimen/digit_offset"
+        android:right="@dimen/digit_offset" />
     <item
         android:drawable="@drawable/digitalvstroke_blue"
         android:id="@+id/digitaldigit"
-        android:top="33dp"
-        android:left="33dp" />
+        android:top="@dimen/digit_offset"
+        android:left="@dimen/digit_offset" />
     <item
         android:drawable="@drawable/digitalvstroke_blue"
         android:id="@+id/digitaldigit"
-        android:bottom="33dp"
-        android:left="33dp" />
+        android:bottom="@dimen/digit_offset"
+        android:left="@dimen/digit_offset" />
 </layer-list>

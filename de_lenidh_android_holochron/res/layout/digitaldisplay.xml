@@ -12,7 +12,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit1_blue"
+	        android:src="@drawable/digitaldigit1_black"
             android:contentDescription="@string/digital_digit_description" />
 	
 	    <ImageView
@@ -20,7 +20,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit2_blue"
+	        android:src="@drawable/digitaldigit2_black"
             android:contentDescription="@string/digital_digit_description" />
 	
 	    <ImageView
@@ -28,7 +28,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitalcolon_blue"
+	        android:src="@drawable/digitalcolon_black"
             android:contentDescription="@string/digital_colon_description" />
 	
 	    <ImageView
@@ -36,7 +36,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit3_blue"
+	        android:src="@drawable/digitaldigit3_black"
             android:contentDescription="@string/digital_digit_description" />
 	
 	    <ImageView
@@ -44,7 +44,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit4_blue"
+	        android:src="@drawable/digitaldigit4_black"
             android:contentDescription="@string/digital_digit_description" />
 	
 	    <ImageView
@@ -52,7 +52,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitalcolon_blue"
+	        android:src="@drawable/digitalcolon_black"
             android:contentDescription="@string/digital_colon_description" />
 	
 	    <ImageView
@@ -60,7 +60,7 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-	        android:src="@drawable/digitaldigit5_blue"
+	        android:src="@drawable/digitaldigit5_black"
             android:contentDescription="@string/digital_digit_description" />
 	
 	    <ImageView
@@ -68,31 +68,28 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
-            android:scaleType="fitEnd"
-	        android:src="@drawable/digitaldigit6_blue"
+            android:src="@drawable/digitaldigit6_black"
             android:contentDescription="@string/digital_digit_description" />
-	
-	</LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="right">
 
         <ImageView
             android:id="@+id/milli1"
-            android:layout_width="32dp"
+            android:layout_width="14dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/digitaldigit7_blue"
-            android:contentDescription="@string/digital_digit_description" />
+            android:src="@drawable/digitaldigit7_black"
+            android:contentDescription="@string/digital_digit_description"
+            android:scaleType="fitStart"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="2dp"/>
 
         <ImageView
             android:id="@+id/milli2"
-            android:layout_width="32dp"
+            android:layout_width="14dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/digitaldigit8_blue"
-            android:contentDescription="@string/digital_digit_description" />
+            android:src="@drawable/digitaldigit8_black"
+            android:contentDescription="@string/digital_digit_description"
+            android:scaleType="fitStart"
+            android:layout_marginTop="2dp"/>
 
-    </LinearLayout>
+	</LinearLayout>
 
 </LinearLayout>
