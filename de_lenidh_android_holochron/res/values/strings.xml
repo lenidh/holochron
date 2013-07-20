@@ -3,7 +3,7 @@
 
     <string name="app_name">Holochron</string>
     <string name="app_summary">Holochron is a open source stopwatch for Android.</string>
-    <string name="app_code">https://code.google.com/p/holochron/</string>
+    <string name="app_code">https://github.com/lenidh/holochron</string>
     <string name="app_license">License: GPLv3+</string>
     <string name="app_developer">Developer: Moritz Heindl</string>
     <string name="app_contributions">Libraries and Images</string>
