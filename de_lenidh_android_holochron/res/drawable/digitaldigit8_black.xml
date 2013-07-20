@@ -17,37 +17,11 @@
   -->
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item
-        android:drawable="@drawable/digitalhstroke_black"
-        android:id="@+id/digitaldigit"
-        android:bottom="@dimen/digit_double_offset" />
-    <item
-        android:drawable="@drawable/digitalhstroke_black"
-        android:id="@+id/digitaldigit"
-        android:top="@dimen/digit_double_offset" />
-    <item
-        android:drawable="@drawable/digitalhstroke_black"
-        android:id="@+id/digitaldigit"
-        android:top="@dimen/digit_offset"
-        android:bottom="@dimen/digit_offset" />
-    <item
-        android:drawable="@drawable/digitalvstroke_black"
-        android:id="@+id/digitaldigit"
-        android:top="@dimen/digit_offset"
-        android:right="@dimen/digit_offset" />
-    <item
-        android:drawable="@drawable/digitalvstroke_black"
-        android:id="@+id/digitaldigit"
-        android:bottom="@dimen/digit_offset"
-        android:right="@dimen/digit_offset" />
-    <item
-        android:drawable="@drawable/digitalvstroke_black"
-        android:id="@+id/digitaldigit"
-        android:top="@dimen/digit_offset"
-        android:left="@dimen/digit_offset" />
-    <item
-        android:drawable="@drawable/digitalvstroke_black"
-        android:id="@+id/digitaldigit"
-        android:bottom="@dimen/digit_offset"
-        android:left="@dimen/digit_offset" />
+    <item android:drawable="@drawable/digitalhtstroke_black" />
+    <item android:drawable="@drawable/digitalhcstroke_black" />
+    <item android:drawable="@drawable/digitalhbstroke_black" />
+    <item android:drawable="@drawable/digitalvltstroke_black" />
+    <item android:drawable="@drawable/digitalvrtstroke_black" />
+    <item android:drawable="@drawable/digitalvlbstroke_black" />
+    <item android:drawable="@drawable/digitalvrbstroke_black" />
 </layer-list>

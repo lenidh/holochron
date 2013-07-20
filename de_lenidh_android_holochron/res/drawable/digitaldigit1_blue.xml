@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item
-        android:drawable="@drawable/digitalvstroke_blue"
-        android:id="@+id/digitaldigit"
-        android:top="@dimen/digit_offset"
-        android:left="@dimen/digit_offset" />
-    <item
-        android:drawable="@drawable/digitalvstroke_blue"
-        android:id="@+id/digitaldigit"
-        android:bottom="@dimen/digit_offset"
-        android:left="@dimen/digit_offset" />
+    <item android:drawable="@drawable/digitalvrtstroke_blue" />
+    <item android:drawable="@drawable/digitalvrbstroke_blue" />
 </layer-list>
