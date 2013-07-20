@@ -68,4 +68,8 @@ public class App extends Application {
 		int px = (int)((dp * displayMetrics.density) + 0.5);
 		return px;
 	}
+
+	public static String getStringFromResource(int resId) {
+		return context.getString(resId);
+	}
 }

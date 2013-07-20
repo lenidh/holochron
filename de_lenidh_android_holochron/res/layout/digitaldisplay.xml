@@ -74,20 +74,17 @@
         <ImageView
             android:id="@+id/milli1"
             android:layout_width="14dp"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:src="@drawable/digitaldigit7_black"
             android:contentDescription="@string/digital_digit_description"
-            android:scaleType="fitStart"
-            android:layout_gravity="center_horizontal|bottom"
             android:layout_marginTop="2dp"/>
 
         <ImageView
             android:id="@+id/milli2"
             android:layout_width="14dp"
-            android:layout_height="wrap_content"
+            android:layout_height="24dp"
             android:src="@drawable/digitaldigit8_black"
             android:contentDescription="@string/digital_digit_description"
-            android:scaleType="fitStart"
             android:layout_marginTop="2dp"/>
 
 	</LinearLayout>

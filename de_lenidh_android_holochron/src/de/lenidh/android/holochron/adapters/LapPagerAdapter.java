@@ -20,6 +20,8 @@ package de.lenidh.android.holochron.adapters;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.actionbarsherlock.app.SherlockListFragment;
+import de.lenidh.android.holochron.App;
+import de.lenidh.android.holochron.R;
 import de.lenidh.android.holochron.ui.LapListFragment;
 
 import java.util.ArrayList;
@@ -49,11 +51,11 @@ public class LapPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public CharSequence getPageTitle(int position) {
-		switch (position) { // TODO: Use string resources.
+		switch (position) {
 			case 0:
-				return "elapsed time";
+				return App.getStringFromResource(R.string.elapsed_time);
 			case 1:
-				return "lap time";
+				return App.getStringFromResource(R.string.lap_time);
 		}
 		return super.getPageTitle(position);
 	}

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Holochron</string>
-    <string name="app_summary">Holochron is a open source stopwatch for Android.</string>
+    <string name="app_summary">Holochron is an open source stopwatch for Android.</string>
     <string name="app_code">https://github.com/lenidh/holochron</string>
     <string name="app_license">License: GPLv3+</string>
     <string name="app_developer">Developer: Moritz Heindl</string>
@@ -20,6 +20,11 @@
     <string name="stop">Stop</string>
     <string name="reset">Reset</string>
     <string name="lap">Lap</string>
+    <string name="elapsed_time">Elapsed time</string>
+    <string name="restart">Restart</string>
+    <string name="restart_later">Later</string>
+    <string name="restart_message">In order to apply the theme you have to restart the app.</string>
+    <string name="lap_time">Lap time</string>
     <string name="thanks_to">&#xb7; &lt;a href="http://actionbarsherlock.com/">ActionBarSherlock&lt;/a> (Apache License 2)&lt;br/>&#xb7; &lt;a href="http://tiheum.deviantart.com/art/Faenza-Icons-173323228">Faenza&lt;/a> based app icon (GPLv3)</string>
     <string name="digital_digit_description">A digital number.</string>
     <string name="digital_colon_description">A digital colon.</string>
