@@ -20,17 +20,21 @@ package de.lenidh.android.holochron.ui;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListFragment;
+import de.lenidh.android.holochron.App;
 
 public class LapListFragment extends SherlockListFragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		this.getListView().setDivider(null);
-		this.getListView().setCacheColorHint(Color.TRANSPARENT);
-		this.getListView().setFadingEdgeLength(16);
-		this.getListView().setVerticalFadingEdgeEnabled(true);
-		this.getListView().setSelector(android.R.color.transparent);
-		this.getListView().setPadding(0, 0, 0, 8);
+		ListView list = this.getListView();
+		list.setDivider(null);
+		list.setCacheColorHint(Color.TRANSPARENT);
+		list.setFadingEdgeLength(App.convertToPx(8));
+		list.setVerticalFadingEdgeEnabled(true);
+		list.setSelector(android.R.color.transparent);
+		list.setPadding(0, 0, 0, App.convertToPx(8));
+		list.setClipToPadding(false);
 	}
 }

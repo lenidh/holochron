@@ -51,16 +51,24 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// Theme needs to be selected before super.onCreate.
+		if(App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
+			setTheme(R.style.AppTheme_Dark);
+		}
+
 		super.onCreate(savedInstanceState);
 
+		setContentView(R.layout.activity_main);
 
-
-		/* content view */
-
+		// Configure dark theme.
 		if(App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
-			setDarkContentView();
-		} else {
-			setContentView(R.layout.activity_main);
+			LinearLayout tile = (LinearLayout)this.findViewById(R.id.tile);
+			View hView = this.findViewById(R.id.hSeparator);
+			View vView = this.findViewById(R.id.vSeparator);
+
+			tile.setBackgroundResource(R.drawable.tile_shape_dark);
+			hView.setBackgroundResource(R.color.watch_button_separator_color_dark);
+			vView.setBackgroundResource(R.color.watch_button_separator_color_dark);
 		}
 
 
@@ -238,20 +246,6 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 		}
 
 		return super.onKeyDown(keyCode, event);
-	}
-
-	private void setDarkContentView() {
-		setTheme(R.style.AppTheme_Dark);
-
-		setContentView(R.layout.activity_main);
-
-		LinearLayout tile = (LinearLayout)this.findViewById(R.id.tile);
-		View hView = this.findViewById(R.id.hSeparator);
-		View vView = this.findViewById(R.id.vSeparator);
-
-		tile.setBackgroundResource(R.drawable.tile_shape_dark);
-		hView.setBackgroundResource(R.color.watch_button_separator_color_dark);
-		vView.setBackgroundResource(R.color.watch_button_separator_color_dark);
 	}
 
 	private void onStartStop() {

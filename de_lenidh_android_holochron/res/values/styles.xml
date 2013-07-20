@@ -4,7 +4,7 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Light">
+    <style name="AppBaseTheme" parent="Theme.Sherlock.Light.DarkActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -12,7 +12,7 @@
         -->
     </style>
 
-    <style name="AppBaseTheme.Dark" parent="android:Theme">
+    <style name="AppBaseTheme.Dark" parent="Theme.Sherlock">
 
     </style>
 
@@ -24,7 +24,7 @@
     </style>
 
     <style name="AppTheme.Dark" parent="AppBaseTheme.Dark">
-        <!--item name="android:windowBackground">@color/background_color_dark</item-->
+
     </style>
 
 </resources>

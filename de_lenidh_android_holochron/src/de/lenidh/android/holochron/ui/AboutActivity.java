@@ -35,12 +35,12 @@ public class AboutActivity extends SherlockActivity {
 	private static final String TAG = "AboutActivity";
 
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		// Set theme.
+		// Theme needs to be selected before super.onCreate.
 		if(App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
 			setTheme(R.style.AppTheme_Dark);
 		}
+
+		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_about);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);

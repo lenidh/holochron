@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import de.lenidh.libzeitmesser.stopwatch.SystemTime;
 import de.lenidh.libzeitmesser.stopwatch.Watch;
 
@@ -60,5 +61,11 @@ public class App extends Application {
 	public static void updateThemePreference() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		themePref = prefs.getString(context.getString(R.string.pref_key_theme), context.getString(R.string.pref_value_theme_light));
+	}
+
+	public static int convertToPx(int dp) {
+		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+		int px = (int)((dp * displayMetrics.density) + 0.5);
+		return px;
 	}
 }
