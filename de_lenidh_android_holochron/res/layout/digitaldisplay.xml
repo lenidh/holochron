@@ -73,19 +73,19 @@
 
         <ImageView
             android:id="@+id/milli1"
-            android:layout_width="14dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/small_digit_width"
+            android:layout_height="@dimen/small_digit_height"
             android:src="@drawable/digitaldigit7_black"
             android:contentDescription="@string/digital_digit_description"
-            android:layout_marginTop="2dp"/>
+            android:layout_marginTop="@dimen/small_digit_offset"/>
 
         <ImageView
             android:id="@+id/milli2"
-            android:layout_width="14dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/small_digit_width"
+            android:layout_height="@dimen/small_digit_height"
             android:src="@drawable/digitaldigit8_black"
             android:contentDescription="@string/digital_digit_description"
-            android:layout_marginTop="2dp"/>
+            android:layout_marginTop="@dimen/small_digit_offset"/>
 
 	</LinearLayout>
 

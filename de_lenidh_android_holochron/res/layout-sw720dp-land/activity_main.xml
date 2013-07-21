@@ -1,16 +1,34 @@
+<!--
+  ~ Copyright (C) 2013 Moritz Heindl <lenidh[at]gmail[dot]com>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation, either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT
+  ~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+  ~ details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program. If not, see <http://www.gnu.org/licenses/>.
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".MainActivity" >
 
     <LinearLayout
         android:id="@+id/tile"
         android:orientation="vertical"
-        android:layout_width="match_parent"
+        android:layout_width="704dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="@dimen/tile_margin"
         android:layout_marginLeft="@dimen/tile_margin"
         android:layout_marginRight="@dimen/tile_margin"
@@ -61,6 +79,11 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"/>
     
     <android.support.v4.view.ViewPager
         android:id="@+id/lapPager"

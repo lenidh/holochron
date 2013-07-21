@@ -28,16 +28,16 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/tile_margin"
+        android:layout_marginLeft="@dimen/tile_margin"
+        android:layout_marginRight="@dimen/tile_margin"
         android:background="@drawable/tile_shape" >
 
         <de.lenidh.android.holochron.controls.DigitalDisplay
             android:id="@+id/digitalDisplay1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/tile_margin"
             android:minHeight="20dp"
             android:layout_gravity="center"
             android:layout_weight="2"/>
