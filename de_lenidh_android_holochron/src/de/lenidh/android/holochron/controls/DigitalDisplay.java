@@ -124,15 +124,15 @@ public class DigitalDisplay extends LinearLayout {
 		}
 	}
 	
-	public void setTime(long ms) {
-		this.hours[0].setImageResource(this.digits[(int) (ms / 36000000 % 6)]);
-		this.hours[1].setImageResource(this.digits[(int) (ms / 3600000 % 10)]);
-		this.minutes[0].setImageResource(this.digits[(int) (ms / 600000 % 6)]);
-		this.minutes[1].setImageResource(this.digits[(int) (ms / 60000 % 10)]);
-		this.seconds[0].setImageResource(this.digits[(int) (ms / 10000 % 6)]);
-		this.seconds[1].setImageResource(this.digits[(int) (ms / 1000 % 10)]);
-		this.millis[0].setImageResource(this.digits[(int) (ms / 100 % 10)]);
-		this.millis[1].setImageResource(this.digits[(int) (ms / 10 % 10)]);
+	public void setTime(long hs) {
+		this.hours[0].setImageResource(this.digits[(int) (hs / 3600000 % 6)]);
+		this.hours[1].setImageResource(this.digits[(int) (hs / 360000 % 10)]);
+		this.minutes[0].setImageResource(this.digits[(int) (hs / 60000 % 6)]);
+		this.minutes[1].setImageResource(this.digits[(int) (hs / 6000 % 10)]);
+		this.seconds[0].setImageResource(this.digits[(int) (hs / 1000 % 6)]);
+		this.seconds[1].setImageResource(this.digits[(int) (hs / 100 % 10)]);
+		this.millis[0].setImageResource(this.digits[(int) (hs / 10 % 10)]);
+		this.millis[1].setImageResource(this.digits[(int) (hs % 10)]);
 	}
 
 }

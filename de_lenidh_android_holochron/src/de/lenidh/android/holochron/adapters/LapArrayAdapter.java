@@ -125,20 +125,21 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 	 */
 	private String formatTime(long time, boolean trim) {
 		StringBuilder timeFormat = new StringBuilder();
+
 		short digits[] = {
-				(short) (time / 36000000 % 6),    // hours: tens
-				(short) (time / 3600000 % 10),    //        ones
-				-1,                               // separator: ':'
-				(short) (time / 600000 % 6),      // minutes: tens
-				(short) (time / 60000 % 10),      //          ones
-				-1,                               // separator: ':'
-				(short) (time / 10000 % 6),       // seconds: tens
-				(short) (time / 1000 % 10),       //          ones
-				-2,                               // separator: '.'
-				(short) (time / 100 % 10),        // milliseconds: hundreds
-				(short) (time / 10 % 10),         //               tens
-				(short) (time % 10),              //               ones
+				(short) (time / 3600000 % 6),    // hours: tens
+				(short) (time / 360000 % 10),    //        ones
+				-1,                              // separator: ':'
+				(short) (time / 60000 % 6),      // minutes: tens
+				(short) (time / 6000 % 10),      //          ones
+				-1,                              // separator: ':'
+				(short) (time / 1000 % 6),       // seconds: tens
+				(short) (time / 100 % 10),       //          ones
+				-2,                              // separator: '.'
+				(short) (time / 10 % 10),        // milliseconds: tens
+				(short) (time % 10),             //               hundreds
 		};
+
 		int index = 0;
 
 		// Skip leading zeros and separators.
