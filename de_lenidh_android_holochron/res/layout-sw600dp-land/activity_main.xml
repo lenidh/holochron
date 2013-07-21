@@ -26,7 +26,7 @@
     <LinearLayout
         android:id="@+id/tile"
         android:orientation="vertical"
-        android:layout_width="704dp"
+        android:layout_width="@dimen/tile_width_land"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/tile_margin"
@@ -81,6 +81,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/landSeparator"
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:background="@android:color/black"/>

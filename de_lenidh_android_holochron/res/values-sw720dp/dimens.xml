@@ -13,4 +13,6 @@
     <dimen name="small_digit_height">56dp</dimen>
     <dimen name="small_digit_offset">5dp</dimen>
 
+    <dimen name="tile_width_land">704dp</dimen>
+
 </resources>

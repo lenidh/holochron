@@ -6,6 +6,7 @@
     <dimen name="tile_margin">8dp</dimen>
     <dimen name="tile_border_corner">2dp</dimen>
     <dimen name="tile_shadow_size">2dp</dimen>
+    <dimen name="tile_width_land">0dp</dimen>
 
     <dimen name="digit_offset">27dp</dimen>
     <dimen name="digit_double_offset">54dp</dimen>

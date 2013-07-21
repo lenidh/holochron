@@ -91,10 +91,12 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 			LinearLayout tile = (LinearLayout)this.findViewById(R.id.tile);
 			View hView = this.findViewById(R.id.hSeparator);
 			View vView = this.findViewById(R.id.vSeparator);
+			View landSeparator = this.findViewById(R.id.landSeparator);
 
 			tile.setBackgroundResource(R.drawable.tile_shape_dark);
 			hView.setBackgroundResource(R.color.watch_button_separator_color_dark);
 			vView.setBackgroundResource(R.color.watch_button_separator_color_dark);
+			if(landSeparator != null) landSeparator.setBackgroundResource(android.R.color.white);
 			this.btnState.setTextColor(getResources().getColor(android.R.color.white));
 			this.btnExtra.setTextColor(getResources().getColor(android.R.color.white));
 		}
