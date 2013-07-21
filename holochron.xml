@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="holochron" default="all">
+  
+  
+  <property file="holochron.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+  </patternset>
+  <patternset id="compiler.excluded">
+    <exclude name="${basedir}/com_actionbarsherlock/gen/**"/>
+    <exclude name="${basedir}/de_lenidh_android_holochron/gen/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.apk"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.ane"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.android_4.2.2" value="${jdk.home.android_4.2.2}/../../../../../usr/lib/jvm/java-6-oracle/bin"/>
+  <path id="jdk.classpath.android_4.2.2">
+    <fileset dir="${jdk.home.android_4.2.2}">
+      <include name="platforms/android-17/android.jar"/>
+      <include name="platforms/android-17/data/res"/>
+      <include name="tools/support/annotations.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.6}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.android-support-v4.classpath">
+    <pathelement location="${basedir}/com_actionbarsherlock/libs/android-support-v4.jar"/>
+  </path>
+  
+  <path id="library.libzeitmesser.classpath">
+    <pathelement location="${basedir}/de_lenidh_android_holochron/libs/libZeitmesser.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm4-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module com_actionbarsherlock -->
+  
+  <dirname property="module.com_actionbarsherlock.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.com_actionbarsherlock" value="${jdk.home.android_4.2.2}"/>
+  <property name="module.jdk.bin.com_actionbarsherlock" value="${jdk.bin.android_4.2.2}"/>
+  <property name="module.jdk.classpath.com_actionbarsherlock" value="jdk.classpath.android_4.2.2"/>
+  
+  <property name="compiler.args.com_actionbarsherlock" value="${compiler.args}"/>
+  
+  <property name="com_actionbarsherlock.output.dir" value="${module.com_actionbarsherlock.basedir}/out/production/com_actionbarsherlock"/>
+  <property name="com_actionbarsherlock.testoutput.dir" value="${module.com_actionbarsherlock.basedir}/out/test/com_actionbarsherlock"/>
+  
+  <path id="com_actionbarsherlock.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="com_actionbarsherlock.module.production.classpath">
+    <path refid="${module.jdk.classpath.com_actionbarsherlock}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="com_actionbarsherlock.runtime.production.module.classpath">
+    <pathelement location="${com_actionbarsherlock.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="com_actionbarsherlock.module.classpath">
+    <path refid="${module.jdk.classpath.com_actionbarsherlock}"/>
+    <pathelement location="${com_actionbarsherlock.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  <path id="com_actionbarsherlock.runtime.module.classpath">
+    <pathelement location="${com_actionbarsherlock.testoutput.dir}"/>
+    <pathelement location="${com_actionbarsherlock.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.com_actionbarsherlock">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.com_actionbarsherlock">
+    <patternset refid="compiler.excluded"/>
+    <patternset refid="excluded.from.module.com_actionbarsherlock"/>
+  </patternset>
+  
+  <path id="com_actionbarsherlock.module.sourcepath">
+    <dirset dir="${module.com_actionbarsherlock.basedir}/com_actionbarsherlock">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.com_actionbarsherlock" depends="compile.module.com_actionbarsherlock.production,compile.module.com_actionbarsherlock.tests" description="Compile module com_actionbarsherlock"/>
+  
+  <target name="compile.module.com_actionbarsherlock.production" depends="register.custom.compilers" description="Compile module com_actionbarsherlock; production classes">
+    <mkdir dir="${com_actionbarsherlock.output.dir}"/>
+    <javac2 destdir="${com_actionbarsherlock.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.com_actionbarsherlock}/javac">
+      <compilerarg line="${compiler.args.com_actionbarsherlock}"/>
+      <bootclasspath refid="com_actionbarsherlock.module.bootclasspath"/>
+      <classpath refid="com_actionbarsherlock.module.production.classpath"/>
+      <src refid="com_actionbarsherlock.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.com_actionbarsherlock"/>
+    </javac2>
+    
+    <copy todir="${com_actionbarsherlock.output.dir}">
+      <fileset dir="${module.com_actionbarsherlock.basedir}/com_actionbarsherlock/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+        <patternset refid="excluded.from.compilation.com_actionbarsherlock"/>
+      </fileset>
+      <fileset dir="${module.com_actionbarsherlock.basedir}/com_actionbarsherlock/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+        <patternset refid="excluded.from.compilation.com_actionbarsherlock"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.com_actionbarsherlock.tests" depends="register.custom.compilers,compile.module.com_actionbarsherlock.production" description="compile module com_actionbarsherlock; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.com_actionbarsherlock" description="cleanup module">
+    <delete dir="${com_actionbarsherlock.output.dir}"/>
+    <delete dir="${com_actionbarsherlock.testoutput.dir}"/>
+  </target>
+  
+  
+  <!-- Module de_lenidh_android_holochron -->
+  
+  <dirname property="module.de_lenidh_android_holochron.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.de_lenidh_android_holochron" value="${jdk.home.android_4.2.2}"/>
+  <property name="module.jdk.bin.de_lenidh_android_holochron" value="${jdk.bin.android_4.2.2}"/>
+  <property name="module.jdk.classpath.de_lenidh_android_holochron" value="jdk.classpath.android_4.2.2"/>
+  
+  <property name="compiler.args.de_lenidh_android_holochron" value="${compiler.args}"/>
+  
+  <property name="de_lenidh_android_holochron.output.dir" value="${module.de_lenidh_android_holochron.basedir}/out/production/de_lenidh_android_holochron"/>
+  <property name="de_lenidh_android_holochron.testoutput.dir" value="${module.de_lenidh_android_holochron.basedir}/out/test/de_lenidh_android_holochron"/>
+  
+  <path id="de_lenidh_android_holochron.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="de_lenidh_android_holochron.module.production.classpath">
+    <path refid="${module.jdk.classpath.de_lenidh_android_holochron}"/>
+    <path refid="library.libzeitmesser.classpath"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <pathelement location="${com_actionbarsherlock.output.dir}"/>
+  </path>
+  
+  <path id="de_lenidh_android_holochron.runtime.production.module.classpath">
+    <pathelement location="${de_lenidh_android_holochron.output.dir}"/>
+    <path refid="library.libzeitmesser.classpath"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="com_actionbarsherlock.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="de_lenidh_android_holochron.module.classpath">
+    <path refid="${module.jdk.classpath.de_lenidh_android_holochron}"/>
+    <pathelement location="${de_lenidh_android_holochron.output.dir}"/>
+    <path refid="library.libzeitmesser.classpath"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <pathelement location="${com_actionbarsherlock.testoutput.dir}"/>
+    <pathelement location="${com_actionbarsherlock.output.dir}"/>
+  </path>
+  
+  <path id="de_lenidh_android_holochron.runtime.module.classpath">
+    <pathelement location="${de_lenidh_android_holochron.testoutput.dir}"/>
+    <pathelement location="${de_lenidh_android_holochron.output.dir}"/>
+    <path refid="library.libzeitmesser.classpath"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="com_actionbarsherlock.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.de_lenidh_android_holochron">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.de_lenidh_android_holochron">
+    <patternset refid="compiler.excluded"/>
+    <patternset refid="excluded.from.module.de_lenidh_android_holochron"/>
+  </patternset>
+  
+  <path id="de_lenidh_android_holochron.module.sourcepath">
+    <dirset dir="${module.de_lenidh_android_holochron.basedir}/de_lenidh_android_holochron">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.de_lenidh_android_holochron" depends="compile.module.de_lenidh_android_holochron.production,compile.module.de_lenidh_android_holochron.tests" description="Compile module de_lenidh_android_holochron"/>
+  
+  <target name="compile.module.de_lenidh_android_holochron.production" depends="register.custom.compilers,compile.module.com_actionbarsherlock" description="Compile module de_lenidh_android_holochron; production classes">
+    <mkdir dir="${de_lenidh_android_holochron.output.dir}"/>
+    <javac2 destdir="${de_lenidh_android_holochron.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.de_lenidh_android_holochron}/javac">
+      <compilerarg line="${compiler.args.de_lenidh_android_holochron}"/>
+      <bootclasspath refid="de_lenidh_android_holochron.module.bootclasspath"/>
+      <classpath refid="de_lenidh_android_holochron.module.production.classpath"/>
+      <src refid="de_lenidh_android_holochron.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.de_lenidh_android_holochron"/>
+    </javac2>
+    
+    <copy todir="${de_lenidh_android_holochron.output.dir}">
+      <fileset dir="${module.de_lenidh_android_holochron.basedir}/de_lenidh_android_holochron/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+        <patternset refid="excluded.from.compilation.de_lenidh_android_holochron"/>
+      </fileset>
+      <fileset dir="${module.de_lenidh_android_holochron.basedir}/de_lenidh_android_holochron/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+        <patternset refid="excluded.from.compilation.de_lenidh_android_holochron"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.de_lenidh_android_holochron.tests" depends="register.custom.compilers,compile.module.de_lenidh_android_holochron.production" description="compile module de_lenidh_android_holochron; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.de_lenidh_android_holochron" description="cleanup module">
+    <delete dir="${de_lenidh_android_holochron.output.dir}"/>
+    <delete dir="${de_lenidh_android_holochron.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.com_actionbarsherlock, clean.module.de_lenidh_android_holochron" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.com_actionbarsherlock, compile.module.de_lenidh_android_holochron" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>

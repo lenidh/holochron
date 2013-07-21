@@ -1,0 +1,20 @@
+<resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="tile_margin">8dp</dimen>
+    <dimen name="tile_border_corner">2dp</dimen>
+    <dimen name="tile_shadow_size">2dp</dimen>
+    <dimen name="tile_width_land">0dp</dimen>
+
+    <dimen name="digit_offset">27dp</dimen>
+    <dimen name="digit_double_offset">54dp</dimen>
+    <dimen name="colon_small_offset">18dp</dimen>
+    <dimen name="colon_big_offset">36dp</dimen>
+
+    <dimen name="small_digit_width">14dp</dimen>
+    <dimen name="small_digit_height">24dp</dimen>
+    <dimen name="small_digit_offset">2dp</dimen>
+
+</resources>

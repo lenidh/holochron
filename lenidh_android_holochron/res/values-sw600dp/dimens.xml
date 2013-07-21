@@ -1,0 +1,17 @@
+<resources>
+
+    <!--
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw600dp devices (e.g. 7" tablets) here.
+    -->
+
+    <dimen name="colon_small_offset">36dp</dimen>
+    <dimen name="colon_big_offset">71dp</dimen>
+
+    <dimen name="small_digit_width">27dp</dimen>
+    <dimen name="small_digit_height">47dp</dimen>
+    <dimen name="small_digit_offset">4dp</dimen>
+
+    <dimen name="tile_width_land">584dp</dimen>
+
+</resources>

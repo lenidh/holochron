@@ -1,0 +1,78 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:id="@+id/tile"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/tile_margin"
+        android:layout_marginLeft="@dimen/tile_margin"
+        android:layout_marginRight="@dimen/tile_margin"
+        android:background="@drawable/tile_shape" >
+
+        <lenidh.android.holochron.controls.DigitalDisplay
+            android:id="@+id/digitalDisplay1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/tile_margin"
+            android:minHeight="20dp" />
+
+        <View
+            android:id="@+id/hSeparator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/watch_button_separator_color_light"/>
+
+        <LinearLayout
+            android:id="@+id/btnLayout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <Button
+                android:id="@+id/btnState"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/start"
+                android:background="@drawable/left_watch_button_background"/>
+
+            <View
+                android:id="@+id/vSeparator"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/watch_button_separator_color_light"
+                android:layout_marginBottom="@dimen/tile_shadow_size"/>
+
+            <Button
+                android:id="@+id/btnExtra"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/reset"
+                android:background="@drawable/right_watch_button_background" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    
+    <android.support.v4.view.ViewPager
+        android:id="@+id/lapPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/lapPagerTabStrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"/>
+
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

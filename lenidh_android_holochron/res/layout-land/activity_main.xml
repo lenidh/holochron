@@ -1,0 +1,96 @@
+<!--
+  ~ Copyright (C) 2013 Moritz Heindl <lenidh[at]gmail[dot]com>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation, either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT
+  ~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+  ~ details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program. If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:id="@+id/tile"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/tile_margin"
+        android:layout_marginLeft="@dimen/tile_margin"
+        android:layout_marginRight="@dimen/tile_margin"
+        android:background="@drawable/tile_shape" >
+
+        <lenidh.android.holochron.controls.DigitalDisplay
+            android:id="@+id/digitalDisplay1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/tile_margin"
+            android:minHeight="20dp"
+            android:layout_gravity="center"
+            android:layout_weight="2"/>
+
+        <View
+            android:id="@+id/hSeparator"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/watch_button_separator_color_light"/>
+
+        <LinearLayout
+            android:id="@+id/btnLayout"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/btnState"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/start"
+                android:background="@drawable/top_watch_button_background"/>
+
+            <View
+                android:id="@+id/vSeparator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/watch_button_separator_color_light"
+                />
+
+            <Button
+                android:id="@+id/btnExtra"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="@string/reset"
+                android:background="@drawable/right_watch_button_background" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/lapPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/lapPagerTabStrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"/>
+
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>
