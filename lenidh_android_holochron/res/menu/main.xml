@@ -1,14 +1,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/menu_item_order"
+        android:title="@string/pref_sort_by_number"
+        android:icon="@drawable/ic_collections_sort_by_size"
+        android:orderInCategory="50"
+        android:showAsAction="ifRoom|withText" />
+
+    <item
         android:id="@+id/menu_item_settings"
         android:title="@string/menu_item_settings"
+        android:icon="@drawable/ic_action_settings"
         android:orderInCategory="100"
         android:showAsAction="never|collapseActionView"/>
 
     <item
         android:id="@+id/menu_item_about"
         android:title="@string/menu_item_about"
+        android:icon="@drawable/ic_action_about"
         android:orderInCategory="200"
         android:showAsAction="never|collapseActionView"/>
 

@@ -37,17 +37,20 @@ import lenidh.android.holochron.controls.DigitalDisplay;
 import de.lenidh.libzeitmesser.stopwatch.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends SherlockFragmentActivity implements Display, SharedPreferences.OnSharedPreferenceChangeListener {
+public class MainActivity extends SherlockFragmentActivity implements Display, SharedPreferences.OnSharedPreferenceChangeListener, ViewPager.OnPageChangeListener {
 	
 	// Widgets
 	private Button btnState;
 	private Button btnExtra;
 	private DigitalDisplay display;
 
+	private ViewPager lapPager;
+
 	private LapArrayAdapter elapsedTimeArrayAdapter;
 	private LapArrayAdapter lapTimeArrayAdapter;
+
+	private LapListFragment lapTimeListFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,22 +114,22 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 
 		/* elapsed time Adapter */
 
-		List<Lap> elapsedTimeItems = App.getWatch().getLapContainer().toList();
-		this.elapsedTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(), elapsedTimeItems, LapArrayAdapter.Mode.elapsedTime);
+		this.elapsedTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(), LapArrayAdapter.Mode.elapsedTime);
 
 
 
 		/* lap time Adapter */
 
-		List<Lap> lapTimeItems = App.getWatch().getLapContainer().toList(LapContainer.Order.lapTime);
-		this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(), lapTimeItems, LapArrayAdapter.Mode.lapTime);
+		LapArrayAdapter.Mode mode = this.getLapTimeMode();
+		this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(), mode);
 
 
 
 		/* lap pages */
 
 		// Find pager view.
-		ViewPager lapPager = (ViewPager) this.findViewById(R.id.lapPager);
+		this.lapPager = (ViewPager) this.findViewById(R.id.lapPager);
+		this.lapPager.setOnPageChangeListener(this);
 		ArrayList<LapListFragment> pages = new ArrayList<LapListFragment>();
 
 		// Check if page was already created and create page if necessary.
@@ -136,17 +139,17 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 		pages.add(elapsedTimeListFragment);
 
 		// Check if page was already created and create page if necessary.
-		LapListFragment lapTimeListFragment = (LapListFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + lapPager.getId() + ":1");
-		if(lapTimeListFragment == null) lapTimeListFragment = new LapListFragment();
-		lapTimeListFragment.setListAdapter(this.lapTimeArrayAdapter);
-		pages.add(lapTimeListFragment);
+		this.lapTimeListFragment = (LapListFragment) getSupportFragmentManager().findFragmentByTag("android:switcher:" + lapPager.getId() + ":1");
+		if(lapTimeListFragment == null) this.lapTimeListFragment = new LapListFragment();
+		this.lapTimeListFragment.setListAdapter(this.lapTimeArrayAdapter);
+		pages.add(this.lapTimeListFragment);
 
 		// Create the page adapter.
 		LapPagerAdapter lapPagerAdapter = new LapPagerAdapter(getSupportFragmentManager());
 		lapPagerAdapter.setPages(pages);
 
 		// Add page adapter to pager.
-		lapPager.setAdapter(lapPagerAdapter);
+		this.lapPager.setAdapter(lapPagerAdapter);
 	}
 
 	@Override
@@ -167,8 +170,45 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 	}
 
 	@Override
+	protected void onResume() {
+		super.onResume();
+
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		preferences.registerOnSharedPreferenceChangeListener(this);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		preferences.unregisterOnSharedPreferenceChangeListener(this);
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		this.getSupportMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuItem sortItem = menu.findItem(R.id.menu_item_order);
+
+		if(this.lapPager.getCurrentItem() == 1 && App.getWatch().getLapContainer().size() >= 2) {
+			sortItem.setVisible(true);
+
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+			boolean lapByNumberPref = preferences.getBoolean(this.getString(R.string.pref_key_lap_by_number), false);
+			if(lapByNumberPref) {
+				sortItem.setTitle(this.getString(R.string.pref_sort_by_lap_time));
+			} else {
+				sortItem.setTitle(this.getString(R.string.pref_sort_by_number));
+			}
+		} else {
+			sortItem.setVisible(false);
+		}
+
 		return true;
 	}
 
@@ -180,6 +220,13 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 				return true;
 			case R.id.menu_item_about:
 				this.startActivity(new Intent(this, AboutActivity.class));
+				return true;
+			case R.id.menu_item_order:
+				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+				boolean lapByNumberPref = preferences.getBoolean(this.getString(R.string.pref_key_lap_by_number), false);
+				SharedPreferences.Editor editor = preferences.edit();
+				editor.putBoolean(this.getString(R.string.pref_key_lap_by_number), !lapByNumberPref);
+				editor.commit();
 				return true;
 		}
 
@@ -229,13 +276,32 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		/*if(this.getString(R.string.pref_key_lap_appearance).equals(key)) {
-			this.updatePages();
-		}/* else if(this.getString(R.string.pref_key_volume_buttons).equals(key)) {
+		if(this.getString(R.string.pref_key_lap_by_number).equals(key)) {
+			this.invalidateOptionsMenu();
 
-		} else if(this.getString(R.string.pref_key_theme).equals(key)) {
+			LapArrayAdapter.Mode mode = this.getLapTimeMode();
+			this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(), mode);
+			this.lapTimeListFragment.setListAdapter(this.lapTimeArrayAdapter);
+		}
+	}
 
-		}*/
+	private LapArrayAdapter.Mode getLapTimeMode() {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		boolean byNumber = preferences.getBoolean(this.getString(R.string.pref_key_lap_by_number), false);
+		return (byNumber) ? LapArrayAdapter.Mode.elapsedTime : LapArrayAdapter.Mode.lapTime;
+	}
+
+	@Override
+	public void onPageScrolled(int i, float v, int i2) {
+	}
+
+	@Override
+	public void onPageSelected(int i) {
+		this.invalidateOptionsMenu();
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int i) {
 	}
 
 	@Override
@@ -263,8 +329,10 @@ public class MainActivity extends SherlockFragmentActivity implements Display, S
 	private void onResetRecord() {
 		if(App.getWatch().isRunning()) {
 			App.getWatch().record();
+			if(App.getWatch().getLapContainer().size() == 2) invalidateOptionsMenu();
 		} else {
 			App.getWatch().reset();
+			this.invalidateOptionsMenu();
 		}
 	}
 

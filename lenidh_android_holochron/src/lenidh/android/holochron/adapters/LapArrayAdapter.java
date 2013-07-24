@@ -50,23 +50,54 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 
 	private final LapContainer container;
 	private final LayoutInflater inflater;
-	private final List<Lap> values;
 	private final Mode mode;
 	private final int tileResId;
 
-	public LapArrayAdapter(Context context, LapContainer container, List<Lap> values, Mode mode) {
-		super(context, R.layout.lap_listitem, values);
+	public LapArrayAdapter(Context context, LapContainer container, Mode mode) {
+		super(context, R.layout.lap_listitem, getValues(container, mode));
 
 		this.container = container;
-		
-		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.values = values;
 		this.mode = mode;
+
+		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		if(App.getThemePreference().equals(getContext().getString(R.string.pref_value_theme_dark))) {
 			this.tileResId = R.drawable.tile_shape_dark;
 		} else {
 			this.tileResId = R.drawable.tile_shape;
+		}
+	}
+
+	private static List<Lap> getValues(LapContainer container, Mode mode) {
+		switch (mode) {
+			case elapsedTime:
+				return container.toList(LapContainer.Order.elapsedTime);
+			case lapTime:
+				return container.toList(LapContainer.Order.lapTime);
+			default:
+				throw new Error("Unhandled mode.");
+		}
+	}
+
+	private static long getTime(Lap lap, Mode mode) {
+		switch (mode) {
+			case elapsedTime:
+				return lap.getElapsedTime();
+			case lapTime:
+				return lap.getLapTime();
+			default:
+				throw new Error("Unhandled mode.");
+		}
+	}
+
+	private static long getTimeDiff(Lap lap, Mode mode) {
+		switch (mode) {
+			case elapsedTime:
+				return lap.getElapsedTimeDiff();
+			case lapTime:
+				return lap.getLapTimeDiff();
+			default:
+				throw new Error("Unhandled mode.");
 		}
 	}
 
@@ -90,25 +121,14 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 			convertView.setTag(holder);
 		}
 
-		holder.numberView.setText(Integer.toString(this.container.NumberOf(this.values.get(position))));
+		Lap item = this.getItem(position);
+		holder.numberView.setText(Integer.toString(this.container.NumberOf(item)));
 
-		switch (this.mode) {
-			case elapsedTime:
-				holder.timeView.setText(this.formatTime(this.values.get(position).getElapsedTime(), false));
-				if(this.values.get(position).getElapsedTimeDiff() == 0) {
-					holder.diffView.setText(this.formatTime(this.values.get(position).getElapsedTimeDiff(), true));
-				} else {
-					holder.diffView.setText("+" + this.formatTime(this.values.get(position).getElapsedTimeDiff(), true));
-				}
-				break;
-			case lapTime:
-				holder.timeView.setText(this.formatTime(this.values.get(position).getLapTime(), false));
-				if(this.values.get(position).getLapTimeDiff() == 0) {
-					holder.diffView.setText(this.formatTime(this.values.get(position).getLapTimeDiff(), true));
-				} else {
-					holder.diffView.setText("+" + this.formatTime(this.values.get(position).getLapTimeDiff(), true));
-				}
-				break;
+		holder.timeView.setText(formatTime(getTime(item, this.mode), false));
+		if(getTimeDiff(item, this.mode) == 0) {
+			holder.diffView.setText(formatTime(getTimeDiff(item, this.mode), true));
+		} else {
+			holder.diffView.setText("+" + formatTime(getTimeDiff(item, this.mode), true));
 		}
 
 		holder.tileView.setBackgroundResource(this.tileResId);
@@ -123,7 +143,7 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 	 * @param trim If true, leading zeros and separators are trimmed. (e.g. 00:00:00.000 becomes 0.000)
 	 * @return formatted time string
 	 */
-	private String formatTime(long time, boolean trim) {
+	private static String formatTime(long time, boolean trim) {
 		StringBuilder timeFormat = new StringBuilder();
 
 		short digits[] = {

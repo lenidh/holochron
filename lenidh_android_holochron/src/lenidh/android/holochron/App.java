@@ -65,8 +65,7 @@ public class App extends Application {
 
 	public static int convertToPx(int dp) {
 		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-		int px = (int)((dp * displayMetrics.density) + 0.5);
-		return px;
+		return (int)((dp * displayMetrics.density) + 0.5);
 	}
 
 	public static String getStringFromResource(int resId) {
