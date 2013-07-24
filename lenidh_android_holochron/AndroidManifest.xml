@@ -42,8 +42,12 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<activity android:name=".ui.AboutActivity" />
-		<activity android:name=".ui.SettingsActivity" />
+		<activity
+			android:name=".ui.AboutActivity"
+			android:label="@string/menu_item_about" />
+		<activity
+			android:name=".ui.SettingsActivity"
+			android:label="@string/menu_item_settings" />
 	</application>
 
 </manifest>
