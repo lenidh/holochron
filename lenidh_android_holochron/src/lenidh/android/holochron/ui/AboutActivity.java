@@ -36,7 +36,7 @@ public class AboutActivity extends SherlockActivity {
 
 	public void onCreate(Bundle savedInstanceState) {
 		// Theme needs to be selected before super.onCreate.
-		if(App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
+		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
 			setTheme(R.style.AppTheme_Dark);
 		}
 

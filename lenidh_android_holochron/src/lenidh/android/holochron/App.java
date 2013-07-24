@@ -29,10 +29,31 @@ import de.lenidh.libzeitmesser.stopwatch.Watch;
 public class App extends Application {
 
 	private static Context context;
-
 	private static String themePref;
-
 	private static Watch watch;
+
+	public static Watch getWatch() {
+		return watch;
+	}
+
+	public static String getThemePreference() {
+		return themePref;
+	}
+
+	public static void updateThemePreference() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		themePref = prefs.getString(context.getString(R.string.pref_key_theme),
+		                            context.getString(R.string.pref_value_theme_light));
+	}
+
+	public static int convertToPx(int dp) {
+		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+		return (int) ((dp * displayMetrics.density) + 0.5);
+	}
+
+	public static String getStringFromResource(int resId) {
+		return context.getString(resId);
+	}
 
 	@Override
 	public void onCreate() {
@@ -48,27 +69,5 @@ public class App extends Application {
 		}, 10);
 
 		updateThemePreference();
-	}
-
-	public static Watch getWatch() {
-		return watch;
-	}
-
-	public static String getThemePreference() {
-		return themePref;
-	}
-
-	public static void updateThemePreference() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		themePref = prefs.getString(context.getString(R.string.pref_key_theme), context.getString(R.string.pref_value_theme_light));
-	}
-
-	public static int convertToPx(int dp) {
-		DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-		return (int)((dp * displayMetrics.density) + 0.5);
-	}
-
-	public static String getStringFromResource(int resId) {
-		return context.getString(resId);
 	}
 }

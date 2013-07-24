@@ -33,7 +33,7 @@ public class LapListFragment extends SherlockListFragment {
 		ListView list = this.getListView();
 		list.setDivider(null);
 		list.setCacheColorHint(Color.TRANSPARENT);
-		if(currentApi >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+		if (currentApi >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			list.setFadingEdgeLength(App.convertToPx(8));
 			list.setVerticalFadingEdgeEnabled(true);
 		} else {

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ Copyright (C) 2013 Moritz Heindl <lenidh[at]gmail[dot]com>
   ~
@@ -18,32 +19,32 @@
 
 <resources>
 
-    <!-- light theme -->
+	<!-- light theme -->
 
-    <!-- Windows -->
-    <color name="background_color_light">#e5e5e5</color>
+	<!-- Windows -->
+	<color name="background_color_light">#e5e5e5</color>
 
-    <!-- Buttons -->
-    <color name="button_text_color_light">#000</color>
-    <color name="button_background_color_light">#0000</color>
-    <color name="button_background_pressed_color_light">#7f33b5e5</color>
-    <color name="watch_button_separator_color_light">#d3d3d3</color>
+	<!-- Buttons -->
+	<color name="button_text_color_light">#000</color>
+	<color name="button_background_color_light">#0000</color>
+	<color name="button_background_pressed_color_light">#7f33b5e5</color>
+	<color name="watch_button_separator_color_light">#d3d3d3</color>
 
-    <!-- Tiles -->
-    <color name="tile_color_light">#fff</color>
-    <color name="tile_shadow_color_light">#d3d3d3</color>
+	<!-- Tiles -->
+	<color name="tile_color_light">#fff</color>
+	<color name="tile_shadow_color_light">#d3d3d3</color>
 
 
-    <!-- dark theme -->
+	<!-- dark theme -->
 
-    <!-- Windows -->
-    <color name="background_color_dark">#2b2b2b</color>
+	<!-- Windows -->
+	<color name="background_color_dark">#2b2b2b</color>
 
-    <!-- Buttons -->
-    <color name="watch_button_separator_color_dark">#000</color>
+	<!-- Buttons -->
+	<color name="watch_button_separator_color_dark">#000</color>
 
-    <!-- Tiles -->
-    <color name="tile_color_dark">#3c3f41</color>
-    <color name="tile_shadow_color_dark">#000</color>
+	<!-- Tiles -->
+	<color name="tile_color_dark">#3c3f41</color>
+	<color name="tile_shadow_color_dark">#000</color>
 
 </resources>

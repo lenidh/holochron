@@ -25,29 +25,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import lenidh.android.holochron.App;
-import lenidh.android.holochron.R;
 import de.lenidh.libzeitmesser.stopwatch.Lap;
 import de.lenidh.libzeitmesser.stopwatch.LapContainer;
+import lenidh.android.holochron.App;
+import lenidh.android.holochron.R;
 
 import java.util.List;
 
 public class LapArrayAdapter extends ArrayAdapter<Lap> {
 
 	private static final String TAG = "LapArrayAdapter";
-	
-	private class ViewHolder {
-		public TextView numberView;
-		public TextView timeView;
-		public TextView diffView;
-		public LinearLayout tileView;
-	}
-
-	public enum Mode {
-		lapTime,
-		elapsedTime,
-	}
-
 	private final LapContainer container;
 	private final LayoutInflater inflater;
 	private final Mode mode;
@@ -61,7 +48,7 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 
 		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		if(App.getThemePreference().equals(getContext().getString(R.string.pref_value_theme_dark))) {
+		if (App.getThemePreference().equals(getContext().getString(R.string.pref_value_theme_dark))) {
 			this.tileResId = R.drawable.tile_shape_dark;
 		} else {
 			this.tileResId = R.drawable.tile_shape;
@@ -101,44 +88,10 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		}
 	}
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder;
-		
-		// Reuse existing Views.
-		if(convertView != null) {
-			holder = (ViewHolder) convertView.getTag();
-		} else {
-			convertView = this.inflater.inflate(R.layout.lap_listitem, parent, false);
-			assert convertView != null;
-			
-			holder = new ViewHolder();
-			holder.numberView = (TextView)convertView.findViewById(R.id.txt_number);
-			holder.timeView = (TextView)convertView.findViewById(R.id.txt_time);
-			holder.diffView = (TextView)convertView.findViewById(R.id.txt_diff);
-			holder.tileView = (LinearLayout)convertView.findViewById(R.id.tile);
-			
-			convertView.setTag(holder);
-		}
-
-		Lap item = this.getItem(position);
-		holder.numberView.setText(Integer.toString(this.container.NumberOf(item)));
-
-		holder.timeView.setText(formatTime(getTime(item, this.mode), false));
-		if(getTimeDiff(item, this.mode) == 0) {
-			holder.diffView.setText(formatTime(getTimeDiff(item, this.mode), true));
-		} else {
-			holder.diffView.setText("+" + formatTime(getTimeDiff(item, this.mode), true));
-		}
-
-		holder.tileView.setBackgroundResource(this.tileResId);
-		
-		return convertView;
-	}
-
 	/**
-	 * This method creates a formatted time string from a millisecond value.
-	 * Format: [[[[[h]h:]m]m:]s]s.ms (e.g. 00:00:00.000)
+	 * This method creates a formatted time string from a millisecond value. Format: [[[[[h]h:]m]m:]s]s.ms (e.g.
+	 * 00:00:00.000)
+	 *
 	 * @param time in milliseconds
 	 * @param trim If true, leading zeros and separators are trimmed. (e.g. 00:00:00.000 becomes 0.000)
 	 * @return formatted time string
@@ -166,14 +119,67 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		while (trim && index < 7 && digits[index] <= 0) index++;
 
 		while (index < 11) {
-			if(digits[index] >= 0) timeFormat.append(digits[index]);
-			else if(digits[index] == -1) timeFormat.append(':');
-			else if(digits[index] == -2) timeFormat.append('.');
-			else Log.e(TAG, String.format("Invalid value while formatting: time: %d, index: %d, value: %d", time, index, digits[index]));
+			if (digits[index] >= 0) {
+				timeFormat.append(digits[index]);
+			} else if (digits[index] == -1) {
+				timeFormat.append(':');
+			} else if (digits[index] == -2) {
+				timeFormat.append('.');
+			} else {
+				Log.e(TAG, String.format("Invalid value while formatting: time: %d, index: %d, value: %d",
+				                         time, index, digits[index]));
+			}
 			index++;
 		}
 
 		return timeFormat.toString();
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		ViewHolder holder;
+
+		// Reuse existing Views.
+		if (convertView != null) {
+			holder = (ViewHolder) convertView.getTag();
+		} else {
+			convertView = this.inflater.inflate(R.layout.lap_listitem, parent, false);
+			assert convertView != null;
+
+			holder = new ViewHolder();
+			holder.numberView = (TextView) convertView.findViewById(R.id.txt_number);
+			holder.timeView = (TextView) convertView.findViewById(R.id.txt_time);
+			holder.diffView = (TextView) convertView.findViewById(R.id.txt_diff);
+			holder.tileView = (LinearLayout) convertView.findViewById(R.id.tile);
+
+			convertView.setTag(holder);
+		}
+
+		Lap item = this.getItem(position);
+		holder.numberView.setText(Integer.toString(this.container.NumberOf(item)));
+
+		holder.timeView.setText(formatTime(getTime(item, this.mode), false));
+		if (getTimeDiff(item, this.mode) == 0) {
+			holder.diffView.setText(formatTime(getTimeDiff(item, this.mode), true));
+		} else {
+			holder.diffView.setText("+" + formatTime(getTimeDiff(item, this.mode), true));
+		}
+
+		holder.tileView.setBackgroundResource(this.tileResId);
+
+		return convertView;
+	}
+
+	public enum Mode {
+		lapTime,
+		elapsedTime,
+	}
+
+	private class ViewHolder {
+		public TextView numberView;
+		public TextView timeView;
+		public TextView diffView;
+		public LinearLayout tileView;
 	}
 
 }

@@ -17,13 +17,13 @@
 
 package lenidh.android.holochron.controls;
 
-import lenidh.android.holochron.App;
-import lenidh.android.holochron.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import lenidh.android.holochron.App;
+import lenidh.android.holochron.R;
 
 public class DigitalDisplay extends LinearLayout {
 
@@ -39,7 +39,6 @@ public class DigitalDisplay extends LinearLayout {
 			R.drawable.digitaldigit8_black,
 			R.drawable.digitaldigit9_black,
 	};
-	
 	private final int[] digits_blue = {
 			R.drawable.digitaldigit0_blue,
 			R.drawable.digitaldigit1_blue,
@@ -52,58 +51,56 @@ public class DigitalDisplay extends LinearLayout {
 			R.drawable.digitaldigit8_blue,
 			R.drawable.digitaldigit9_blue,
 	};
-
-	private int[] digits;
-
 	private final ImageView[] hours = new ImageView[2];
 	private final ImageView[] minutes = new ImageView[2];
 	private final ImageView[] seconds = new ImageView[2];
 	private final ImageView[] millis = new ImageView[2];
-	
+	private int[] digits;
+
 	@SuppressWarnings("UnusedDeclaration")
 	public DigitalDisplay(Context context) {
 		super(context);
 
-		if(App.getThemePreference().equals(context.getString(R.string.pref_value_theme_dark))) {
+		if (App.getThemePreference().equals(context.getString(R.string.pref_value_theme_dark))) {
 			this.digits = this.digits_blue;
 		} else {
 			this.digits = this.digits_black;
 		}
-		
+
 		LayoutInflater inflater = LayoutInflater.from(context);
 		inflater.inflate(R.layout.digitaldisplay, this, true);
-		
+
 		this.initComponents();
 	}
-	
+
 	@SuppressWarnings("UnusedDeclaration")
 	public DigitalDisplay(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		
+
 		LayoutInflater inflater = LayoutInflater.from(context);
 		inflater.inflate(R.layout.digitaldisplay, this, true);
-		
+
 		this.initComponents();
 	}
-	
+
 	private void initComponents() {
-		ImageView colon1 = (ImageView)this.findViewById(R.id.colon1);
-		ImageView colon2 = (ImageView)this.findViewById(R.id.colon2);
-		this.hours[0] = (ImageView)this.findViewById(R.id.hour1);
-		this.hours[1] = (ImageView)this.findViewById(R.id.hour2);
-		this.minutes[0] = (ImageView)this.findViewById(R.id.minute1);
-		this.minutes[1] = (ImageView)this.findViewById(R.id.minute2);
-		this.seconds[0] = (ImageView)this.findViewById(R.id.second1);
-		this.seconds[1] = (ImageView)this.findViewById(R.id.second2);
-		this.millis[0] = (ImageView)this.findViewById(R.id.milli1);
-		this.millis[1] = (ImageView)this.findViewById(R.id.milli2);
+		ImageView colon1 = (ImageView) this.findViewById(R.id.colon1);
+		ImageView colon2 = (ImageView) this.findViewById(R.id.colon2);
+		this.hours[0] = (ImageView) this.findViewById(R.id.hour1);
+		this.hours[1] = (ImageView) this.findViewById(R.id.hour2);
+		this.minutes[0] = (ImageView) this.findViewById(R.id.minute1);
+		this.minutes[1] = (ImageView) this.findViewById(R.id.minute2);
+		this.seconds[0] = (ImageView) this.findViewById(R.id.second1);
+		this.seconds[1] = (ImageView) this.findViewById(R.id.second2);
+		this.millis[0] = (ImageView) this.findViewById(R.id.milli1);
+		this.millis[1] = (ImageView) this.findViewById(R.id.milli2);
 
 		// Disable, if executed in development tools.
-		if(!this.isInEditMode()) {
+		if (!this.isInEditMode()) {
 			int colonResource;
 			Context context = this.getContext();
 			assert context != null;
-			if(App.getThemePreference().equals(context.getString(R.string.pref_value_theme_dark))) {
+			if (App.getThemePreference().equals(context.getString(R.string.pref_value_theme_dark))) {
 				colonResource = R.drawable.digitalcolon_blue;
 				this.digits = this.digits_blue;
 			} else {
@@ -123,7 +120,7 @@ public class DigitalDisplay extends LinearLayout {
 			this.millis[1].setImageResource(this.digits[0]);
 		}
 	}
-	
+
 	public void setTime(long hs) {
 		this.hours[0].setImageResource(this.digits[(int) (hs / 3600000 % 6)]);
 		this.hours[1].setImageResource(this.digits[(int) (hs / 360000 % 10)]);

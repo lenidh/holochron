@@ -45,7 +45,7 @@ public class LapPagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public int getCount() {
-		if(this.pages == null) return 0;
+		if (this.pages == null) return 0;
 		return this.pages.size();
 	}
 

@@ -18,22 +18,27 @@
   -->
 
 <resources>
-    <string-array name="pref_volume_buttons_entries">
-        <item>@string/pref_volume_buttons_use</item>
-        <item>@string/pref_volume_buttons_inverse</item>
-        <item>@string/pref_volume_buttons_ignore</item>
-    </string-array>
-    <string-array name="pref_volume_buttons_values">
-        <item>@string/pref_value_volume_buttons_use</item>
-        <item>@string/pref_value_volume_buttons_inverse</item>
-        <item>@string/pref_value_volume_buttons_ignore</item>
-    </string-array>
-    <string-array name="pref_theme_entries">
-        <item>@string/pref_theme_light</item>
-        <item>@string/pref_theme_dark</item>
-    </string-array>
-    <string-array name="pref_theme_values">
-        <item>@string/pref_value_theme_light</item>
-        <item>@string/pref_value_theme_dark</item>
-    </string-array>
+
+	<string-array name="pref_volume_buttons_entries">
+		<item>@string/pref_volume_buttons_use</item>
+		<item>@string/pref_volume_buttons_inverse</item>
+		<item>@string/pref_volume_buttons_ignore</item>
+	</string-array>
+
+	<string-array name="pref_volume_buttons_values">
+		<item>@string/pref_value_volume_buttons_use</item>
+		<item>@string/pref_value_volume_buttons_inverse</item>
+		<item>@string/pref_value_volume_buttons_ignore</item>
+	</string-array>
+
+	<string-array name="pref_theme_entries">
+		<item>@string/pref_theme_light</item>
+		<item>@string/pref_theme_dark</item>
+	</string-array>
+
+	<string-array name="pref_theme_values">
+		<item>@string/pref_value_theme_light</item>
+		<item>@string/pref_value_theme_dark</item>
+	</string-array>
+
 </resources>

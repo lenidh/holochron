@@ -32,16 +32,16 @@ import lenidh.android.holochron.App;
 import lenidh.android.holochron.R;
 
 @SuppressWarnings("deprecation")
-public class SettingsActivity extends SherlockPreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends SherlockPreferenceActivity
+		implements SharedPreferences.OnSharedPreferenceChangeListener {
 
 	private static final String TAG = "SettingsActivity";
-
 	private ListPreference theme;
 	private ListPreference volumeButtons;
 
 	public void onCreate(Bundle savedInstanceState) {
 		// Theme needs to be selected before super.onCreate.
-		if(App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
+		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
 			setTheme(R.style.AppTheme_Dark);
 		}
 
@@ -54,19 +54,6 @@ public class SettingsActivity extends SherlockPreferenceActivity implements Shar
 		assert preferenceScreen != null;
 		this.theme = (ListPreference) preferenceScreen.findPreference(getString(R.string.pref_key_theme));
 		this.volumeButtons = (ListPreference) preferenceScreen.findPreference(getString(R.string.pref_key_volume_buttons));
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case android.R.id.home:
-				Intent home = new Intent(this, MainActivity.class);
-				home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				this.startActivity(home);
-				return true;
-		}
-
-		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -95,8 +82,21 @@ public class SettingsActivity extends SherlockPreferenceActivity implements Shar
 	}
 
 	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case android.R.id.home:
+				Intent home = new Intent(this, MainActivity.class);
+				home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				this.startActivity(home);
+				return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		if(key.equals(getString(R.string.pref_key_theme))) {
+		if (key.equals(getString(R.string.pref_key_theme))) {
 			this.theme.setSummary(this.theme.getEntry());
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.restart_message);
@@ -115,7 +115,7 @@ public class SettingsActivity extends SherlockPreferenceActivity implements Shar
 			builder.setNegativeButton(R.string.restart_later, null);
 			AlertDialog dialog = builder.create();
 			dialog.show();
-		} else if(key.equals(getString(R.string.pref_key_volume_buttons))) {
+		} else if (key.equals(getString(R.string.pref_key_volume_buttons))) {
 			this.volumeButtons.setSummary(this.volumeButtons.getEntry());
 		} else {
 			Log.w(TAG, "Unhandled preference change.");

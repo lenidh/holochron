@@ -1,24 +1,43 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<?xml version="1.0" encoding="utf-8"?>
 
-    <item
-        android:id="@+id/menu_item_order"
-        android:title="@string/pref_sort_by_number"
-        android:icon="@drawable/ic_collections_sort_by_size"
-        android:orderInCategory="50"
-        android:showAsAction="ifRoom|withText" />
+<!--
+  ~ Copyright (C) 2013 Moritz Heindl <lenidh[at]gmail[dot]com>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation, either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT
+  ~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+  ~ details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program. If not, see <http://www.gnu.org/licenses/>.
+  -->
 
-    <item
-        android:id="@+id/menu_item_settings"
-        android:title="@string/menu_item_settings"
-        android:icon="@drawable/ic_action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never|collapseActionView"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/menu_item_about"
-        android:title="@string/menu_item_about"
-        android:icon="@drawable/ic_action_about"
-        android:orderInCategory="200"
-        android:showAsAction="never|collapseActionView"/>
+	<item
+		android:id="@+id/menu_item_order"
+		android:title="@string/pref_sort_by_number"
+		android:icon="@drawable/ic_collections_sort_by_size"
+		android:orderInCategory="50"
+		android:showAsAction="ifRoom|withText" />
+
+	<item
+		android:id="@+id/menu_item_settings"
+		android:title="@string/menu_item_settings"
+		android:icon="@drawable/ic_action_settings"
+		android:orderInCategory="100"
+		android:showAsAction="never|collapseActionView" />
+
+	<item
+		android:id="@+id/menu_item_about"
+		android:title="@string/menu_item_about"
+		android:icon="@drawable/ic_action_about"
+		android:orderInCategory="200"
+		android:showAsAction="never|collapseActionView" />
 
 </menu>
