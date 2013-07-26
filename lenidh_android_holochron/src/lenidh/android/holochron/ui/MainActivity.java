@@ -32,8 +32,10 @@ import com.actionbarsherlock.view.MenuItem;
 import de.lenidh.libzeitmesser.stopwatch.Display;
 import lenidh.android.holochron.App;
 import lenidh.android.holochron.R;
-import lenidh.android.holochron.adapters.LapArrayAdapter;
+import lenidh.android.holochron.adapters.ElapsedTimeLapAdapter;
+import lenidh.android.holochron.adapters.LapAdapter;
 import lenidh.android.holochron.adapters.LapPagerAdapter;
+import lenidh.android.holochron.adapters.LapTimeLapAdapter;
 import lenidh.android.holochron.controls.DigitalDisplay;
 
 import java.util.ArrayList;
@@ -46,8 +48,8 @@ public class MainActivity extends SherlockFragmentActivity
 	private Button btnExtra;
 	private DigitalDisplay display;
 	private ViewPager lapPager;
-	private LapArrayAdapter elapsedTimeArrayAdapter;
-	private LapArrayAdapter lapTimeArrayAdapter;
+	private LapAdapter elapsedTimeArrayAdapter;
+	private LapAdapter lapTimeArrayAdapter;
 	private LapListFragment lapTimeListFragment;
 
 	@Override
@@ -182,15 +184,14 @@ public class MainActivity extends SherlockFragmentActivity
 
 		/* elapsed time Adapter */
 
-		this.elapsedTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(),
-		                                                   LapArrayAdapter.Mode.elapsedTime);
+		this.elapsedTimeArrayAdapter = new ElapsedTimeLapAdapter(this, App.getWatch().getLapContainer());
 
 
 
 		/* lap time Adapter */
 
-		LapArrayAdapter.Mode mode = this.getLapTimeMode();
-		this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(), mode);
+		LapTimeLapAdapter.SortOrder sortOrder = this.getLapTimeMode();
+		this.lapTimeArrayAdapter = new LapTimeLapAdapter(this, App.getWatch().getLapContainer(), sortOrder);
 
 
 
@@ -294,16 +295,16 @@ public class MainActivity extends SherlockFragmentActivity
 		if (this.getString(R.string.pref_key_lap_by_number).equals(key)) {
 			this.invalidateOptionsMenu();
 
-			LapArrayAdapter.Mode mode = this.getLapTimeMode();
-			this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(), mode);
+			LapTimeLapAdapter.SortOrder sortOrder = this.getLapTimeMode();
+			this.lapTimeArrayAdapter = new LapTimeLapAdapter(this, App.getWatch().getLapContainer(), sortOrder);
 			this.lapTimeListFragment.setListAdapter(this.lapTimeArrayAdapter);
 		}
 	}
 
-	private LapArrayAdapter.Mode getLapTimeMode() {
+	private LapTimeLapAdapter.SortOrder getLapTimeMode() {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean byNumber = preferences.getBoolean(this.getString(R.string.pref_key_lap_by_number), false);
-		return (byNumber) ? LapArrayAdapter.Mode.elapsedTime : LapArrayAdapter.Mode.lapTime;
+		return (byNumber) ? LapTimeLapAdapter.SortOrder.SORT_BY_NUMBER : LapTimeLapAdapter.SortOrder.SORT_BY_TIME;
 	}
 
 	@Override

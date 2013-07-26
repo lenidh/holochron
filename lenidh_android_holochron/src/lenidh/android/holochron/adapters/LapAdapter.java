@@ -32,19 +32,17 @@ import lenidh.android.holochron.R;
 
 import java.util.List;
 
-public class LapArrayAdapter extends ArrayAdapter<Lap> {
+public abstract class LapAdapter extends ArrayAdapter<Lap> {
 
 	private static final String TAG = "LapArrayAdapter";
 	private final LapContainer container;
 	private final LayoutInflater inflater;
-	private final Mode mode;
 	private final int tileResId;
 
-	public LapArrayAdapter(Context context, LapContainer container, Mode mode) {
-		super(context, R.layout.lap_listitem, getValues(container, mode));
+	public LapAdapter(Context context, LapContainer container, List<Lap> laps) {
+		super(context, R.layout.lap_listitem, laps);
 
 		this.container = container;
-		this.mode = mode;
 
 		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -55,38 +53,9 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		}
 	}
 
-	private static List<Lap> getValues(LapContainer container, Mode mode) {
-		switch (mode) {
-			case elapsedTime:
-				return container.toList(LapContainer.Order.elapsedTime);
-			case lapTime:
-				return container.toList(LapContainer.Order.lapTime);
-			default:
-				throw new Error("Unhandled mode.");
-		}
-	}
+	protected abstract long getTime(Lap lap);
 
-	private static long getTime(Lap lap, Mode mode) {
-		switch (mode) {
-			case elapsedTime:
-				return lap.getElapsedTime();
-			case lapTime:
-				return lap.getLapTime();
-			default:
-				throw new Error("Unhandled mode.");
-		}
-	}
-
-	private static long getTimeDiff(Lap lap, Mode mode) {
-		switch (mode) {
-			case elapsedTime:
-				return lap.getElapsedTimeDiff();
-			case lapTime:
-				return lap.getLapTimeDiff();
-			default:
-				throw new Error("Unhandled mode.");
-		}
-	}
+	protected abstract long getTimeDiff(Lap lap);
 
 	/**
 	 * This method creates a formatted time string from a millisecond value. Format: [[[[[h]h:]m]m:]s]s.ms (e.g.
@@ -136,7 +105,7 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public final View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 
 		// Reuse existing Views.
@@ -158,21 +127,16 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		Lap item = this.getItem(position);
 		holder.numberView.setText("# " + Integer.toString(this.container.NumberOf(item)));
 
-		holder.timeView.setText(formatTime(getTime(item, this.mode), false));
-		if (getTimeDiff(item, this.mode) == 0) {
-			holder.diffView.setText(formatTime(getTimeDiff(item, this.mode), true));
+		holder.timeView.setText(formatTime(getTime(item), false));
+		if (getTimeDiff(item) == 0) {
+			holder.diffView.setText(formatTime(getTimeDiff(item), true));
 		} else {
-			holder.diffView.setText("+" + formatTime(getTimeDiff(item, this.mode), true));
+			holder.diffView.setText("+" + formatTime(getTimeDiff(item), true));
 		}
 
 		holder.tileView.setBackgroundResource(this.tileResId);
 
 		return convertView;
-	}
-
-	public enum Mode {
-		lapTime,
-		elapsedTime,
 	}
 
 	private class ViewHolder {
