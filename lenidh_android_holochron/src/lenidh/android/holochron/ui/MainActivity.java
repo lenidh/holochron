@@ -189,8 +189,9 @@ public class MainActivity extends SherlockFragmentActivity
 
 		/* lap time Adapter */
 
-		LapArrayAdapter.Mode mode = this.getLapTimeMode();
-		this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(), mode);
+		LapArrayAdapter.Order order = this.getLapTimeOrder();
+		this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(),
+		                                               LapArrayAdapter.Mode.lapTime, order);
 
 
 
@@ -294,16 +295,17 @@ public class MainActivity extends SherlockFragmentActivity
 		if (this.getString(R.string.pref_key_lap_by_number).equals(key)) {
 			this.invalidateOptionsMenu();
 
-			LapArrayAdapter.Mode mode = this.getLapTimeMode();
-			this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(), mode);
+			LapArrayAdapter.Order order = this.getLapTimeOrder();
+			this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(),
+			                                               LapArrayAdapter.Mode.lapTime, order);
 			this.lapTimeListFragment.setListAdapter(this.lapTimeArrayAdapter);
 		}
 	}
 
-	private LapArrayAdapter.Mode getLapTimeMode() {
+	private LapArrayAdapter.Order getLapTimeOrder() {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean byNumber = preferences.getBoolean(this.getString(R.string.pref_key_lap_by_number), false);
-		return (byNumber) ? LapArrayAdapter.Mode.elapsedTime : LapArrayAdapter.Mode.lapTime;
+		return (byNumber) ? LapArrayAdapter.Order.number : LapArrayAdapter.Order.time;
 	}
 
 	@Override

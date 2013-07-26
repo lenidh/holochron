@@ -41,7 +41,11 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 	private final int tileResId;
 
 	public LapArrayAdapter(Context context, LapContainer container, Mode mode) {
-		super(context, R.layout.lap_listitem, getValues(container, mode));
+		this(context, container, mode, Order.time);
+	}
+
+	public LapArrayAdapter(Context context, LapContainer container, Mode mode, Order order) {
+		super(context, R.layout.lap_listitem, getValues(container, mode, order));
 
 		this.container = container;
 		this.mode = mode;
@@ -55,14 +59,15 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		}
 	}
 
-	private static List<Lap> getValues(LapContainer container, Mode mode) {
-		switch (mode) {
-			case elapsedTime:
-				return container.toList(LapContainer.Order.elapsedTime);
-			case lapTime:
-				return container.toList(LapContainer.Order.lapTime);
-			default:
-				throw new Error("Unhandled mode.");
+	private static List<Lap> getValues(LapContainer container, Mode mode, Order order) {
+		if(mode == Mode.elapsedTime){
+			return container.toList(LapContainer.Order.elapsedTime);
+		} else if(mode == Mode.lapTime && order == Order.time) {
+			return container.toList(LapContainer.Order.lapTime);
+		} else if(mode == Mode.lapTime && order == Order.number) {
+			return container.toList(LapContainer.Order.elapsedTime);
+		} else {
+			throw new Error("Unhandled mode.");
 		}
 	}
 
@@ -173,6 +178,11 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 	public enum Mode {
 		lapTime,
 		elapsedTime,
+	}
+
+	public enum Order {
+		number,
+		time,
 	}
 
 	private class ViewHolder {
