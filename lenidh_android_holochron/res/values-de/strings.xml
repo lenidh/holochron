@@ -50,5 +50,6 @@
 	</string>
 	<string name="digital_digit_description">Eine digitale Ziffer.</string>
 	<string name="digital_colon_description">Ein digitaler Doppelpunkt.</string>
+	<string name="notification_text">Zum Öffnen der App berühren.</string>
 
 </resources>

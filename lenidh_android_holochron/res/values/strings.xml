@@ -51,5 +51,6 @@
 	</string>
 	<string name="digital_digit_description">A digital number.</string>
 	<string name="digital_colon_description">A digital colon.</string>
+	<string name="notification_text">Touch to open app.</string>
 
 </resources>

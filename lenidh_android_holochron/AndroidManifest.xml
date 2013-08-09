@@ -48,6 +48,8 @@
 		<activity
 			android:name=".ui.SettingsActivity"
 			android:label="@string/menu_item_settings" />
+		<service
+			android:name=".services.WatchService" />
 	</application>
 
 </manifest>

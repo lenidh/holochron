@@ -37,6 +37,7 @@ import lenidh.android.holochron.adapters.LapAdapter;
 import lenidh.android.holochron.adapters.LapPagerAdapter;
 import lenidh.android.holochron.adapters.LapTimeLapAdapter;
 import lenidh.android.holochron.controls.DigitalDisplay;
+import lenidh.android.holochron.services.WatchService;
 
 import java.util.ArrayList;
 
@@ -51,76 +52,6 @@ public class MainActivity extends SherlockFragmentActivity
 	private LapAdapter elapsedTimeArrayAdapter;
 	private LapAdapter lapTimeArrayAdapter;
 	private LapListFragment lapTimeListFragment;
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		preferences.unregisterOnSharedPreferenceChangeListener(this);
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-
-		App.getWatch().removeDisplay(this);
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		this.getSupportMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		MenuItem sortItem = menu.findItem(R.id.menu_item_order);
-
-		if (this.lapPager.getCurrentItem() == 1 && App.getWatch().getLapContainer().size() >= 2) {
-			sortItem.setVisible(true);
-
-			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-			boolean lapByNumberPref = preferences.getBoolean(this.getString(R.string.pref_key_lap_by_number), false);
-			if (lapByNumberPref) {
-				sortItem.setTitle(this.getString(R.string.pref_sort_by_lap_time));
-			} else {
-				sortItem.setTitle(this.getString(R.string.pref_sort_by_number));
-			}
-		} else {
-			sortItem.setVisible(false);
-		}
-
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.menu_item_settings:
-				this.startActivity(new Intent(this, SettingsActivity.class));
-				return true;
-			case R.id.menu_item_about:
-				this.startActivity(new Intent(this, AboutActivity.class));
-				return true;
-			case R.id.menu_item_order:
-				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-				boolean lapByNumberPref = preferences.getBoolean(this.getString(R.string.pref_key_lap_by_number), false);
-				SharedPreferences.Editor editor = preferences.edit();
-				editor.putBoolean(this.getString(R.string.pref_key_lap_by_number), !lapByNumberPref);
-				editor.commit();
-				return true;
-		}
-
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-		App.updateThemePreference();
-		finish();
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -225,6 +156,103 @@ public class MainActivity extends SherlockFragmentActivity
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+
+		updateTime();
+		updateLaps();
+		updateState();
+		App.getWatch().addDisplay(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		preferences.registerOnSharedPreferenceChangeListener(this);
+
+		Intent intent = new Intent(this, WatchService.class);
+		stopService(intent);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		preferences.unregisterOnSharedPreferenceChangeListener(this);
+
+		// Keep watch alive by running service.
+		if(App.getWatch().getElapsedTime() > 0) {
+			Intent intent = new Intent(this, WatchService.class);
+			startService(intent);
+		}
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+
+		App.getWatch().removeDisplay(this);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		this.getSupportMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuItem sortItem = menu.findItem(R.id.menu_item_order);
+
+		if (this.lapPager.getCurrentItem() == 1 && App.getWatch().getLapContainer().size() >= 2) {
+			sortItem.setVisible(true);
+
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+			boolean lapByNumberPref = preferences.getBoolean(this.getString(R.string.pref_key_lap_by_number), false);
+			if (lapByNumberPref) {
+				sortItem.setTitle(this.getString(R.string.pref_sort_by_lap_time));
+			} else {
+				sortItem.setTitle(this.getString(R.string.pref_sort_by_number));
+			}
+		} else {
+			sortItem.setVisible(false);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.menu_item_settings:
+				this.startActivity(new Intent(this, SettingsActivity.class));
+				return true;
+			case R.id.menu_item_about:
+				this.startActivity(new Intent(this, AboutActivity.class));
+				return true;
+			case R.id.menu_item_order:
+				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+				boolean lapByNumberPref = preferences.getBoolean(this.getString(R.string.pref_key_lap_by_number), false);
+				SharedPreferences.Editor editor = preferences.edit();
+				editor.putBoolean(this.getString(R.string.pref_key_lap_by_number), !lapByNumberPref);
+				editor.commit();
+				return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		App.updateThemePreference();
+		finish();
+	}
+
+	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
@@ -236,24 +264,6 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 
 		return super.onKeyDown(keyCode, event);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		preferences.registerOnSharedPreferenceChangeListener(this);
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-
-		updateTime();
-		updateLaps();
-		updateState();
-		App.getWatch().addDisplay(this);
 	}
 
 	@Override
