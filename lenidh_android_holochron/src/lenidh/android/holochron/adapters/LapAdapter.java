@@ -135,7 +135,7 @@ public abstract class LapAdapter extends ArrayAdapter<Lap> {
 		}
 
 		Lap item = this.getItem(position);
-		holder.numberView.setText("# " + Integer.toString(this.container.NumberOf(item)));
+		holder.numberView.setText("# " + Integer.toString(this.container.NumberOf(item) + 1));
 
 		holder.timeView.setText(formatTime(getTime(item), false));
 		if (getTimeDiff(item) == 0) {
