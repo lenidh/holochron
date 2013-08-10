@@ -26,6 +26,7 @@
 	<string name="pref_key_theme">pref_key_theme</string>
 	<string name="pref_value_theme_dark">dark</string>
 	<string name="pref_value_theme_light">light</string>
+	<string name="pref_value_theme_classic">classic</string>
 	<string name="pref_key_lap_by_number">pref_key_lap_by_number</string>
 
 </resources>

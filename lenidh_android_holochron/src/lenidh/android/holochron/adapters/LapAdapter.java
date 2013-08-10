@@ -39,8 +39,18 @@ public abstract class LapAdapter extends ArrayAdapter<Lap> {
 	private final LayoutInflater inflater;
 	private final int tileResId;
 
+	private static int getLayout(Context context) {
+		int layout;
+		if(App.getThemePreference().equals(context.getString(R.string.pref_value_theme_classic))) {
+			layout = R.layout.lap_listitem_classic;
+		} else {
+			layout = R.layout.lap_listitem;
+		}
+		return layout;
+	}
+
 	public LapAdapter(Context context, LapContainer container, List<Lap> laps) {
-		super(context, R.layout.lap_listitem, laps);
+		super(context, getLayout(context), laps);
 
 		this.container = container;
 
@@ -112,7 +122,7 @@ public abstract class LapAdapter extends ArrayAdapter<Lap> {
 		if (convertView != null) {
 			holder = (ViewHolder) convertView.getTag();
 		} else {
-			convertView = this.inflater.inflate(R.layout.lap_listitem, parent, false);
+			convertView = this.inflater.inflate(getLayout(getContext()), parent, false);
 			assert convertView != null;
 
 			holder = new ViewHolder();
@@ -134,7 +144,9 @@ public abstract class LapAdapter extends ArrayAdapter<Lap> {
 			holder.diffView.setText("+" + formatTime(getTimeDiff(item), true));
 		}
 
-		holder.tileView.setBackgroundResource(this.tileResId);
+		if(!App.getThemePreference().equals(getContext().getString(R.string.pref_value_theme_classic))) {
+			holder.tileView.setBackgroundResource(this.tileResId);
+		}
 
 		return convertView;
 	}

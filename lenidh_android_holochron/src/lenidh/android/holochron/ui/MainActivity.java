@@ -56,13 +56,17 @@ public class MainActivity extends SherlockFragmentActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// Theme needs to be selected before super.onCreate.
-		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
+		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_dark)) || App.getThemePreference().equals(getString(R.string.pref_value_theme_classic))) {
 			setTheme(R.style.AppTheme_Dark);
 		}
 
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_main);
+		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_classic))) {
+			setContentView(R.layout.activity_main_classic);
+		} else {
+			setContentView(R.layout.activity_main);
+		}
 
 
 

@@ -34,6 +34,7 @@
 	<string name="pref_theme">Erscheinungsbild</string>
 	<string name="pref_theme_dark">Dunkel</string>
 	<string name="pref_theme_light">Hell</string>
+	<string name="pref_theme_classic">Klassisch</string>
 	<string name="pref_sort_by_number">Nach Nummer sortieren</string>
 	<string name="pref_sort_by_lap_time">Nach Zeit sortieren</string>
 	<string name="start">Starten</string>

@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.ListView;
 import com.actionbarsherlock.app.SherlockListFragment;
 import lenidh.android.holochron.App;
+import lenidh.android.holochron.R;
 
 public class LapListFragment extends SherlockListFragment {
 	@Override
@@ -31,7 +32,9 @@ public class LapListFragment extends SherlockListFragment {
 		super.onViewCreated(view, savedInstanceState);
 		int currentApi = Build.VERSION.SDK_INT;
 		ListView list = this.getListView();
-		list.setDivider(null);
+		if(!App.getThemePreference().equals(getString(R.string.pref_value_theme_classic))) {
+			list.setDivider(null);
+		}
 		list.setCacheColorHint(Color.TRANSPARENT);
 		if (currentApi >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			list.setFadingEdgeLength(App.convertToPx(8));

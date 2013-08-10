@@ -34,6 +34,7 @@
 	<string name="pref_theme">Theme</string>
 	<string name="pref_theme_dark">Dark</string>
 	<string name="pref_theme_light">Light</string>
+	<string name="pref_theme_classic">Classic</string>
 	<string name="pref_sort_by_number">Sort by number</string>
 	<string name="pref_sort_by_lap_time">Sort by time</string>
 	<string name="start">Start</string>
