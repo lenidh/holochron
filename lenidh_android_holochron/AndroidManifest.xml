@@ -44,12 +44,15 @@
 		</activity>
 		<activity
 			android:name=".ui.AboutActivity"
-			android:label="@string/menu_item_about" />
+			android:label="@string/menu_item_about"
+			android:exported="false" />
 		<activity
 			android:name=".ui.SettingsActivity"
-			android:label="@string/menu_item_settings" />
+			android:label="@string/menu_item_settings"
+			android:exported="false" />
 		<service
-			android:name=".services.WatchService" />
+			android:name=".services.WatchService"
+			android:exported="false" />
 	</application>
 
 </manifest>
