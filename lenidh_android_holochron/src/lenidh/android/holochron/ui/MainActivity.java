@@ -32,23 +32,152 @@ import com.actionbarsherlock.view.MenuItem;
 import de.lenidh.libzeitmesser.stopwatch.Display;
 import lenidh.android.holochron.App;
 import lenidh.android.holochron.R;
-import lenidh.android.holochron.adapters.LapArrayAdapter;
+import lenidh.android.holochron.adapters.ElapsedTimeLapAdapter;
+import lenidh.android.holochron.adapters.LapAdapter;
 import lenidh.android.holochron.adapters.LapPagerAdapter;
+import lenidh.android.holochron.adapters.LapTimeLapAdapter;
 import lenidh.android.holochron.controls.DigitalDisplay;
+import lenidh.android.holochron.services.WatchService;
 
 import java.util.ArrayList;
 
 public class MainActivity extends SherlockFragmentActivity
 		implements Display, SharedPreferences.OnSharedPreferenceChangeListener, ViewPager.OnPageChangeListener {
 
-	// Widgets
 	private Button btnState;
 	private Button btnExtra;
 	private DigitalDisplay display;
 	private ViewPager lapPager;
-	private LapArrayAdapter elapsedTimeArrayAdapter;
-	private LapArrayAdapter lapTimeArrayAdapter;
+	private LapAdapter elapsedTimeArrayAdapter;
+	private LapAdapter lapTimeArrayAdapter;
 	private LapListFragment lapTimeListFragment;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// Theme needs to be selected before super.onCreate.
+		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_dark)) || App.getThemePreference().equals(getString(R.string.pref_value_theme_classic))) {
+			setTheme(R.style.AppTheme_Dark);
+		}
+
+		super.onCreate(savedInstanceState);
+
+		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_classic))) {
+			setContentView(R.layout.activity_main_classic);
+		} else {
+			setContentView(R.layout.activity_main);
+		}
+
+
+
+		/* state button */
+
+		this.btnState = (Button) this.findViewById(R.id.btnState);
+		this.btnState.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onStartStop();
+			}
+		});
+
+
+
+		/* extra button */
+
+		this.btnExtra = (Button) this.findViewById(R.id.btnExtra);
+		this.btnExtra.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onResetRecord();
+			}
+		});
+
+		// Configure dark theme.
+		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
+			LinearLayout tile = (LinearLayout) this.findViewById(R.id.tile);
+			View hView = this.findViewById(R.id.hSeparator);
+			View vView = this.findViewById(R.id.vSeparator);
+			View landSeparator = this.findViewById(R.id.landSeparator);
+
+			tile.setBackgroundResource(R.drawable.tile_shape_dark);
+			hView.setBackgroundResource(R.color.watch_button_separator_color_dark);
+			vView.setBackgroundResource(R.color.watch_button_separator_color_dark);
+			if (landSeparator != null) landSeparator.setBackgroundResource(android.R.color.white);
+			this.btnState.setTextColor(getResources().getColor(android.R.color.white));
+			this.btnExtra.setTextColor(getResources().getColor(android.R.color.white));
+		}
+
+
+
+		/* display */
+
+		this.display = (DigitalDisplay) this.findViewById(R.id.digitalDisplay1);
+
+
+
+		/* elapsed time Adapter */
+
+		this.elapsedTimeArrayAdapter = new ElapsedTimeLapAdapter(this, App.getWatch().getLapContainer());
+
+
+
+		/* lap time Adapter */
+
+		LapTimeLapAdapter.SortOrder sortOrder = this.getLapTimeMode();
+		this.lapTimeArrayAdapter = new LapTimeLapAdapter(this, App.getWatch().getLapContainer(), sortOrder);
+
+
+
+		/* lap pages */
+
+		// Find pager view.
+		this.lapPager = (ViewPager) this.findViewById(R.id.lapPager);
+		this.lapPager.setOnPageChangeListener(this);
+		ArrayList<LapListFragment> pages = new ArrayList<LapListFragment>();
+
+		// Check if page was already created and create page if necessary.
+		LapListFragment elapsedTimeListFragment =(LapListFragment) getSupportFragmentManager().findFragmentByTag(
+				"android:switcher:" + lapPager.getId() + ":0");
+		if (elapsedTimeListFragment == null) elapsedTimeListFragment = new LapListFragment();
+		elapsedTimeListFragment.setListAdapter(this.elapsedTimeArrayAdapter);
+		pages.add(elapsedTimeListFragment);
+
+		// Check if page was already created and create page if necessary.
+		this.lapTimeListFragment = (LapListFragment) getSupportFragmentManager().findFragmentByTag(
+				"android:switcher:" + lapPager.getId() + ":1");
+		if (lapTimeListFragment == null) this.lapTimeListFragment = new LapListFragment();
+		this.lapTimeListFragment.setListAdapter(this.lapTimeArrayAdapter);
+		pages.add(this.lapTimeListFragment);
+
+		// Create the page adapter.
+		LapPagerAdapter lapPagerAdapter = new LapPagerAdapter(getSupportFragmentManager());
+		lapPagerAdapter.setPages(pages);
+
+		// Add page adapter to pager.
+		this.lapPager.setAdapter(lapPagerAdapter);
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+		updateTime();
+		updateLaps();
+		updateState();
+		App.getWatch().addDisplay(this);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		preferences.registerOnSharedPreferenceChangeListener(this);
+
+		Intent intent = new Intent(this, WatchService.class);
+		stopService(intent);
+	}
 
 	@Override
 	protected void onPause() {
@@ -56,6 +185,12 @@ public class MainActivity extends SherlockFragmentActivity
 
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		preferences.unregisterOnSharedPreferenceChangeListener(this);
+
+		// Keep watch alive by running service.
+		if(App.getWatch().getElapsedTime() > 0) {
+			Intent intent = new Intent(this, WatchService.class);
+			startService(intent);
+		}
 	}
 
 	@Override
@@ -121,110 +256,6 @@ public class MainActivity extends SherlockFragmentActivity
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// Theme needs to be selected before super.onCreate.
-		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
-			setTheme(R.style.AppTheme_Dark);
-		}
-
-		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.activity_main);
-
-
-
-		/* state button */
-
-		this.btnState = (Button) this.findViewById(R.id.btnState);
-		this.btnState.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				onStartStop();
-			}
-		});
-
-
-
-		/* extra button */
-
-		this.btnExtra = (Button) this.findViewById(R.id.btnExtra);
-		this.btnExtra.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				onResetRecord();
-			}
-		});
-
-		// Configure dark theme.
-		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_dark))) {
-			LinearLayout tile = (LinearLayout) this.findViewById(R.id.tile);
-			View hView = this.findViewById(R.id.hSeparator);
-			View vView = this.findViewById(R.id.vSeparator);
-			View landSeparator = this.findViewById(R.id.landSeparator);
-
-			tile.setBackgroundResource(R.drawable.tile_shape_dark);
-			hView.setBackgroundResource(R.color.watch_button_separator_color_dark);
-			vView.setBackgroundResource(R.color.watch_button_separator_color_dark);
-			if (landSeparator != null) landSeparator.setBackgroundResource(android.R.color.white);
-			this.btnState.setTextColor(getResources().getColor(android.R.color.white));
-			this.btnExtra.setTextColor(getResources().getColor(android.R.color.white));
-		}
-
-
-
-		/* display */
-
-		this.display = (DigitalDisplay) this.findViewById(R.id.digitalDisplay1);
-
-
-
-		/* elapsed time Adapter */
-
-		this.elapsedTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(),
-		                                                   LapArrayAdapter.Mode.elapsedTime);
-
-
-
-		/* lap time Adapter */
-
-		LapArrayAdapter.Order order = this.getLapTimeOrder();
-		this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(),
-		                                               LapArrayAdapter.Mode.lapTime, order);
-
-
-
-		/* lap pages */
-
-		// Find pager view.
-		this.lapPager = (ViewPager) this.findViewById(R.id.lapPager);
-		this.lapPager.setOnPageChangeListener(this);
-		ArrayList<LapListFragment> pages = new ArrayList<LapListFragment>();
-
-		// Check if page was already created and create page if necessary.
-		LapListFragment elapsedTimeListFragment =(LapListFragment) getSupportFragmentManager().findFragmentByTag(
-				"android:switcher:" + lapPager.getId() + ":0");
-		if (elapsedTimeListFragment == null) elapsedTimeListFragment = new LapListFragment();
-		elapsedTimeListFragment.setListAdapter(this.elapsedTimeArrayAdapter);
-		pages.add(elapsedTimeListFragment);
-
-		// Check if page was already created and create page if necessary.
-		this.lapTimeListFragment = (LapListFragment) getSupportFragmentManager().findFragmentByTag(
-				"android:switcher:" + lapPager.getId() + ":1");
-		if (lapTimeListFragment == null) this.lapTimeListFragment = new LapListFragment();
-		this.lapTimeListFragment.setListAdapter(this.lapTimeArrayAdapter);
-		pages.add(this.lapTimeListFragment);
-
-		// Create the page adapter.
-		LapPagerAdapter lapPagerAdapter = new LapPagerAdapter(getSupportFragmentManager());
-		lapPagerAdapter.setPages(pages);
-
-		// Add page adapter to pager.
-		this.lapPager.setAdapter(lapPagerAdapter);
-	}
-
-	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		switch (keyCode) {
 			case KeyEvent.KEYCODE_VOLUME_DOWN:
@@ -236,24 +267,6 @@ public class MainActivity extends SherlockFragmentActivity
 		}
 
 		return super.onKeyDown(keyCode, event);
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-		preferences.registerOnSharedPreferenceChangeListener(this);
-	}
-
-	@Override
-	protected void onStart() {
-		super.onStart();
-
-		updateTime();
-		updateLaps();
-		updateState();
-		App.getWatch().addDisplay(this);
 	}
 
 	@Override
@@ -295,17 +308,16 @@ public class MainActivity extends SherlockFragmentActivity
 		if (this.getString(R.string.pref_key_lap_by_number).equals(key)) {
 			this.invalidateOptionsMenu();
 
-			LapArrayAdapter.Order order = this.getLapTimeOrder();
-			this.lapTimeArrayAdapter = new LapArrayAdapter(this, App.getWatch().getLapContainer(),
-			                                               LapArrayAdapter.Mode.lapTime, order);
+			LapTimeLapAdapter.SortOrder sortOrder = this.getLapTimeMode();
+			this.lapTimeArrayAdapter = new LapTimeLapAdapter(this, App.getWatch().getLapContainer(), sortOrder);
 			this.lapTimeListFragment.setListAdapter(this.lapTimeArrayAdapter);
 		}
 	}
 
-	private LapArrayAdapter.Order getLapTimeOrder() {
+	private LapTimeLapAdapter.SortOrder getLapTimeMode() {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		boolean byNumber = preferences.getBoolean(this.getString(R.string.pref_key_lap_by_number), false);
-		return (byNumber) ? LapArrayAdapter.Order.number : LapArrayAdapter.Order.time;
+		return (byNumber) ? LapTimeLapAdapter.SortOrder.SORT_BY_NUMBER : LapTimeLapAdapter.SortOrder.SORT_BY_TIME;
 	}
 
 	@Override

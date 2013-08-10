@@ -61,7 +61,7 @@ public class DigitalDisplay extends LinearLayout {
 	public DigitalDisplay(Context context) {
 		super(context);
 
-		if (App.getThemePreference().equals(context.getString(R.string.pref_value_theme_dark))) {
+		if (App.getThemePreference().equals(context.getString(R.string.pref_value_theme_dark)) || App.getThemePreference().equals(context.getString(R.string.pref_value_theme_classic))) {
 			this.digits = this.digits_blue;
 		} else {
 			this.digits = this.digits_black;
@@ -100,7 +100,7 @@ public class DigitalDisplay extends LinearLayout {
 			int colonResource;
 			Context context = this.getContext();
 			assert context != null;
-			if (App.getThemePreference().equals(context.getString(R.string.pref_value_theme_dark))) {
+			if (App.getThemePreference().equals(context.getString(R.string.pref_value_theme_dark)) || App.getThemePreference().equals(context.getString(R.string.pref_value_theme_classic))) {
 				colonResource = R.drawable.digitalcolon_blue;
 				this.digits = this.digits_blue;
 			} else {

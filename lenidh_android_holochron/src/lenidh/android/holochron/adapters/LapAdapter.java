@@ -32,23 +32,27 @@ import lenidh.android.holochron.R;
 
 import java.util.List;
 
-public class LapArrayAdapter extends ArrayAdapter<Lap> {
+public abstract class LapAdapter extends ArrayAdapter<Lap> {
 
 	private static final String TAG = "LapArrayAdapter";
 	private final LapContainer container;
 	private final LayoutInflater inflater;
-	private final Mode mode;
 	private final int tileResId;
 
-	public LapArrayAdapter(Context context, LapContainer container, Mode mode) {
-		this(context, container, mode, Order.time);
+	private static int getLayout(Context context) {
+		int layout;
+		if(App.getThemePreference().equals(context.getString(R.string.pref_value_theme_classic))) {
+			layout = R.layout.lap_listitem_classic;
+		} else {
+			layout = R.layout.lap_listitem;
+		}
+		return layout;
 	}
 
-	public LapArrayAdapter(Context context, LapContainer container, Mode mode, Order order) {
-		super(context, R.layout.lap_listitem, getValues(container, mode, order));
+	public LapAdapter(Context context, LapContainer container, List<Lap> laps) {
+		super(context, getLayout(context), laps);
 
 		this.container = container;
-		this.mode = mode;
 
 		this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -59,39 +63,9 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		}
 	}
 
-	private static List<Lap> getValues(LapContainer container, Mode mode, Order order) {
-		if(mode == Mode.elapsedTime){
-			return container.toList(LapContainer.Order.elapsedTime);
-		} else if(mode == Mode.lapTime && order == Order.time) {
-			return container.toList(LapContainer.Order.lapTime);
-		} else if(mode == Mode.lapTime && order == Order.number) {
-			return container.toList(LapContainer.Order.elapsedTime);
-		} else {
-			throw new Error("Unhandled mode.");
-		}
-	}
+	protected abstract long getTime(Lap lap);
 
-	private static long getTime(Lap lap, Mode mode) {
-		switch (mode) {
-			case elapsedTime:
-				return lap.getElapsedTime();
-			case lapTime:
-				return lap.getLapTime();
-			default:
-				throw new Error("Unhandled mode.");
-		}
-	}
-
-	private static long getTimeDiff(Lap lap, Mode mode) {
-		switch (mode) {
-			case elapsedTime:
-				return lap.getElapsedTimeDiff();
-			case lapTime:
-				return lap.getLapTimeDiff();
-			default:
-				throw new Error("Unhandled mode.");
-		}
-	}
+	protected abstract long getTimeDiff(Lap lap);
 
 	/**
 	 * This method creates a formatted time string from a millisecond value. Format: [[[[[h]h:]m]m:]s]s.ms (e.g.
@@ -141,14 +115,14 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public final View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 
 		// Reuse existing Views.
 		if (convertView != null) {
 			holder = (ViewHolder) convertView.getTag();
 		} else {
-			convertView = this.inflater.inflate(R.layout.lap_listitem, parent, false);
+			convertView = this.inflater.inflate(getLayout(getContext()), parent, false);
 			assert convertView != null;
 
 			holder = new ViewHolder();
@@ -161,28 +135,20 @@ public class LapArrayAdapter extends ArrayAdapter<Lap> {
 		}
 
 		Lap item = this.getItem(position);
-		holder.numberView.setText("# " + Integer.toString(this.container.NumberOf(item)));
+		holder.numberView.setText("# " + Integer.toString(this.container.NumberOf(item) + 1));
 
-		holder.timeView.setText(formatTime(getTime(item, this.mode), false));
-		if (getTimeDiff(item, this.mode) == 0) {
-			holder.diffView.setText(formatTime(getTimeDiff(item, this.mode), true));
+		holder.timeView.setText(formatTime(getTime(item), false));
+		if (getTimeDiff(item) == 0) {
+			holder.diffView.setText(formatTime(getTimeDiff(item), true));
 		} else {
-			holder.diffView.setText("+" + formatTime(getTimeDiff(item, this.mode), true));
+			holder.diffView.setText("+" + formatTime(getTimeDiff(item), true));
 		}
 
-		holder.tileView.setBackgroundResource(this.tileResId);
+		if(!App.getThemePreference().equals(getContext().getString(R.string.pref_value_theme_classic))) {
+			holder.tileView.setBackgroundResource(this.tileResId);
+		}
 
 		return convertView;
-	}
-
-	public enum Mode {
-		lapTime,
-		elapsedTime,
-	}
-
-	public enum Order {
-		number,
-		time,
 	}
 
 	private class ViewHolder {

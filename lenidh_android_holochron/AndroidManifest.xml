@@ -25,7 +25,7 @@
 
 	<uses-sdk
 		android:minSdkVersion="8"
-		android:targetSdkVersion="17" />
+		android:targetSdkVersion="18" />
 
 	<application
 		android:name=".App"
@@ -44,10 +44,15 @@
 		</activity>
 		<activity
 			android:name=".ui.AboutActivity"
-			android:label="@string/menu_item_about" />
+			android:label="@string/menu_item_about"
+			android:exported="false" />
 		<activity
 			android:name=".ui.SettingsActivity"
-			android:label="@string/menu_item_settings" />
+			android:label="@string/menu_item_settings"
+			android:exported="false" />
+		<service
+			android:name=".services.WatchService"
+			android:exported="false" />
 	</application>
 
 </manifest>
