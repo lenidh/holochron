@@ -44,7 +44,6 @@ import java.util.ArrayList;
 public class MainActivity extends SherlockFragmentActivity
 		implements Display, SharedPreferences.OnSharedPreferenceChangeListener, ViewPager.OnPageChangeListener {
 
-	// Widgets
 	private Button btnState;
 	private Button btnExtra;
 	private DigitalDisplay display;
