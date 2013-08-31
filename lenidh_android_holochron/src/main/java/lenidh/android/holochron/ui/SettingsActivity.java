@@ -17,28 +17,20 @@
 
 package lenidh.android.holochron.ui;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.annotation.TargetApi;
+import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceScreen;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 
 import lenidh.android.holochron.App;
 import lenidh.android.holochron.R;
 
-@SuppressWarnings("deprecation")
-public class SettingsActivity extends PreferenceActivity
-		implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends ActionBarActivity {
 
 	private static final String TAG = "SettingsActivity";
-	private ListPreference theme;
-	private ListPreference volumeButtons;
 
 	public void onCreate(Bundle savedInstanceState) {
 		// Theme needs to be selected before super.onCreate.
@@ -48,38 +40,13 @@ public class SettingsActivity extends PreferenceActivity
 
 		super.onCreate(savedInstanceState);
 
-		addPreferencesFromResource(R.xml.settings);
-		//getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		PreferenceScreen preferenceScreen = getPreferenceScreen();
-		assert preferenceScreen != null;
-		this.theme = (ListPreference) preferenceScreen.findPreference(getString(R.string.pref_key_theme));
-		this.volumeButtons = (ListPreference) preferenceScreen.findPreference(getString(R.string.pref_key_volume_buttons));
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		this.theme.setSummary(this.theme.getEntry());
-		this.volumeButtons.setSummary(this.volumeButtons.getEntry());
-
-		PreferenceScreen preferenceScreen = getPreferenceScreen();
-		assert preferenceScreen != null;
-		SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
-		assert sharedPreferences != null;
-		sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
-
-		PreferenceScreen preferenceScreen = getPreferenceScreen();
-		assert preferenceScreen != null;
-		SharedPreferences sharedPreferences = preferenceScreen.getSharedPreferences();
-		assert sharedPreferences != null;
-		sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+		if(Build.VERSION.SDK_INT > Build.VERSION_CODES.HONEYCOMB) {
+			setFragment();
+		} else {
+			setSupportFragment();
+		}
 	}
 
 	@Override
@@ -95,31 +62,20 @@ public class SettingsActivity extends PreferenceActivity
 		return super.onOptionsItemSelected(item);
 	}
 
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-		if (key.equals(getString(R.string.pref_key_theme))) {
-			this.theme.setSummary(this.theme.getEntry());
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setMessage(R.string.restart_message);
-			builder.setTitle(R.string.restart);
-			builder.setPositiveButton(R.string.restart, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					PackageManager pm = getPackageManager();
-					assert pm != null;
-					Intent i = pm.getLaunchIntentForPackage(getPackageName());
-					assert i != null;
-					i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					App.updateThemePreference();
-					startActivity(i);
-				}
-			});
-			builder.setNegativeButton(R.string.restart_later, null);
-			AlertDialog dialog = builder.create();
-			dialog.show();
-		} else if (key.equals(getString(R.string.pref_key_volume_buttons))) {
-			this.volumeButtons.setSummary(this.volumeButtons.getEntry());
-		} else {
-			Log.w(TAG, "Unhandled preference change.");
-		}
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void setFragment() {
+		FragmentTransaction transaction = getFragmentManager().beginTransaction();
+		transaction.replace(android.R.id.content, new SettingsFragment());
+		transaction.commit();
+	}
+
+	private void setSupportFragment() {
+		setContentView(R.layout.activity_support_settings);
+
+		android.support.v4.app.FragmentTransaction transaction = getSupportFragmentManager()
+				.beginTransaction();
+		transaction.replace(R.id.fragment, new lenidh.android.holochron.support.settings
+				.SettingsFragment());
+		transaction.commit();
 	}
 }
