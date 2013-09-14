@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (C) 2013 Moritz Heindl <lenidh[at]gmail[dot]com>
+  ~
+  ~ This program is free software: you can redistribute it and/or modify it under
+  ~ the terms of the GNU General Public License as published by the Free Software
+  ~ Foundation, either version 3 of the License, or (at your option) any later
+  ~ version.
+  ~
+  ~ This program is distributed in the hope that it will be useful, but WITHOUT
+  ~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+  ~ FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+  ~ details.
+  ~
+  ~ You should have received a copy of the GNU General Public License along with
+  ~ this program. If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+
+	<string name="app_name">Holochron</string>
+	<string name="app_summary">Holochron ist eine Open-Source-Stoppuhr für Android.</string>
+	<string name="app_code">https://github.com/lenidh/holochron</string>
+	<string name="app_license">Lizenz: GPLv3+</string>
+	<string name="app_developer">Entwickler: Moritz Heindl</string>
+	<string name="app_contributions">Bibliotheken und Bilder</string>
+	<string name="menu_item_settings">Einstellungen</string>
+	<string name="menu_item_about">Über</string>
+	<string name="pref_volume_buttons">Steuerung über Lautstärketasten</string>
+	<string name="pref_volume_buttons_use">Hoch: Starten und stoppen\nRunter: Zurücksetzen oder Runde</string>
+	<string name="pref_volume_buttons_inverse">Hoch: Zurücksetzen oder Runde\nRunter: Starten und stoppen</string>
+	<string name="pref_volume_buttons_ignore">Lautstärketasten ignorieren</string>
+	<string name="pref_theme">Erscheinungsbild</string>
+	<string name="pref_theme_dark">Dunkel</string>
+	<string name="pref_theme_light">Hell</string>
+	<string name="pref_theme_classic">Klassisch</string>
+	<string name="pref_sort_by_number">Nach Nummer sortieren</string>
+	<string name="pref_sort_by_lap_time">Nach Zeit sortieren</string>
+	<string name="start">Starten</string>
+	<string name="stop">Anhalten</string>
+	<string name="reset">Zurücksetzen</string>
+	<string name="lap">Runde</string>
+	<string name="elapsed_time">Gesamtzeit</string>
+	<string name="restart">Neu starten</string>
+	<string name="restart_later">Später</string>
+	<string name="restart_message">Um das Erscheinungsbild zu ändern, muss die App neu gestartet werden.</string>
+	<string name="lap_time">Rundenzeit</string>
+	<string name="thanks_to">&#xb7; Auf &lt;a href="http://tiheum.deviantart.com/art/Faenza-Icons-173323228">Faenza&lt;/a> basierendes App-Symbol (GPLv3)</string>
+	<string name="digital_digit_description">Eine digitale Ziffer.</string>
+	<string name="digital_colon_description">Ein digitaler Doppelpunkt.</string>
+	<string name="notification_text">Zum Öffnen der App berühren.</string>
+	<string name="cancel">Abbrechen</string>
+
+</resources>
