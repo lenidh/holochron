@@ -46,9 +46,7 @@
 	<string name="restart_later">Später</string>
 	<string name="restart_message">Um das Erscheinungsbild zu ändern, muss die App neu gestartet werden.</string>
 	<string name="lap_time">Rundenzeit</string>
-	<string name="thanks_to">&#xb7; &lt;a href="http://actionbarsherlock.com/">ActionBarSherlock&lt;/a> (Apache License
-		2)&lt;br/>&#xb7; Auf &lt;a href="http://tiheum.deviantart.com/art/Faenza-Icons-173323228">Faenza&lt;/a> basierendes App-Symbol (GPLv3)
-	</string>
+	<string name="thanks_to">&#xb7; Auf &lt;a href="http://tiheum.deviantart.com/art/Faenza-Icons-173323228">Faenza&lt;/a> basierendes App-Symbol (GPLv3)</string>
 	<string name="digital_digit_description">Eine digitale Ziffer.</string>
 	<string name="digital_colon_description">Ein digitaler Doppelpunkt.</string>
 	<string name="notification_text">Zum Öffnen der App berühren.</string>

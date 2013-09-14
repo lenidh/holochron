@@ -46,10 +46,7 @@
 	<string name="restart_later">Later</string>
 	<string name="restart_message">In order to apply the theme you have to restart the app.</string>
 	<string name="lap_time">Lap time</string>
-	<string name="thanks_to">&#xb7; &lt;a href="http://actionbarsherlock.com/">ActionBarSherlock&lt;/a> (Apache License
-		2)&lt;br/>&#xb7; &lt;a href="http://tiheum.deviantart.com/art/Faenza-Icons-173323228">Faenza&lt;/a> based app
-		icon (GPLv3)
-	</string>
+	<string name="thanks_to">&#xb7; &lt;a href="http://tiheum.deviantart.com/art/Faenza-Icons-173323228">Faenza&lt;/a> based app icon (GPLv3)</string>
 	<string name="digital_digit_description">A digital number.</string>
 	<string name="digital_colon_description">A digital colon.</string>
 	<string name="notification_text">Touch to open app.</string>
