@@ -34,7 +34,7 @@ import java.util.List;
 
 public abstract class LapAdapter extends ArrayAdapter<Lap> {
 
-	private static final String TAG = "LapArrayAdapter";
+	private static final String TAG = "LapAdapter";
 	private final LapContainer container;
 	private final LayoutInflater inflater;
 	private final int tileResId;
@@ -135,7 +135,7 @@ public abstract class LapAdapter extends ArrayAdapter<Lap> {
 		}
 
 		Lap item = this.getItem(position);
-		holder.numberView.setText("# " + Integer.toString(this.container.NumberOf(item) + 1));
+		holder.numberView.setText("# " + Integer.toString(this.container.NumberOf(item)));
 
 		holder.timeView.setText(formatTime(getTime(item), false));
 		if (getTimeDiff(item) == 0) {

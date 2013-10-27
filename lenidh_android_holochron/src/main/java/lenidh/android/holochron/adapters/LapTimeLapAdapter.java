@@ -28,9 +28,9 @@ public class LapTimeLapAdapter extends LapAdapter {
 	private static List<Lap> getLapList(LapContainer container, SortOrder order) {
 		switch (order) {
 			case SORT_BY_NUMBER:
-				return container.toList(LapContainer.Order.elapsedTime);
+				return container.toList(LapContainer.SortOrder.SORT_BY_ELAPSED_TIME);
 			case SORT_BY_TIME:
-				return container.toList(LapContainer.Order.lapTime);
+				return container.toList(LapContainer.SortOrder.SORT_BY_LAP_TIME);
 			default:
 				throw new Error("Unhandled SortOrder.");
 		}
@@ -42,12 +42,12 @@ public class LapTimeLapAdapter extends LapAdapter {
 
 	@Override
 	protected long getTime(Lap lap) {
-		return lap.getLapTime();
+		return lap.getLapTime(10);
 	}
 
 	@Override
 	protected long getTimeDiff(Lap lap) {
-		return lap.getLapTimeDiff();
+		return lap.getLapTimeDelta(10);
 	}
 
 	public enum SortOrder {

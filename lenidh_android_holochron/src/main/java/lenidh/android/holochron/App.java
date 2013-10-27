@@ -66,7 +66,7 @@ public class App extends Application {
 			public long getTime() {
 				return SystemClock.elapsedRealtime();
 			}
-		}, 10);
+		});
 
 		updateThemePreference();
 	}
