@@ -45,6 +45,8 @@ public class MainActivity extends ActionBarActivity
 		implements Watch.TimeChangedListener, Watch.LapsChangedListener, Watch.StateChangedListener,
 		SharedPreferences.OnSharedPreferenceChangeListener, ViewPager.OnPageChangeListener {
 
+	public static final String ACTION_RESET= "lenidh.android.holochron.intent.action.RESET";
+
 	private Button btnState;
 	private Button btnExtra;
 	private DigitalDisplay display;
@@ -61,6 +63,10 @@ public class MainActivity extends ActionBarActivity
 		}
 
 		super.onCreate(savedInstanceState);
+
+		if(ACTION_RESET.equals(getIntent().getAction())) {
+			App.getWatch().reset();
+		}
 
 		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_classic))) {
 			setContentView(R.layout.activity_main_classic);

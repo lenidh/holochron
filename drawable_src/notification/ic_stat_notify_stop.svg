@@ -14,9 +14,9 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   inkscape:export-filename="/home/moritz/Git/holochron/lenidh_android_holochron/src/main/res/drawable-xhdpi/ic_stat_notify_stop.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90"
+   inkscape:export-filename="/home/moritz/Git/holochron/lenidh_android_holochron/src/main/res/drawable-ldpi/ic_stat_notify_stop.png"
+   inkscape:export-xdpi="33.75"
+   inkscape:export-ydpi="33.75"
    sodipodi:docname="ic_stat_notify_stop.svg">
   <defs
      id="defs4" />
@@ -28,8 +28,8 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="8.984375"
-     inkscape:cx="32"
-     inkscape:cy="32"
+     inkscape:cx="31.946878"
+     inkscape:cy="31.946986"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -65,8 +65,8 @@
      transform="translate(0,-988.3622)">
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:none"
-       d="M 8 8 L 8 56 L 27 56 L 27 8 L 8 8 z M 37 8 L 37 56 L 56 56 L 56 8 L 37 8 z "
-       transform="translate(0,988.3622)"
-       id="rect3835" />
+       d="m 12,1000.3622 0,40 15.833333,0 0,-40 -15.833333,0 z m 24.166667,0 0,40 15.833333,0 0,-40 -15.833333,0 z"
+       id="rect3835"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

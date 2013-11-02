@@ -17,7 +17,7 @@
    inkscape:export-filename="/home/moritz/Git/holochron/lenidh_android_holochron/src/main/res/drawable-xhdpi/ic_stat_notify_reset.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   sodipodi:docname="ic_stat_notify_lap.svg">
+   sodipodi:docname="ic_stat_notify_start.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -56,7 +56,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -67,7 +67,7 @@
      transform="translate(0,-988.3622)">
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:none"
-       d="m 8,996.36218 48,24.00002 -48,24 z"
+       d="m 14,1000.3622 36,20 -36,20 z"
        id="rect4712"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />

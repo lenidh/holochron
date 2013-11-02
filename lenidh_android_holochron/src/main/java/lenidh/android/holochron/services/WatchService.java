@@ -17,6 +17,7 @@
 
 package lenidh.android.holochron.services;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -27,6 +28,9 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import lenidh.android.holochron.App;
 import lenidh.android.holochron.R;
@@ -42,15 +46,15 @@ public final class WatchService extends Service implements Watch.TimeChangedList
 
 	private static final String ACTION_STOP = "lenidh.android.holochron.intent.action.STOP";
 
-	private static final String ACTION_RECORD= "lenidh.android.holochron.intent.action.RECORD";
-
-	private static final String ACTION_RESET = "lenidh.android.holochron.intent.action.RESET";
+	private static final String ACTION_RECORD = "lenidh.android.holochron.intent.action.RECORD";
 
 	private final int NOTIFICATION_ID = 1;
 
-	private IntentFilter actionFilter;
+	private final Lock notificationCancelLock = new ReentrantLock(true);
 
-	private PendingIntent pendingMainIntent;
+	private boolean isCanceled = false;
+
+	private IntentFilter actionFilter;
 
 	private NotificationManager notificationManager;
 
@@ -67,13 +71,10 @@ public final class WatchService extends Service implements Watch.TimeChangedList
 				App.getWatch().stop();
 			} else if(ACTION_RECORD.equals(intent.getAction())) {
 				App.getWatch().record();
-			} else if(ACTION_RESET.equals(intent.getAction())) {
-				App.getWatch().reset();
-				try {
-					pendingMainIntent.send();
-				} catch (PendingIntent.CanceledException e) {
-					Log.w(TAG, "Sending mainIntent failed.");
-				}
+			} else if(Intent.ACTION_SCREEN_ON.equals(intent.getAction())) {
+				App.getWatch().addTimeChangedListener(WatchService.this, 1000);
+			} else if(Intent.ACTION_SCREEN_OFF.equals(intent.getAction())) {
+				App.getWatch().removeTimeChangedListener(WatchService.this);
 			}
 		}
 	};
@@ -82,44 +83,12 @@ public final class WatchService extends Service implements Watch.TimeChangedList
 	public void onCreate() {
 		super.onCreate();
 
-		this.notificationManager
-				= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-		Intent mainIntent = new Intent(this, MainActivity.class);
-		mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		this.pendingMainIntent = PendingIntent.getActivity(this, 0, mainIntent, 0);
-
-		Intent startIntent = new Intent(ACTION_START);
-		PendingIntent pendingStartIntent = PendingIntent.getBroadcast(this, 0, startIntent, 0);
-
-		Intent stopIntent = new Intent(ACTION_STOP);
-		PendingIntent pendingStopIntent = PendingIntent.getBroadcast(this, 0, stopIntent, 0);
-
-		Intent recordIntent = new Intent(ACTION_RECORD);
-		PendingIntent pendingRecordIntent = PendingIntent.getBroadcast(this, 0, recordIntent, 0);
-
-		Intent resetIntent = new Intent(ACTION_RESET);
-		PendingIntent pendingResetIntent = PendingIntent.getBroadcast(this, 0, resetIntent, 0);
-
 		this.actionFilter = new IntentFilter();
-		this.actionFilter.addAction(ACTION_START);
-		this.actionFilter.addAction(ACTION_STOP);
-		this.actionFilter.addAction(ACTION_RECORD);
-		this.actionFilter.addAction(ACTION_RESET);
+		// Save battery by turning off time update when screen is off.
+		this.actionFilter.addAction(Intent.ACTION_SCREEN_OFF);
+		this.actionFilter.addAction(Intent.ACTION_SCREEN_ON);
 
-		this.runningNotificationBuilder = new NotificationCompat.Builder(this)
-				.setWhen(0)
-				.setSmallIcon(R.drawable.ic_stat_notify_icon)
-				.setContentIntent(pendingMainIntent)
-				.addAction(R.drawable.ic_stat_notify_stop, this.getString(R.string.stop), pendingStopIntent)
-				.addAction(R.drawable.ic_stat_notify_lap, this.getString(R.string.lap), pendingRecordIntent);
-
-		this.notRunningNotificationBuilder = new NotificationCompat.Builder(this)
-				.setWhen(0)
-				.setSmallIcon(R.drawable.ic_stat_notify_icon)
-				.setContentIntent(pendingMainIntent)
-				.addAction(R.drawable.ic_stat_notify_start, this.getString(R.string.start), pendingStartIntent)
-				.addAction(R.drawable.ic_stat_notify_reset, this.getString(R.string.reset), pendingResetIntent);
+		initNotification();
 	}
 
 	@Override
@@ -141,7 +110,13 @@ public final class WatchService extends Service implements Watch.TimeChangedList
 		App.getWatch().removeStateChangedListener(this);
 		App.getWatch().removeTimeChangedListener(this);
 		unregisterReceiver(actionReceiver);
+
+		// Prevent async update after cancellation.
+		this.notificationCancelLock.lock();
 		notificationManager.cancel(NOTIFICATION_ID);
+		this.isCanceled = true;
+		this.notificationCancelLock.unlock();
+
 		super.onDestroy();
 	}
 
@@ -160,10 +135,75 @@ public final class WatchService extends Service implements Watch.TimeChangedList
 		updateNotification();
 	}
 
+	private void initNotification() {
+		this.notificationManager
+				= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+		Intent mainIntent = new Intent(this, MainActivity.class);
+		mainIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		PendingIntent pendingMainIntent = PendingIntent.getActivity(this, 0, mainIntent, 0);
+
+		Intent startIntent = new Intent(ACTION_START);
+		PendingIntent pendingStartIntent = PendingIntent.getBroadcast(this, 0, startIntent, 0);
+
+		Intent stopIntent = new Intent(ACTION_STOP);
+		PendingIntent pendingStopIntent = PendingIntent.getBroadcast(this, 0, stopIntent, 0);
+
+		Intent recordIntent = new Intent(ACTION_RECORD);
+		PendingIntent pendingRecordIntent = PendingIntent.getBroadcast(this, 0, recordIntent, 0);
+
+		Intent resetIntent = new Intent(this, MainActivity.class);
+		resetIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		resetIntent.setAction(MainActivity.ACTION_RESET);
+		PendingIntent pendingResetIntent = PendingIntent.getActivity(this, 0, resetIntent, 0);
+
+		this.actionFilter.addAction(ACTION_START);
+		this.actionFilter.addAction(ACTION_STOP);
+		this.actionFilter.addAction(ACTION_RECORD);
+
+		this.runningNotificationBuilder = new NotificationCompat.Builder(this)
+				.setWhen(0)
+				.setOngoing(true)
+				.setPriority(Notification.PRIORITY_MAX)
+				.setSmallIcon(R.drawable.ic_stat_notify_icon)
+				.setContentIntent(pendingMainIntent)
+				.addAction(R.drawable.ic_stat_notify_stop, this.getString(R.string.stop),
+						pendingStopIntent)
+				.addAction(R.drawable.ic_stat_notify_lap, this.getString(R.string.lap),
+						pendingRecordIntent);
+
+		this.notRunningNotificationBuilder = new NotificationCompat.Builder(this)
+				.setWhen(0)
+				.setOngoing(true)
+				.setPriority(Notification.PRIORITY_MAX)
+				.setSmallIcon(R.drawable.ic_stat_notify_icon)
+				.setContentIntent(pendingMainIntent)
+				.addAction(R.drawable.ic_stat_notify_start, this.getString(R.string.start),
+						pendingStartIntent)
+				.addAction(R.drawable.ic_stat_notify_reset, this.getString(R.string.reset),
+						pendingResetIntent);
+	}
+
 	private void updateNotification() {
 		NotificationCompat.Builder builder = getNotificationBuilder();
 		builder.setContentTitle(formatTime(App.getWatch().getElapsedTime()));
-		this.notificationManager.notify(NOTIFICATION_ID, builder.build());
+
+//		int numberOfLaps = App.getWatch().getLapContainer().size();
+//		if(numberOfLaps > 0) {
+//			long lastLapTime = App.getWatch().getLapContainer().toList(
+//					LapContainer.SortOrder.SORT_BY_ELAPSED_TIME).get(numberOfLaps - 1)
+//					.getElapsedTime();
+//			long lapTime = App.getWatch().getElapsedTime() - lastLapTime;
+//			builder.setContentText(formatTime(lapTime));
+//		} else {
+//			builder.setContentText(null);
+//		}
+
+		this.notificationCancelLock.lock();
+		if(!isCanceled) {
+			this.notificationManager.notify(NOTIFICATION_ID, builder.build());
+		}
+		this.notificationCancelLock.unlock();
 	}
 
 	private NotificationCompat.Builder getNotificationBuilder() {
@@ -180,10 +220,10 @@ public final class WatchService extends Service implements Watch.TimeChangedList
 		short digits[] = {
 				(short) (time / 36000000 % 6),    // hours: tens
 				(short) (time / 3600000 % 10),    //        ones
-				-1,                              // separator: ':'
+				-1,                               // separator: ':'
 				(short) (time / 600000 % 6),      // minutes: tens
 				(short) (time / 60000 % 10),      //          ones
-				-1,                              // separator: ':'
+				-1,                               // separator: ':'
 				(short) (time / 10000 % 6),       // seconds: tens
 				(short) (time / 1000 % 10),       //          ones
 		};
@@ -198,8 +238,8 @@ public final class WatchService extends Service implements Watch.TimeChangedList
 			} else if (digits[index] == -2) {
 				timeFormat.append('.');
 			} else {
-				Log.e(TAG, String.format("Invalid value while formatting: time: %d, index: %d, value: %d",
-						time, index, digits[index]));
+				String logString = "Invalid value while formatting: time: %d, index: %d, value: %d";
+				Log.e(TAG, String.format(logString, time, index, digits[index]));
 			}
 			index++;
 		}
