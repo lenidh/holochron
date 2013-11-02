@@ -24,16 +24,16 @@ import de.lenidh.libzeitmesser.stopwatch.LapContainer;
 public class ElapsedTimeLapAdapter extends LapAdapter {
 
 	public ElapsedTimeLapAdapter(Context context, LapContainer container) {
-		super(context, container, container.toList(LapContainer.Order.elapsedTime));
+		super(context, container, container.toList(LapContainer.SortOrder.SORT_BY_ELAPSED_TIME));
 	}
 
 	@Override
 	protected long getTime(Lap lap) {
-		return lap.getElapsedTime();
+		return lap.getElapsedTime(10);
 	}
 
 	@Override
 	protected long getTimeDiff(Lap lap) {
-		return lap.getElapsedTimeDiff();
+		return lap.getElapsedTimeDelta(10);
 	}
 }

@@ -29,7 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import de.lenidh.libzeitmesser.stopwatch.Display;
+import de.lenidh.libzeitmesser.stopwatch.Watch;
 import lenidh.android.holochron.App;
 import lenidh.android.holochron.R;
 import lenidh.android.holochron.adapters.ElapsedTimeLapAdapter;
@@ -42,7 +42,10 @@ import lenidh.android.holochron.services.WatchService;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
-		implements Display, SharedPreferences.OnSharedPreferenceChangeListener, ViewPager.OnPageChangeListener {
+		implements Watch.TimeChangedListener, Watch.LapsChangedListener, Watch.StateChangedListener,
+		SharedPreferences.OnSharedPreferenceChangeListener, ViewPager.OnPageChangeListener {
+
+	public static final String ACTION_RESET= "lenidh.android.holochron.intent.action.RESET";
 
 	private Button btnState;
 	private Button btnExtra;
@@ -60,6 +63,10 @@ public class MainActivity extends ActionBarActivity
 		}
 
 		super.onCreate(savedInstanceState);
+
+		if(ACTION_RESET.equals(getIntent().getAction())) {
+			App.getWatch().reset();
+		}
 
 		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_classic))) {
 			setContentView(R.layout.activity_main_classic);
@@ -162,10 +169,12 @@ public class MainActivity extends ActionBarActivity
 	protected void onStart() {
 		super.onStart();
 
-		updateTime();
-		updateLaps();
-		updateState();
-		App.getWatch().addDisplay(this);
+		onTimeChanged();
+		onLapsChanged();
+		onStateChanged();
+		App.getWatch().addTimeChangedListener(this, 10);
+		App.getWatch().addLapsChangedListener(this);
+		App.getWatch().addStateChangedListener(this);
 	}
 
 	@Override
@@ -197,7 +206,9 @@ public class MainActivity extends ActionBarActivity
 	protected void onStop() {
 		super.onStop();
 
-		App.getWatch().removeDisplay(this);
+		App.getWatch().removeLapsChangedListener(this);
+		App.getWatch().removeStateChangedListener(this);
+		App.getWatch().removeTimeChangedListener(this);
 	}
 
 	@Override
@@ -270,7 +281,7 @@ public class MainActivity extends ActionBarActivity
 	}
 
 	@Override
-	public void updateTime() {
+	public void onTimeChanged() {
 		this.runOnUiThread(new Runnable() {
 
 			@Override
@@ -281,7 +292,7 @@ public class MainActivity extends ActionBarActivity
 	}
 
 	@Override
-	public void updateState() {
+	public void onStateChanged() {
 		this.runOnUiThread(new Runnable() {
 
 			@Override
@@ -298,7 +309,7 @@ public class MainActivity extends ActionBarActivity
 	}
 
 	@Override
-	public void updateLaps() {
+	public void onLapsChanged() {
 		this.lapTimeArrayAdapter.notifyDataSetChanged();
 		this.elapsedTimeArrayAdapter.notifyDataSetChanged();
 	}
