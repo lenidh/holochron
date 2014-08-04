@@ -58,7 +58,8 @@ public class MainActivity extends ActionBarActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// Theme needs to be selected before super.onCreate.
-		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_dark)) || App.getThemePreference().equals(getString(R.string.pref_value_theme_classic))) {
+		if (App.getThemePreference().equals(getString(R.string.pref_value_theme_dark)) ||
+				App.getThemePreference().equals(getString(R.string.pref_value_theme_classic))) {
 			setTheme(R.style.AppTheme_Dark);
 		}
 
